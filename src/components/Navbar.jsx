@@ -20,7 +20,7 @@ export default function Navbar() {
     { name: 'Dashboard', href: '/user/dashboard' },
     { name: 'Profile', href: '/profile' },
   ];
-  
+
   const navLinksAdmin = [
     { name: 'Home', href: '/' },
     { name: 'Public Post', href: '/public-post' },
@@ -31,7 +31,11 @@ export default function Navbar() {
   async function handelSignOut() {
     await authClient.signOut();
     router.push('/login');
-  } 
+  }
+  const links = []
+  console.log('linkes from nav', links);
+
+  const filter = session?.user?.role === 'admin' ? links.push(navLinksAdmin) : session?.user?.role === 'user' ? links.push(navLinks) : links.push(navLinks);
 
 
   return (
@@ -48,7 +52,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden  lg:flex justify-center items-center gap-6">
-          {navLinks.slice(0, session?.user ? 6 : 2).map(link => {
+          {links[0].map(link => {
             const isActive = pathname === link.href;
             return (
               <Link key={link.href} href={link.href} className={`text-lg whitespace-nowrap font-medium transition ${isActive ? 'text-blue-600 border-b-[1px] border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
@@ -74,14 +78,14 @@ export default function Navbar() {
                   </svg>
                 </div>
               </Link>
-            ) : session?.user?.plan === "free" ? ( 
+            ) : session?.user?.role === 'admin' ? '' : session?.user?.plan === "free" ? (
               <Link
                 href="/plans"
                 className="text-md font-medium px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
               >
                 Upgrade to Premium ✦
               </Link>
-            ) : ( 
+            ) : (
               <span className="text-md font-medium px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
                 ✦ Premium
               </span>
@@ -135,7 +139,7 @@ export default function Navbar() {
                       </Link>
                     )}
                   </div>
-                  {navLinks.slice(0, session?.user ? 6 : 2).map(link => (
+                  {links[0].map(link => (
                     <Link key={link.href} href={link.href} className={`px-3 py-2 whitespace-nowrap rounded-md text-lg ${pathname === link.href ? 'text-blue-600  border-b-[1px] border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
                       {link.name}
                     </Link>

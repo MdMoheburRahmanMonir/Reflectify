@@ -8,8 +8,7 @@ import { Button, Drawer } from "@heroui/react";
 import { userSessionClient } from "@/lib/actions/sessionClient";
 import { FaEdit, FaQuoteLeft, FaRegUserCircle } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
-const navItems = [
-    { icon: LuLayoutDashboard , label: "Dashboard", href: "/user/dashboard" },
+const navItems = [ 
     { icon: FaRegUserCircle, label: "Profile", href: "/profile" },
     { icon: FaEdit, label: "Edit Profile", href: "/profile/editprofile" },
     { icon: FaQuoteLeft, label: "FAQ", href: "/profile/faq" },
@@ -200,7 +199,7 @@ export function Navigation() {
                     })}
                 </nav>
                 <div className="p-4">
-                    {session?.user?.plan === 'free' && <div className="rounded-3xl bg-gradient-to-r from-purple-500 to-blue-600 p-5 text-white shadow-xl ">
+                    {session?.user?.role === "admin" ? " " : session?.user?.plan === 'free' && session?.user?.role === 'user' ? <div className="rounded-3xl bg-gradient-to-r from-purple-500 to-blue-600 p-5 text-white shadow-xl ">
                         <h3 className="font-semibold">
                             Premium Growth
                         </h3>
@@ -213,7 +212,7 @@ export function Navigation() {
                                 Upgrade Now
                             </button>
                         </Link>
-                    </div>}
+                    </div> : ''}
                 </div>
             </aside>
         </>
