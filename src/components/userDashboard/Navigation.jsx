@@ -2,23 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  FiBell,
-  FiHome,
-  FiMail,
-  FiMenu,
-  FiSearch,
-  FiSettings,
-  FiUser,
-} from "react-icons/fi";
+import { FiHome, FiMenu } from "react-icons/fi";
 
 import { Button, Drawer } from "@heroui/react";
 import { userSessionClient } from "@/lib/actions/sessionClient";
-
+import { FaAddressBook, FaUserAstronaut } from "react-icons/fa";
+import { MdCreateNewFolder, MdFavoriteBorder } from "react-icons/md";
 const navItems = [
-  { icon: FiHome, label: "Home", href: "/dashboard" },
-  { icon: FiSearch, label: "Search", href: "/dashboard/search" },
-  { icon: FiBell, label: "Notifications", href: "/dashboard/notifications" }, 
+  { icon: FiHome, label: "Home", href: "/user/dashboard" },
+  { icon: MdCreateNewFolder, label: "Post Lesson", href: "/user/dashboard/add-lesson" },
+  { icon: FaAddressBook, label: "My Lessons", href: "/user/dashboard/my-lessons" },
+  { icon: MdFavoriteBorder , label: "My Favorite", href: "/user/dashboard/my-favorites" },
+  { icon: FaUserAstronaut , label: "Profile", href: "/profile" },
 ];
 
 export function Navigation() {

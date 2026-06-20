@@ -1,11 +1,11 @@
 import React from 'react';
 
-const SearchPage = () => {
+const MyPostPage = () => {
     return (
         <div>
-            Searchpage
+            My Post Page
         </div>
     );
 };
 
-export default SearchPage;
+export default MyPostPage;

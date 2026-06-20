@@ -72,7 +72,7 @@ export default function ProfileEditPage() {
     return (
         <div className=" w-full  flex items-center justify-center p-5">
             <div className="w-full max-w-md  shadow-lg dark:shadow-white/20 shadow-black/20 rounded-2xl p-6">
-                <h1 className="text-2xl font-bold text-center mb-6">
+                <h1 className="text-2xl font-bold text-center mb-6 bg-gradient-to-l from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
                     Edit Profile
                 </h1>
 
@@ -107,12 +107,27 @@ export default function ProfileEditPage() {
                             className="w-full border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
+                    {/* Email */}
+                    <div>
+                        <label className="block mb-2 text-sm font-medium">
+                            Your Email Address? To change email Contact Admin!
+                        </label>
+
+                        <input
+                            type="text"
+                            defaultValue={session?.user?.email}
+                            disabled
+                            name="email"
+                            placeholder="Your Email address"
+                            className="w-full border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
 
 
                     {/* Button */}
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
+                        className="w-full bg-gradient-to-l from-blue-600 to-purple-600 hover:scale-105 text-white py-2 rounded-lg transition"
                     >
                         Save Changes
                     </button>

@@ -78,7 +78,7 @@ export default function Footer() {
                             Home
                         </Link>
 
-                        <Link href="/dashboard" className="hover:text-blue-600 dark:hover:text-blue-400 transition">
+                        <Link href="/user/dashboard" className="hover:text-blue-600 dark:hover:text-blue-400 transition">
                             Dashboard
                         </Link>
 

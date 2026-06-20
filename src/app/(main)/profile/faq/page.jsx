@@ -1,57 +1,31 @@
 'use client';
+import { Link } from "lucide-react";
 import { useState } from "react";
 
 const FAQPage = () => {
-  const [expandedId, setExpandedId] = useState(0);
+  const [expandedId, setExpandedId] = useState(null);
 
   const faqs = [
     {
       id: 0,
       category: "Account",
       question: "How do I reset my password?",
-      answer: "You can reset your password by going to the Edit Profile section. Enter your current password, then set a new password following our security requirements. Make sure both password fields match before saving.",
+      answer:
+        "You can reset your password from profile settings by entering your current and new password securely.",
     },
     {
       id: 1,
-      category: "Account",
-      question: "How do I change my display name?",
-      answer: "Navigate to the Edit Profile page and update your first and last name in the Personal Information section. Click 'Save Changes' to apply the updates to your account.",
+      category: "Security",
+      question: "What are the password requirements?",
+      answer:
+        "Minimum 8 characters, including uppercase, lowercase, number, and special character.",
     },
     {
       id: 2,
-      category: "Account",
-      question: "Can I have multiple accounts?",
-      answer: "Each email address can only be associated with one account. If you need a separate account, please use a different email address to sign up.",
-    },
-    {
-      id: 3,
-      category: "Security",
-      question: "What are the password security requirements?",
-      answer: "Our password requirements include: minimum 8 characters, uppercase and lowercase letters, at least one number, and one special character (@, #, $, %, etc.). This ensures your account remains secure.",
-    },
-    {
-      id: 4,
-      category: "Security",
-      question: "How often should I change my password?",
-      answer: "We recommend changing your password every 3-6 months for optimal security. If you notice any suspicious activity, change it immediately and contact our support team.",
-    },
-    {
-      id: 5,
-      category: "Account",
-      question: "How do I delete my account?",
-      answer: "Account deletion is a permanent action. To delete your account, please contact our support team with your email address. We'll guide you through the process and ensure all your data is properly handled.",
-    },
-    {
-      id: 6,
       category: "Privacy",
-      question: "Is my personal information secure?",
-      answer: "Yes, we use industry-standard encryption to protect your data. All passwords are hashed and stored securely. Your information is never shared with third parties without your consent.",
-    },
-    {
-      id: 7,
-      category: "Privacy",
-      question: "What data do you collect?",
-      answer: "We collect only essential information needed for your account and profile. This includes your name, email, and any information you choose to add to your profile. You control what information is visible to others.",
+      question: "Is my data secure?",
+      answer:
+        "Yes, all data is encrypted and securely stored. We never share personal information without consent.",
     },
   ];
 
@@ -60,82 +34,77 @@ const FAQPage = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900/95">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100">FAQ</h2>
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Frequently asked questions and help resources</p>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen px-4 py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-all duration-300">
 
-      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <div className="mb-8">
-          <p className="text-sm uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">Common Questions</p>
-          <h3 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-slate-100">Find answers to your questions</h3>
-          <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-            Click on any question to expand and view the answer. If you need further assistance, please contact our support team.
-          </p>
-        </div>
+      {/* Header */}
+      <div className="max-w-4xl mx-auto text-center mb-10">
+        <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
+          Frequently Asked Questions
+        </h1>
 
-        <div className="space-y-3">
-          {faqs.map((faq) => (
-            <div
-              key={faq.id}
-              className="rounded-3xl border border-slate-200 overflow-hidden transition dark:border-slate-700"
-            >
-              <button
-                type="button"
-                onClick={() => toggleAccordion(faq.id)}
-                className={`w-full px-6 py-4 text-left flex items-center justify-between transition ${
-                  expandedId === faq.id
-                    ? "bg-blue-50 dark:bg-blue-950/20"
-                    : "bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 dark:hover:bg-slate-900"
-                }`}
-              >
-                <div className="flex-1">
-                  <span className="inline-block rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold text-green-600 dark:bg-slate-700 dark:text-slate-300 mb-2">
-                    {faq.category}
-                  </span>
-                  <p className={`text-sm font-semibold ${expandedId === faq.id ? "text-blue-600 dark:text-blue-400" : "text-slate-900 dark:text-slate-100"}`}>
-                    {faq.question}
-                  </p>
-                </div>
-                <svg
-                  className={`h-5 w-5 text-slate-500 ml-4 flex-shrink-0 transition transform -rotate-90 ${
-                    expandedId === faq.id ? "-rotate-180 text-blue-600 dark:text-blue-400" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
-              </button>
-
-              {expandedId === faq.id && (
-                <div className="border-t border-slate-200 bg-white px-6 py-4 text-sm leading-relaxed text-slate-600 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-400">
-                  {faq.answer}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="rounded-3xl border border-slate-200 bg-gradient-to-r from-blue-50 to-cyan-50 p-8 dark:from-blue-950/20 dark:to-cyan-950/20 dark:border-slate-700">
-        <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Still need help?</h3>
-        <p className="text-slate-600 dark:text-slate-400 mb-4">
-          If you couldn't find the answer you're looking for, please don't hesitate to contact our support team.
+        <p className="mt-3 text-gray-600 dark:text-gray-300">
+          Find answers to the most common questions about your account and usage
         </p>
-        <div className="flex gap-3">
-          <button className="inline-flex items-center justify-center rounded-3xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
-            Contact Support
-          </button>
-          <button className="inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
-            View Documentation
-          </button>
+      </div>
+
+      {/* FAQ Container */}
+      <div className="max-w-4xl mx-auto space-y-4">
+
+        {faqs.map((faq) => (
+          <div
+            key={faq.id}
+            className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl shadow-md hover:shadow-lg transition"
+          >
+
+            {/* Question */}
+            <button
+              onClick={() => toggleAccordion(faq.id)}
+              className={`w-full flex justify-between items-center px-6 py-5 text-left transition ${expandedId === faq.id
+                  ? "bg-indigo-100 dark:bg-slate-800"
+                  : "hover:bg-gray-50 dark:hover:bg-slate-800/60"
+                }`}
+            >
+              <div>
+                <span className="inline-block mb-2 px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+                  {faq.category}
+                </span>
+
+                <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                  {faq.question}
+                </p>
+              </div>
+
+              <span
+                className={`text-xl transition-transform duration-300 text-gray-500 dark:text-gray-300 ${expandedId === faq.id ? "rotate-180" : ""
+                  }`}
+              >
+                ⌄
+              </span>
+            </button>
+
+            {/* Answer */}
+            {expandedId === faq.id && (
+              <div className="px-6 pb-5 text-gray-600 dark:text-gray-300 leading-relaxed bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800">
+                {faq.answer}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Help Section */}
+      <div className="max-w-4xl mx-auto mt-12">
+        <div className="rounded-3xl p-8 text-center bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-xl">
+          <h2 className="text-2xl font-bold">Still need help?</h2>
+          <p className="mt-2 opacity-90">
+            Contact our support team for further assistance
+          </p>
+
+          <Link href='/contact'>
+            <button className="px-6 py-2.5 rounded-tl-2xl rounded-br-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white text-sm font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200">
+              Contact Support
+            </button>
+          </Link>
         </div>
       </div>
     </div>

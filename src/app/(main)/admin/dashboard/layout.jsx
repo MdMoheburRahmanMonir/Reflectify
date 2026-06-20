@@ -1,4 +1,6 @@
-import { Navigation } from "@/components/Navigation";
+import { Navigation } from "@/components/userDashboard/Navigation";
+
+ 
 
 export const metadata = {
   title: "Dashboard",

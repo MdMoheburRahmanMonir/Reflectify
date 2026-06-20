@@ -89,7 +89,7 @@ export default async function Success({ searchParams }) {
                         </a>
 
                         <a
-                            href="/dashboard"
+                            href="/user/dashboard"
                             className="flex-1 rounded-xl bg-black px-5 py-3 text-center font-medium text-white hover:bg-gray-800"
                         >
                             View Orders

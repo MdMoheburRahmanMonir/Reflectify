@@ -17,14 +17,21 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Public Post', href: '/public-post' },
-    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Dashboard', href: '/user/dashboard' },
+    { name: 'Profile', href: '/profile' },
+  ];
+  
+  const navLinksAdmin = [
+    { name: 'Home', href: '/' },
+    { name: 'Public Post', href: '/public-post' },
+    { name: 'Dashboard', href: '/admin/dashboard' },
+    { name: 'Profile', href: '/profile' },
   ];
 
   async function handelSignOut() {
     await authClient.signOut();
     router.push('/login');
-  }
-  console.log(session?.user?.image);
+  } 
 
 
   return (
@@ -67,16 +74,14 @@ export default function Navbar() {
                   </svg>
                 </div>
               </Link>
-            ) : session?.user?.plan === "free" ? (
-              // 🟡 Free user
+            ) : session?.user?.plan === "free" ? ( 
               <Link
                 href="/plans"
                 className="text-md font-medium px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
               >
                 Upgrade to Premium ✦
               </Link>
-            ) : (
-              // 🟢 Premium user
+            ) : ( 
               <span className="text-md font-medium px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
                 ✦ Premium
               </span>

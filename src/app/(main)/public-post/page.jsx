@@ -6,245 +6,210 @@ export default function JobsPage() {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Filters
     const [query, setQuery] = useState("");
     const [department, setDepartment] = useState("");
     const [status, setStatus] = useState("");
     const [isRemote, setIsRemote] = useState(null);
 
-    Pagination 
     const [page, setPage] = useState(1);
-    const totalItems = jobs.length;
-    const itemsPerPage = 12;
-    const totalPages = totalItems / itemsPerPage;
-
-    console.log(totalPages);
-
-    const startItem = 1;
-    const endItem = 4;
-    const getPageNumbers = () => {
-        const page = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        return page;
-    }
-  
-
-
-
-
-
+    const itemsPerPage = 6;
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await fetch('http://localhost:5000/api/jobs');
+                const res = await fetch("http://localhost:5000/api/jobs");
                 const data = await res.json();
                 setJobs(Array.isArray(data) ? data : [data]);
-            } catch (error) {
-                console.error(error);
-                setJobs([]);
             } finally {
                 setLoading(false);
             }
         }
-
         fetchData();
     }, []);
 
-    const departments = useMemo(() => {
-        const set = new Set(jobs.map((j) => j.department).filter(Boolean));
-        return ["", ...Array.from(set)];
-    }, [jobs]);
-
-    const statuses = useMemo(() => {
-        const set = new Set(jobs.map((j) => j.status).filter(Boolean));
-        return ["", ...Array.from(set)];
-    }, [jobs]);
-
     const filtered = useMemo(() => {
         return jobs.filter((j) => {
+            const q = query.toLowerCase();
+
             if (query) {
-                const q = query.toLowerCase();
                 const inText = [j.title, j.company, j.location, j.department]
                     .filter(Boolean)
                     .join(" ")
                     .toLowerCase()
                     .includes(q);
-                const inSkills = (j.skills || []).some((s) => s.toLowerCase().includes(q));
+
+                const inSkills = (j.skills || []).some((s) =>
+                    s.toLowerCase().includes(q)
+                );
+
                 if (!inText && !inSkills) return false;
             }
+
             if (department && j.department !== department) return false;
             if (status && j.status !== status) return false;
             if (isRemote !== null && j.isRemote !== isRemote) return false;
+
             return true;
         });
     }, [jobs, query, department, status, isRemote]);
-    // Pagination area
-    
 
+    const paginatedJobs = useMemo(() => {
+        const start = (page - 1) * itemsPerPage;
+        return filtered.slice(start, start + itemsPerPage);
+    }, [filtered, page]);
+
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
     return (
-        <main className="min-h-screen py-10 px-4 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-            <div className="mx-auto max-w-7xl">
-                <h1 className="text-3xl font-semibold mb-6">Jobs</h1>
+        <main className="min-h-screen px-4 py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100">
 
-                {/* Search controls: improved UI */}
-                <div className="mb-8 grid gap-4 sm:grid-cols-4 items-center">
-                    <div className="relative col-span-1 sm:col-span-1">
-                        <svg className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35" />
-                            <circle cx="11" cy="11" r="6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <input
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Search by title, company or skill"
-                            className="w-full rounded-3xl border border-slate-200 bg-white px-12 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
-                        />
-                    </div>
+            <div className="mx-auto max-w-7xl">
+
+                {/* HEADER */}
+                <div className="mb-10 text-center">
+                    <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text">
+                        Explore Jobs
+                    </h1>
+                    <p className="text-slate-500 dark:text-slate-400 mt-2">
+                        Find your next opportunity with smart filtering
+                    </p>
+                </div>
+
+                {/* FILTER BAR (Gorgeous Glass UI) */}
+                <div className="mb-10 rounded-3xl border border-white/20 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-lg p-5 grid gap-4 sm:grid-cols-4">
+
+                    <input
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="Search jobs..."
+                        className="w-full rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-400 outline-none"
+                    />
 
                     <select
                         value={department}
                         onChange={(e) => setDepartment(e.target.value)}
-                        className="rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
+                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border"
                     >
-                        {departments.map((d) => (
-                            <option key={d || "all"} value={d}>
-                                {d || "All Departments"}
-                            </option>
-                        ))}
+                        <option value="">All Departments</option>
+                        <option>Engineering</option>
+                        <option>Marketing</option>
+                        <option>Design</option>
                     </select>
 
                     <select
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
-                        className="rounded-3xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
+                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border"
                     >
-                        {statuses.map((s) => (
-                            <option key={s || "all"} value={s}>
-                                {s || "All Statuses"}
-                            </option>
-                        ))}
+                        <option value="">All Status</option>
+                        <option>active</option>
+                        <option>closed</option>
                     </select>
 
-                    <div className="flex items-center gap-3 justify-end">
-                        <div
-                            onClick={() => setIsRemote((v) => (v === true ? null : true))}
-                            className={`flex items-center gap-3 cursor-pointer rounded-full px-3 py-2 ${isRemote === true ? 'bg-blue-600 text-white' : 'bg-slate-50 dark:bg-slate-950'}`}
-                        >
-                            <div className={`h-5 w-5 rounded-full bg-white ${isRemote === true ? 'translate-x-0.5' : ''}`} />
-                            <span className="text-sm">Remote</span>
-                        </div>
-
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setQuery("");
-                                setDepartment("");
-                                setStatus("");
-                                setIsRemote(null);
-                            }}
-                            className="ml-2 rounded-3xl px-4 py-2 bg-slate-100 text-sm dark:bg-slate-800"
-                        >
-                            Reset
-                        </button>
-                    </div>
+                    <button
+                        onClick={() => {
+                            setQuery("");
+                            setDepartment("");
+                            setStatus("");
+                            setIsRemote(null);
+                            setPage(1);
+                        }}
+                        className="rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold hover:scale-[1.02] transition"
+                    >
+                        Reset Filters
+                    </button>
                 </div>
 
-                {/* Jobs grid */}
+                {/* JOB GRID */}
                 {loading ? (
-                    <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">Loading...</div>
+                    <div className="text-center py-20 text-slate-500">
+                        Loading amazing opportunities...
+                    </div>
                 ) : (
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {filtered.map((job) => (
-                            <article key={job._id || `${job.title}-${job.company}`} className="rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-                                <div className="flex items-start justify-between gap-4">
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 truncate">{job.title}</h3>
-                                        <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{job.company} • {job.location}</p>
-                                    </div>
-                                    <div className="text-right text-sm">
-                                        <p className="font-semibold text-slate-900 dark:text-slate-100">{job.salary ? `$${job.salary.toLocaleString()}` : "-"}</p>
-                                        <p className="text-slate-500 dark:text-slate-400">{job.experience} yrs</p>
-                                    </div>
+
+                        {paginatedJobs.map((job) => (
+                            <article
+                                key={job._id}
+                                className="group rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-6 shadow-md hover:shadow-2xl transition transform hover:-translate-y-1"
+                            >
+
+                                {/* TITLE */}
+                                <h3 className="text-lg font-bold group-hover:text-indigo-500 transition">
+                                    {job.title}
+                                </h3>
+
+                                <p className="text-sm text-slate-500 mt-1">
+                                    {job.company} • {job.location}
+                                </p>
+
+                                {/* META */}
+                                <div className="mt-4 flex justify-between text-sm">
+                                    <span className="font-semibold text-indigo-500">
+                                        {job.salary ? `$${job.salary}` : "N/A"}
+                                    </span>
+                                    <span className="text-slate-500">{job.experience} yrs</span>
                                 </div>
 
-                                <div className="mt-4 flex items-center justify-between">
-                                    <p className="text-sm text-slate-600 dark:text-slate-300">Department: <span className="font-medium text-slate-800 dark:text-slate-100">{job.department}</span></p>
-                                    <div className="flex items-center gap-2">
-                                        {job.isRemote && <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">Remote</span>}
-                                        <span className={`px-2 py-1 rounded-full text-xs ${job.status === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300' : 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200'}`}>
-                                            {job.status}
-                                        </span>
-                                    </div>
-                                </div>
-
+                                {/* TAGS */}
                                 <div className="mt-4 flex flex-wrap gap-2">
-                                    {(job.skills || []).map((s) => (
-                                        <span key={s} className="rounded-full bg-slate-100 px-3 py-1 text-xs dark:bg-slate-700 dark:text-slate-100">
+                                    {(job.skills || []).slice(0, 3).map((s) => (
+                                        <span
+                                            key={s}
+                                            className="px-3 py-1 text-xs rounded-full bg-indigo-50 dark:bg-slate-700 text-indigo-600 dark:text-slate-200"
+                                        >
                                             {s}
                                         </span>
                                     ))}
                                 </div>
 
-                                <div className="mt-4 flex items-center justify-between">
-                                    <div className="text-sm text-slate-500 dark:text-slate-400">Applicants: <span className="font-medium text-slate-700 dark:text-slate-100">{job.applicants}</span></div>
-                                    <div className="flex items-center gap-3">
-                                        <time className="text-xs text-slate-400 dark:text-slate-500">{new Date(job.posted).toLocaleDateString()}</time>
-                                        <button className="rounded-2xl bg-blue-600 px-4 py-2 text-sm text-white">View</button>
-                                    </div>
+                                {/* FOOTER */}
+                                <div className="mt-6 flex justify-between items-center">
+                                    <span className="text-xs text-slate-400">
+                                        {new Date(job.posted).toLocaleDateString()}
+                                    </span>
+
+                                    <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm hover:scale-105 transition">
+                                        View
+                                    </button>
                                 </div>
                             </article>
                         ))}
-                        {filtered.length === 0 && (
-                            <div className="col-span-full rounded-3xl border border-slate-200 bg-white p-8 text-center dark:bg-slate-800">No jobs found</div>
+
+                        {paginatedJobs.length === 0 && (
+                            <div className="col-span-full text-center py-10 text-slate-500">
+                                No jobs found 😢
+                            </div>
                         )}
                     </div>
                 )}
-                <div className="mt-8 flex flex-col items-center gap-3">
-                    <Pagination>
-                        <Pagination.Summary>
-                            Showing {startItem}–{endItem} of {filtered.length} results
-                        </Pagination.Summary>
-                        <Pagination.Content>
-                            <Pagination.Item>
-                                <Pagination.Previous
-                                    isDisabled={page === 1}
-                                    onPress={() => setPage((p) => p - 1)}
-                                >
-                                    <Pagination.PreviousIcon />
-                                    <span>Previous</span>
-                                </Pagination.Previous>
-                            </Pagination.Item>
 
-                            {getPageNumbers().map((p, i) =>
-                                p === "ellipsis" ? (
-                                    <Pagination.Item key={`ellipsis-${i}`}>
-                                        <Pagination.Ellipsis />
-                                    </Pagination.Item>
-                                ) : (
-                                    <Pagination.Item key={p}>
-                                        <Pagination.Link
-                                            isActive={p === page}
-                                            onPress={() => setPage(p)}
-                                        >
-                                            {p}
-                                        </Pagination.Link>
-                                    </Pagination.Item>
-                                )
-                            )}
+                {/* PAGINATION (CLEAN PREMIUM STYLE) */}
+                <div className="mt-12 flex justify-center">
+                    <div className="flex items-center gap-2 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl px-4 py-3 rounded-2xl border">
 
-                            <Pagination.Item>
-                                <Pagination.Next
-                                    isDisabled={page === totalPages}
-                                    onPress={() => setPage((p) => p + 1)}
-                                >
-                                    <span>Next</span>
-                                    <Pagination.NextIcon />
-                                </Pagination.Next>
-                            </Pagination.Item>
-                        </Pagination.Content>
-                    </Pagination>
+                        <button
+                            disabled={page === 1}
+                            onClick={() => setPage((p) => p - 1)}
+                            className="px-3 py-1 rounded-lg disabled:opacity-40"
+                        >
+                            Prev
+                        </button>
+
+                        <span className="text-sm font-semibold">
+                            {page} / {totalPages || 1}
+                        </span>
+
+                        <button
+                            disabled={page === totalPages}
+                            onClick={() => setPage((p) => p + 1)}
+                            className="px-3 py-1 rounded-lg disabled:opacity-40"
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
+
             </div>
         </main>
     );

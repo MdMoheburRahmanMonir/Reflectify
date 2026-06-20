@@ -14,6 +14,7 @@ import { FaRegArrowAltCircleRight, FaUserCog } from 'react-icons/fa';
 import ThemeToggle from './ThemeToggle';
 import { LuLayoutDashboard } from 'react-icons/lu';
 import Link from 'next/link';
+import { RiHome4Line } from 'react-icons/ri';
 
 export function CustomTrigger() {
   const router = useRouter();
@@ -73,12 +74,19 @@ export function CustomTrigger() {
 
         {/* Menu */}
         <Dropdown.Menu>
+          <Dropdown.Item id="home" textValue="home">
+            <div className="flex w-full items-center justify-between gap-2">
+              <Link href="/"  >
+                <Label>Home</Label>
+              </Link>
+              <RiHome4Line className="size-3.5 text-muted" />
+            </div>
+          </Dropdown.Item>
           <Dropdown.Item id="dashboard" textValue="Dashboard">
             <div className="flex w-full items-center justify-between gap-2">
-              <Link href="/dashboard"  >
+              <Link href="/user/dashboard"  >
                 <Label>Dashboard</Label>
               </Link>
-
               <LuLayoutDashboard className="size-3.5 text-muted" />
             </div>
           </Dropdown.Item>
