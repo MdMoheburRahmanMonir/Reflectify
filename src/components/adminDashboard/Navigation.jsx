@@ -17,8 +17,7 @@ const navItems = [
 
 export function Navigation() {
   const pathname = usePathname();
-  const session = userSessionClient();
-  console.log(session?.user?.plan);
+  const session = userSessionClient(); 
 
   return (
     <>

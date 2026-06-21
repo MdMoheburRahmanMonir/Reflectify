@@ -7,7 +7,7 @@ export const ServerMutationDelete = async (path, lesson) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(lesson)
+        ...(lesson && { body: JSON.stringify(lesson) })
     })
     if (!res.ok) {
         throw new Error(`Failed to fetch lessons: ${res.status}`);

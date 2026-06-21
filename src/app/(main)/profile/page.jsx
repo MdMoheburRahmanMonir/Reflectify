@@ -101,7 +101,7 @@ const ProfilePage = () => {
             </div>}
 
             {/* Quote */}
-            <div className="mt-10 bg-gradient-to-r from-purple-500/50 to-blue-500/50 rounded-tr-full rounded-bl-full p-6 text-center">
+            <div className="mt-10 hidden sm:hidden lg:block md:block bg-gradient-to-r from-purple-500/50 truncate to-blue-500/50 rounded-tr-full rounded-bl-full p-6 text-center">
               <p className="italic text-lg  dark:text-white text-black">
 
                 {user?.role === "admin"

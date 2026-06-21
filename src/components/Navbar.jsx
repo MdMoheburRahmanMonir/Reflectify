@@ -32,8 +32,7 @@ export default function Navbar() {
     await authClient.signOut();
     router.push('/login');
   }
-  const links = []
-  console.log('linkes from nav', links);
+  const links = [] 
 
   const filter = session?.user?.role === 'admin' ? links.push(navLinksAdmin) : session?.user?.role === 'user' ? links.push(navLinks) : links.push(navLinks);
 

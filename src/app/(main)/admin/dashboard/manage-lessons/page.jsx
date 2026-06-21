@@ -1,5 +1,6 @@
 "use client";
 
+import { Table } from "@heroui/react";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
@@ -63,23 +64,31 @@ const lessons = [
 const ManageLessonPage = () => {
     const [statusFilter, setStatusFilter] = useState("all");
     const [searchTerm, setSearchTerm] = useState("");
+    const [sortDescriptor, setSortDescriptor] = useState({ column: "title", direction: "ascending" });
 
     const filteredLessons = useMemo(() => {
-        return lessons.filter((lesson) => {
-            const matchesFilter =
-                statusFilter === "all" ||
-                (statusFilter === "featured" && lesson.featured) ||
-                (statusFilter === "flagged" && lesson.flagged > 0) ||
-                (statusFilter === "private" && lesson.visibility === "Private");
+        return lessons
+            .filter((lesson) => {
+                const matchesFilter =
+                    statusFilter === "all" ||
+                    (statusFilter === "featured" && lesson.featured) ||
+                    (statusFilter === "flagged" && lesson.flagged > 0) ||
+                    (statusFilter === "private" && lesson.visibility === "Private");
 
-            const matchesSearch =
-                lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                lesson.creator.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                lesson.category.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesSearch =
+                    lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    lesson.creator.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    lesson.category.toLowerCase().includes(searchTerm.toLowerCase());
 
-            return matchesFilter && matchesSearch;
-        });
-    }, [statusFilter, searchTerm]);
+                return matchesFilter && matchesSearch;
+            })
+            .sort((a, b) => {
+                const first = String(a[sortDescriptor.column]);
+                const second = String(b[sortDescriptor.column]);
+                const comparison = first.localeCompare(second);
+                return sortDescriptor.direction === "descending" ? -comparison : comparison;
+            });
+    }, [statusFilter, searchTerm, sortDescriptor]);
 
     return (
         <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white px-4 py-8">
@@ -178,85 +187,127 @@ const ManageLessonPage = () => {
                     </div>
 
                     <div className="mt-8 overflow-x-auto">
-                        <table className="min-w-full border-separate border-spacing-0 text-left text-sm leading-6 text-slate-700 dark:text-slate-300">
-                            <thead>
-                                <tr>
-                                    <th className="border-b border-slate-200/70 bg-slate-50 px-4 py-4 dark:border-white/10 dark:bg-slate-900">Lesson</th>
-                                    <th className="border-b border-slate-200/70 bg-slate-50 px-4 py-4 dark:border-white/10 dark:bg-slate-900">Creator</th>
-                                    <th className="border-b border-slate-200/70 bg-slate-50 px-4 py-4 dark:border-white/10 dark:bg-slate-900">Category</th>
-                                    <th className="border-b border-slate-200/70 bg-slate-50 px-4 py-4 dark:border-white/10 dark:bg-slate-900">Access</th>
-                                    <th className="border-b border-slate-200/70 bg-slate-50 px-4 py-4 dark:border-white/10 dark:bg-slate-900">Status</th>
-                                    <th className="border-b border-slate-200/70 bg-slate-50 px-4 py-4 dark:border-white/10 dark:bg-slate-900">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredLessons.map((lesson) => (
-                                    <tr key={lesson.id} className="border-b border-slate-200/70 dark:border-white/10">
-                                        <td className="px-4 py-4">
-                                            <div className="max-w-xs">
-                                                <p className="font-semibold text-slate-900 dark:text-white">{lesson.title}</p>
-                                                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{lesson.createdAt}</p>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4">
-                                            <p className="font-medium text-slate-900 dark:text-white">{lesson.creator}</p>
-                                        </td>
-                                        <td className="px-4 py-4">
-                                            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 dark:bg-slate-900 dark:text-slate-300">
-                                                {lesson.category}
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-4">
-                                            <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${lesson.access === "Premium" ? "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
-                                                {lesson.access}
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-4">
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                {lesson.featured && (
-                                                    <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:bg-amber-500/15 dark:text-amber-200">
-                                                        Featured
-                                                    </span>
-                                                )}
-                                                {lesson.flagged > 0 && (
-                                                    <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-red-700 dark:bg-red-500/15 dark:text-red-200">
-                                                        Flagged
-                                                    </span>
-                                                )}
-                                                {lesson.visibility === "Private" && (
-                                                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 dark:bg-slate-900 dark:text-slate-300">
-                                                        Private
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4">
-                                            <div className="flex flex-wrap gap-2">
-                                                <button className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2 text-xs font-semibold text-white transition hover:bg-slate-700">
-                                                    <FiEye className="h-4 w-4" />
-                                                    Preview
-                                                </button>
-                                                <button className="inline-flex items-center gap-2 rounded-full bg-violet-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-violet-600">
-                                                    <FiStar className="h-4 w-4" />
-                                                    Feature
-                                                </button>
-                                                <button className="inline-flex items-center gap-2 rounded-full bg-red-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-red-600">
-                                                    <FiTrash2 className="h-4 w-4" />
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                                {filteredLessons.length === 0 && (
-                                    <tr>
-                                        <td colSpan={6} className="px-4 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
-                                            No lessons matched your filter. Try a different search or status.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                        <Table>
+                            <Table.ScrollContainer>
+                                <Table.Content
+                                    aria-label="Lesson moderation table"
+                                    className="min-w-[1000px]"
+                                    sortDescriptor={sortDescriptor}
+                                    onSortChange={setSortDescriptor}
+                                >
+                                    <Table.Header>
+                                        <Table.Column allowsSorting isRowHeader id="title">
+                                            {({ sortDirection }) => (
+                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                    Lesson
+                                                </Table.SortableColumnHeader>
+                                            )}
+                                        </Table.Column>
+                                        <Table.Column allowsSorting id="creator">
+                                            {({ sortDirection }) => (
+                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                    Creator
+                                                </Table.SortableColumnHeader>
+                                            )}
+                                        </Table.Column>
+                                        <Table.Column allowsSorting id="category">
+                                            {({ sortDirection }) => (
+                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                    Category
+                                                </Table.SortableColumnHeader>
+                                            )}
+                                        </Table.Column>
+                                        <Table.Column allowsSorting id="access">
+                                            {({ sortDirection }) => (
+                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                    Access
+                                                </Table.SortableColumnHeader>
+                                            )}
+                                        </Table.Column>
+                                        <Table.Column allowsSorting id="status">
+                                            {({ sortDirection }) => (
+                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                    Status
+                                                </Table.SortableColumnHeader>
+                                            )}
+                                        </Table.Column>
+                                        <Table.Column id="actions">Actions</Table.Column>
+                                    </Table.Header>
+                                    <Table.Body>
+                                        {filteredLessons.length > 0 ? (
+                                            filteredLessons.map((lesson) => (
+                                                <Table.Row key={lesson.id}>
+                                                    <Table.Cell>
+                                                        <div className="max-w-xs">
+                                                            <p className="font-semibold text-slate-900 dark:text-white">{lesson.title}</p>
+                                                            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{lesson.createdAt}</p>
+                                                        </div>
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <p className="font-medium text-slate-900 dark:text-white">{lesson.creator}</p>
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 dark:bg-slate-900 dark:text-slate-300">
+                                                            {lesson.category}
+                                                        </span>
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${lesson.access === "Premium" ? "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
+                                                            {lesson.access}
+                                                        </span>
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <div className="flex flex-wrap items-center gap-2">
+                                                            {lesson.featured && (
+                                                                <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:bg-amber-500/15 dark:text-amber-200">
+                                                                    Featured
+                                                                </span>
+                                                            )}
+                                                            {lesson.flagged > 0 && (
+                                                                <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-red-700 dark:bg-red-500/15 dark:text-red-200">
+                                                                    Flagged
+                                                                </span>
+                                                            )}
+                                                            {lesson.visibility === "Private" && (
+                                                                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 dark:bg-slate-900 dark:text-slate-300">
+                                                                    Private
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <div className="flex items-center justify-center gap-2">
+                                                            <button className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white transition hover:bg-slate-700">
+                                                                <FiEye className="h-5 w-5" />
+                                                            </button>
+                                                            <button className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-violet-500 text-white transition hover:bg-violet-600">
+                                                                <FiStar className="h-5 w-5" />
+                                                            </button>
+                                                            <button className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition hover:bg-red-600">
+                                                                <FiTrash2 className="h-5 w-5" />
+                                                            </button>
+                                                        </div>
+                                                    </Table.Cell>
+                                                </Table.Row>
+                                            ))
+                                        ) : (
+                                            <Table.Row>
+                                                <Table.Cell>
+                                                    <div className="px-4 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
+                                                        No lessons matched your filter. Try a different search or status.
+                                                    </div>
+                                                </Table.Cell>
+                                                <Table.Cell />
+                                                <Table.Cell />
+                                                <Table.Cell />
+                                                <Table.Cell />
+                                                <Table.Cell />
+                                            </Table.Row>
+                                        )}
+                                    </Table.Body>
+                                </Table.Content>
+                            </Table.ScrollContainer>
+                        </Table>
                     </div>
                 </section>
             </div>

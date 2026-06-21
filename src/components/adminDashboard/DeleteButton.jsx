@@ -1,18 +1,18 @@
 "use client";
-
-import { DeleteUserLessons } from "@/lib/api/userapi/deletelesson";
+ 
+import { DeleteUserFormAdmin } from "@/lib/api/adminApi/DeleteUserIdFromServerByAdmin";
 import { TrashBin } from "@gravity-ui/icons";
-import { AlertDialog, Button } from "@heroui/react";
-import { redirect } from "next/navigation";
+import { AlertDialog, Button } from "@heroui/react"; 
 import { useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
 
-const DeleteButton = ({ lesson }) => {
-    const [loading, setLoading] = useState(false); 
-    
+const DeleteButton = ({ clientId }) => {
+    const [loading, setLoading] = useState(false);
+
     const handleDelete = async () => {
         try {
-            setLoading(true); 
-            const res = await DeleteUserLessons(lesson); 
+            setLoading(true);
+            const res = await DeleteUserFormAdmin(clientId);
             console.log("Deleted:", res);
         } catch (err) {
             console.log(err);
@@ -26,8 +26,8 @@ const DeleteButton = ({ lesson }) => {
         <AlertDialog>
             {/* ✅ Trigger MUST NOT be inside another button */}
             <AlertDialog.Trigger>
-                <span className="inline-flex items-center justify-center cursor-pointer text-red-500 hover:text-red-700">
-                    <TrashBin className="size-5" />
+                <span className="inline-flex items-center justify-center cursor-pointer  ">
+                    <FiTrash2 className="h-5 w-5" />
                 </span>
             </AlertDialog.Trigger>
 
@@ -51,7 +51,7 @@ const DeleteButton = ({ lesson }) => {
                         {/* BODY */}
                         <AlertDialog.Body>
                             <p className="text-sm ">
-                                This action cannot be undone. The lesson will be permanently deleted.
+                                This action cannot be undone. The user will be permanently deleted.
                                 <span className="text-red-600 font-medium">
                                     {" "}Are you sure?
                                 </span>
@@ -62,9 +62,7 @@ const DeleteButton = ({ lesson }) => {
                         <AlertDialog.Footer>
                             <Button slot="close" variant="tertiary">
                                 Cancel
-                            </Button>
-
-
+                            </Button> 
                             <Button
                                 slot="close"
                                 onClick={handleDelete}
