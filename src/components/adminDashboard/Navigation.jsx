@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FiHome, FiMenu } from "react-icons/fi"; 
+import { FiHome, FiMenu } from "react-icons/fi";
 import { Button, Drawer } from "@heroui/react";
 import { userSessionClient } from "@/lib/actions/sessionClient";
 import { FaAddressBook, FaUserAstronaut } from "react-icons/fa";
@@ -17,21 +17,15 @@ const navItems = [
 
 export function Navigation() {
   const pathname = usePathname();
-  const session = userSessionClient(); 
+  const session = userSessionClient();
 
   return (
     <>
       {/* MOBILE DRAWER */}
-      <div className="lg:hidden px-4 py-4">
-
+      <div className="lg:hidden px-4 py-4"> 
         <Drawer>
           <Button
-            className="
-                        bg-white dark:bg-slate-900
-                        border border-slate-200 dark:border-white/10
-                        text-slate-700 dark:text-slate-200
-                        shadow-md
-                        "
+            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 shadow-md "
           >
             <div className="flex items-center gap-2">
               <FiMenu className="h-5 w-5" />
@@ -43,22 +37,10 @@ export function Navigation() {
 
           <Drawer.Content placement="left">
             <Drawer.Dialog
-              className="
-                            h-full
-                            border-r border-slate-200 dark:border-white/10
-                            bg-white/95 dark:bg-slate-950/95
-                            backdrop-blur-xl
-                            "
+              className=" h-full border-r border-slate-200 dark:border-white/10 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl "
             >
               <Drawer.CloseTrigger
-                className="
-                                absolute right-4 top-4
-                                h-10 w-10
-                                rounded-full
-                                flex items-center justify-center
-                                bg-slate-100 dark:bg-slate-800
-                                text-slate-700 dark:text-slate-200
-                                "
+                className=" absolute right-4 top-4 h-10 w-10 rounded-full flex items-center justify-center  bg-slate-100 dark:bg-slate-800  text-slate-700 dark:text-slate-200 "
               >
                 ✕
               </Drawer.CloseTrigger>
@@ -197,7 +179,7 @@ export function Navigation() {
               </Link>
             );
           })}
-        </nav> 
+        </nav>
       </aside>
     </>
   );

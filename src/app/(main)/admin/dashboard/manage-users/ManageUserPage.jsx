@@ -6,6 +6,7 @@ import { FiSearch, FiFilter, FiShield } from "react-icons/fi";
 import Link from "next/link";
 import DeleteButton from "@/components/adminDashboard/DeleteButton";
 import RoleUpdateByAdmin from "@/components/adminDashboard/RoleUpdateByAdmin";
+import PlanUpdateByAdmin from "@/components/adminDashboard/PlanUpdateByAdmin";
 const ManageUserPage = ({ users }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [roleFilter, setRoleFilter] = useState("all");
@@ -128,63 +129,66 @@ const ManageUserPage = ({ users }) => {
                                     <Table.Header>
                                         <Table.Column allowsSorting isRowHeader id="name">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm " sortDirection={sortDirection}>
                                                     Name
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column allowsSorting id="email">
+                                        <Table.Column allowsSorting id="email" >
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader  className="text-sm max-w-14" sortDirection={sortDirection}>
                                                     Email
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
                                         <Table.Column allowsSorting id="role">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
                                                     Role
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
                                         <Table.Column allowsSorting id="plan">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
                                                     Plan
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
                                         <Table.Column allowsSorting id="lessons">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm max-w-5" sortDirection={sortDirection}>
                                                     Lessons
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column id="actions">Actions</Table.Column>
+                                        <Table.Column className="text-sm" id="actions">Actions</Table.Column>
                                     </Table.Header>
                                     <Table.Body>
                                         {filteredUsers.length > 0 ? (
                                             filteredUsers.map((user, ind) => (
                                                 <Table.Row key={ind}>
-                                                    <Table.Cell>
+                                                    <Table.Cell className={`overflow-hidden w-32`}>
                                                         <p className="font-semibold ">{user.name}</p>
                                                         <p className="text-xs text-slate-500 dark:text-slate-400">{user.id}</p>
                                                     </Table.Cell>
-                                                    <Table.Cell>{user.email}</Table.Cell>
-                                                    <Table.Cell>
+                                                    <Table.Cell  className={`overflow-hidden max-w-16 min-w-10`} >{user.email}</Table.Cell>
+                                                    <Table.Cell  className={`overflow-hidden w-32`}>
                                                         <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase ${user.role === "admin" ? "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
                                                             {user.role}
                                                         </span>
                                                     </Table.Cell>
-                                                    <Table.Cell>
+                                                    <Table.Cell className={`overflow-hidden w-32`}>
                                                         <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase ${user.plan === "premium" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
                                                             {user.plan}
                                                         </span>
                                                     </Table.Cell>
-                                                    <Table.Cell>{user.lessons || 0}</Table.Cell>
-                                                    <Table.Cell>
+                                                    <Table.Cell  className={`overflow-hidden w-32`}>{user.lessons || 0}</Table.Cell>
+                                                    <Table.Cell className={`overflow-hidden w-32`}>
                                                         <div className="flex items-center justify-center gap-2">
+                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-violet-500 text-white transition hover:bg-violet-600">
+                                                                <PlanUpdateByAdmin clientId={user._id} />
+                                                            </span>
                                                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-violet-500 text-white transition hover:bg-violet-600">
                                                                 <RoleUpdateByAdmin clientId={user._id} />
                                                             </span>

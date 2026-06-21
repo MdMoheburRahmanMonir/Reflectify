@@ -46,13 +46,13 @@
         const [activeIndex, setActiveIndex] = useState(0);
 
         return (
-            <section className="relative w-full bg-white dark:bg-slate-950 transition-colors duration-300 py-4 md:py-4 overflow-hidden">
+            <section className="relative -top-20 w-full bg-white dark:bg-slate-950 transition-colors duration-300 py-4 md:py-4 overflow-hidden">
 
                 {/* Ambient background accents */}
                 <div className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-purple-400/20 dark:bg-purple-500/10 blur-3xl" />
                 <div className="pointer-events-none absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-blue-400/20 dark:bg-blue-500/10 blur-3xl" />
 
-                <div className="max-w-7xl mx-auto px-5 md:px-10 relative">
+                <div className="max-w-7xl py-20 mx-auto px-5 md:px-10 relative">
 
                     <Swiper
                         modules={[Autoplay]}

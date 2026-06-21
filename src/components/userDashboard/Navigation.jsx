@@ -28,13 +28,7 @@ export function Navigation() {
 
         <Drawer>
           <Button
-            className="
-                        bg-white dark:bg-slate-900
-                        border border-slate-200 dark:border-white/10
-                        text-slate-700 dark:text-slate-200
-                        shadow-md
-                        "
-          >
+            className=" bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10  text-slate-700 dark:text-slate-200 shadow-md " >
             <div className="flex items-center gap-2">
               <FiMenu className="h-5 w-5" />
               Menu
