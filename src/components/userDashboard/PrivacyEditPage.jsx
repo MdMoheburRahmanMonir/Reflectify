@@ -27,31 +27,14 @@ const PrivacyEditPage = ({ lesson }) => {
         } finally {
             setLoading(false);
             window.location.reload()
-        }
-        //         {
-        //     "_id": "6a36b4a938ef2e9c44fdf7ab",
-        //     "title": "manik",
-        //     "description": "adsf",
-        //     "category": "mindset",
-        //     "emotionalTone": "sad",
-        //     "accessLevel": "free",
-        //     "privacy": "privet",
-        //     "lessonPhoto": "https://i.ibb.co/CprgLrRP/484188634-637309962241012-7771909959169094360-n.jpg",
-        //     "status": "pending",
-        //     "userName": "manik mia",
-        //     "userEmail": "mahgsgjsxx@gmail.com",
-        //     "userImage": "https://lh3.googleusercontent.com/a/ACg8ocITtKsfzuWCSmwyeHFxrCgjg19N9QxyjHFyOi-23MjxzFpIz9g=s96-c",
-        //     "userId": "6a33bf0e88a3e921c081babe",
-        //     "createdTime": "2026-06-20T15:41:29.385Z",
-        //     "productID": "6a36b4a938ef2e9c44fdf7ab"
-        // }
+        } 
     };
 
     return (
         <AlertDialog>
             {/* ✅ Trigger MUST NOT be inside another button */}
             <AlertDialog.Trigger>
-                <span className="inline-flex items-center justify-center cursor-pointer text-black hover:text-red-700">
+                <span className="inline-flex items-center justify-center cursor-pointer  hover:text-red-700">
                     <RiGitRepositoryPrivateFill className="size-5 mt-1" />
                 </span>
             </AlertDialog.Trigger>

@@ -4,9 +4,9 @@ import { Table } from "@heroui/react";
 import { useMemo, useState } from "react";
 import { FiSearch, FiFilter, FiShield } from "react-icons/fi";
 import Link from "next/link";
-import DeleteButton from "@/components/adminDashboard/DeleteButton";
-import RoleUpdateByAdmin from "@/components/adminDashboard/RoleUpdateByAdmin";
-import PlanUpdateByAdmin from "@/components/adminDashboard/PlanUpdateByAdmin";
+import DeleteButton from "@/components/adminDashboard/UserAction/DeleteButton";
+import RoleUpdateByAdmin from "@/components/adminDashboard/UserAction/RoleUpdateByAdmin";
+import PlanUpdateByAdmin from "@/components/adminDashboard/UserAction/PlanUpdateByAdmin";
 const ManageUserPage = ({ users }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [roleFilter, setRoleFilter] = useState("all");
@@ -101,7 +101,7 @@ const ManageUserPage = ({ users }) => {
                             </p>
                         </div>
                         <div className="grid gap-3 sm:grid-cols-[1fr_auto] lg:w-[520px]">
-                             
+
                             <div className="relative">
                                 <FiFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                 <select
@@ -136,7 +136,7 @@ const ManageUserPage = ({ users }) => {
                                         </Table.Column>
                                         <Table.Column allowsSorting id="email" >
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader  className="text-sm max-w-14" sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm max-w-14" sortDirection={sortDirection}>
                                                     Email
                                                 </Table.SortableColumnHeader>
                                             )}
@@ -172,8 +172,8 @@ const ManageUserPage = ({ users }) => {
                                                         <p className="font-semibold ">{user.name}</p>
                                                         <p className="text-xs text-slate-500 dark:text-slate-400">{user.id}</p>
                                                     </Table.Cell>
-                                                    <Table.Cell  className={`overflow-hidden max-w-16 min-w-10`} >{user.email}</Table.Cell>
-                                                    <Table.Cell  className={`overflow-hidden w-32`}>
+                                                    <Table.Cell className={`overflow-hidden max-w-16 min-w-10`} >{user.email}</Table.Cell>
+                                                    <Table.Cell className={`overflow-hidden w-32`}>
                                                         <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase ${user.role === "admin" ? "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
                                                             {user.role}
                                                         </span>
@@ -183,16 +183,16 @@ const ManageUserPage = ({ users }) => {
                                                             {user.plan}
                                                         </span>
                                                     </Table.Cell>
-                                                    <Table.Cell  className={`overflow-hidden w-32`}>{user.lessons || 0}</Table.Cell>
-                                                    <Table.Cell className={`overflow-hidden w-32`}>
-                                                        <div className="flex items-center justify-center gap-2">
-                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-violet-500 text-white transition hover:bg-violet-600">
+                                                    <Table.Cell className={`overflow-hidden w-32`}>{user.lessons || 0}</Table.Cell>
+                                                    <Table.Cell className={`overflow-hidden w-32`}> 
+                                                        <div className="flex items-center justify-center  ">
+                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
                                                                 <PlanUpdateByAdmin clientId={user._id} />
                                                             </span>
-                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-violet-500 text-white transition hover:bg-violet-600">
+                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
                                                                 <RoleUpdateByAdmin clientId={user._id} />
                                                             </span>
-                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition hover:bg-red-600">
+                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
                                                                 <DeleteButton clientId={user._id} />
                                                             </span>
                                                         </div>

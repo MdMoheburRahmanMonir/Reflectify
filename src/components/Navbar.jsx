@@ -6,8 +6,7 @@ import { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { CustomTrigger } from '@/components/CustomTrigger';
 import { ArrowRight } from 'lucide-react';
-import ThemeToggle from './ThemeToggle';
-import { FiHome } from "react-icons/fi";
+import ThemeToggle from './ThemeToggle'; 
 import { FaBookOpen, FaUserAlt } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import { RiHome4Fill } from 'react-icons/ri';
@@ -60,7 +59,7 @@ export default function Navbar() {
             const Icons = link.icon;
             return (
               <Link key={link.href} href={link.href} className={`flex gap-10 text-lg whitespace-nowrap font-medium transition  px-3 ${isActive ? 'text-blue-600 border-b-[3px] pb-1 border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
-                <Icons className="h-7 w-7 font-bold" />
+                <Icons className="h-7 w-7 font-bold hover:text-blue-600" />
               </Link>
             );
           })}

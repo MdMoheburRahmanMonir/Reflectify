@@ -1,4 +1,4 @@
-import { ServerMutationUpdate } from "../mutation/update";
+import { ServerMutationUpdate } from "../../mutation/update";
 
   
 export const UpdateUserPlan = async (data) => {

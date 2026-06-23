@@ -8,6 +8,7 @@ const statusColorMap = {
 };
 import { Chip, Table, } from "@heroui/react";
 import PrivacyEditPage from './PrivacyEditPage';
+import { LessonDetails } from '../adminDashboard/LessonAction/LessonDetails';
 
 
 const UserTableData = ({ lessons }) => {
@@ -133,13 +134,16 @@ const UserTableData = ({ lessons }) => {
                                 {/* ACTIONS */}
                                 <Table.Cell>
                                     <div className="flex items-center group gap-3 justify-center text-center">
-                                        <span className=" bg-white w-7 h-7 rounded-full flex justify-center items-center">
+                                        <span className=" w-7 h-7 rounded-full flex justify-center items-center">
                                             <PrivacyEditPage lesson={lesson} />
                                         </span>
-                                        <span className=" bg-white w-7 h-7 rounded-full flex justify-center items-center">
+                                        <span className="w-7 h-7 rounded-full flex justify-center items-center">
+                                            <LessonDetails data={lesson} />
+                                        </span>
+                                        <span className="w-7 h-7 rounded-full flex justify-center items-center">
                                             <EditFormUserDashboard lesson={lesson} />
                                         </span>
-                                        <span className="bg-white pt-1 w-7 h-7 rounded-full flex justify-center items-center">
+                                        <span className="pt-1 w-7 h-7 rounded-full flex justify-center items-center">
                                             <DeleteButton lesson={lesson} />
                                         </span>
 

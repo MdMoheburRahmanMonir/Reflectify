@@ -31,7 +31,6 @@ export default function AddLesson() {
                 body: formData,
             });
             const data = await response.json();
-            console.log(data?.data?.url)
             setImage(`${data?.data?.url}`);
         } catch (err) {
             toast.error('Image upload fail');
@@ -48,6 +47,7 @@ export default function AddLesson() {
         data.userEmail = session?.user?.email;
         data.userImage = session?.user?.image;
         data.userId = session?.user?.id;
+        console.log(data);
 
         const post = await AddLessonApi(data);
         if (post.insertedId) {
@@ -151,16 +151,16 @@ export default function AddLesson() {
 
                 {/* Visibility or Privacy */}
                 <div className="p-4 rounded-2xl border bg-indigo-50 dark:bg-slate-800">
-                    <p className="text-sm font-semibold mb-2">Privacy</p> 
+                    <p className="text-sm font-semibold mb-2">Privacy</p>
                     <select
                         name="privacy"
                         className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border"
                     >
                         <option value="public">Public</option>
-                        <option value="privet">Privet</option> 
-                    </select> 
+                        <option value="privet">Privet</option>
+                    </select>
                 </div>
- 
+
 
                 {/* Image Upload */}
                 <div className="p-4 rounded-2xl flex justify-between border bg-indigo-50 dark:bg-slate-800">
@@ -176,6 +176,7 @@ export default function AddLesson() {
                     <input
                         type="file"
                         id="imageUpload"
+                        accept="image/*"
                         onChange={handleFile}
                         className="w-full top-0 left-0 absolute hidden px-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-dashed"
                     />

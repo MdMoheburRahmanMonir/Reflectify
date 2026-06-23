@@ -1,78 +1,48 @@
-"use client"; 
+"use client";
+import DeleteButtonLesson from "@/components/adminDashboard/LessonAction/DeleteButtonLesson";
+import { FeaturedAndReviewSection } from "@/components/adminDashboard/LessonAction/FeaturedAndReviewSection";
+import { LessonDetails } from "@/components/adminDashboard/LessonAction/LessonDetails";
+import { userSessionClient } from "@/lib/actions/sessionClient";
+import { AdminViewOrNot } from "@/lib/api/adminApi/LessonManaging/AdminViewOrNot";
+import { StatusChangeAction } from "@/lib/api/adminApi/LessonManaging/StatusChangeAction";
 import { Table } from "@heroui/react";
-import { useMemo, useState } from "react"; 
-import {
-    FiFilter,
-    FiSearch,
-    FiStar,
-    FiTrash2,
-    FiEye,
-    FiShield,
-} from "react-icons/fi";
-
-const lessons = [
-    {
-        _id: "6a36d6eb4e3ae94ac9c328df",
-        productId: "6a36d6eb4e3ae94ac9c328df",
-        title: "Share a Life Lesson",
-        description: "Write something meaningful that can inspire others",
-        category: "career",
-        emotionalTone: "realization",
-        accessLevel: "free",
-        privacy: "privet",
-        lessonPhoto: "https://i.ibb.co/rDm9Npv/486617745-122109492590801894-816294486645845418-n.jpg",
-        status: "pending",
-        userName: "manik mia",
-        userEmail: "mahgsgjsxx@gmail.com",
-        userImage: "https://lh3.googleusercontent.com/a/ACg8ocITtKsfzuWCSmwyeHFxrCgjg19N9QxyjHFyOi-23MjxzFpIz9g=s96-c",
-        userId: "6a33bf0e88a3e921c081babe",
-        createdTime: "2026-06-20T18:07:38.971Z",
-    },
-];
+import { useMemo, useState } from "react";
+import { FiFilter, FiSearch } from "react-icons/fi";
 
 const normalizePrivacy = (privacy) => {
-    if (!privacy) return "Unknown";
-    const normalized = privacy.toLowerCase();
-    if (normalized.includes("priv")) return "Private";
-    return "Public";
+    if (!privacy) return "public";
+    const normalized = String(privacy).toLowerCase();
+    if (normalized.includes("private")) return "private";
+    if (normalized.includes("public")) return "public";
+    return normalized;
 };
 
-const capitalize = (value) => {
-    if (!value) return "";
-    return value.charAt(0).toUpperCase() + value.slice(1);
-};
-
-const ManageLesson = () => {
+const ManageLesson = ({ lessons }) => {
     const [statusFilter, setStatusFilter] = useState("all");
     const [searchTerm, setSearchTerm] = useState("");
     const [sortDescriptor, setSortDescriptor] = useState({ column: "title", direction: "ascending" });
 
+
+    const session = userSessionClient();
     const filteredLessons = useMemo(() => {
-        return lessons
-            .filter((lesson) => {
-                const matchesFilter =
-                    statusFilter === "all" ||
-                    (statusFilter === "pending" && lesson.status === "pending") ||
-                    (statusFilter === "private" && normalizePrivacy(lesson.privacy) === "Private");
+        return lessons.filter((lesson) => {
+            const normalizedStatus = String(lesson.status || "").toLowerCase();
+            const matchesFilter =
+                statusFilter === "all" ||
+                statusFilter === normalizedStatus;
 
-                const matchesSearch =
-                    lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    lesson.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    lesson.category.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesSearch =
+                lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                lesson.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                lesson.category.toLowerCase().includes(searchTerm.toLowerCase());
 
-                return matchesFilter && matchesSearch;
-            })
-            .sort((a, b) => {
-                const first = String(a[sortDescriptor.column] || "");
-                const second = String(b[sortDescriptor.column] || "");
-                const comparison = first.localeCompare(second);
-                return sortDescriptor.direction === "descending" ? -comparison : comparison;
-            });
+            return matchesFilter && matchesSearch;
+        });
     }, [statusFilter, searchTerm, sortDescriptor]);
 
     return (
         <main className="min-h-screen text-slate-900 dark:text-white px-4 py-8">
-            <div className="mx-auto max-w-7xl space-y-8"> 
+            <div className="mx-auto max-w-7xl space-y-8">
                 <section className="grid gap-4 lg:grid-cols-3">
                     <div className="rounded-[28px] border border-slate-200/70 bg-white/90 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/80">
                         <p className="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Total lessons</p>
@@ -90,7 +60,7 @@ const ManageLesson = () => {
                     </div>
                     <div className="rounded-[28px] border border-slate-200/70 bg-white/90 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/80">
                         <p className="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Private lessons</p>
-                        <h2 className="mt-4 text-3xl font-bold">{lessons.filter((item) => normalizePrivacy(item.privacy) === "Private").length}</h2>
+                        <h2 className="mt-4 text-3xl font-bold">{lessons.filter((item) => normalizePrivacy(item.privacy) === "privet").length}</h2>
                         <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                             Lessons restricted from public view.
                         </p>
@@ -105,7 +75,7 @@ const ManageLesson = () => {
                                 Filter, search, and take action on lesson submissions.
                             </p>
                         </div>
-                        <div className="grid gap-3 sm:grid-cols-[1fr_auto] lg:w-[520px]">
+                        <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto] lg:w-[660px]">
                             <label className="relative block">
                                 <span className="sr-only">Search lessons</span>
                                 <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
@@ -127,9 +97,20 @@ const ManageLesson = () => {
                                 >
                                     <option value="all">All lessons</option>
                                     <option value="pending">Pending</option>
-                                    <option value="private">Private</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
                                 </select>
                             </div>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setSearchTerm("");
+                                    setStatusFilter("all");
+                                }}
+                                className="inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-violet-500 hover:bg-white hover:text-violet-600 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                            >
+                                Reset
+                            </button>
                         </div>
                     </div>
 
@@ -137,113 +118,138 @@ const ManageLesson = () => {
                         <Table>
                             <Table.ScrollContainer>
                                 <Table.Content
-                                    aria-label="Lesson moderation table"
-                                    className="min-w-[1000px]"
+                                    aria-label="Lesson submissions"
+                                    className="min-w-[1200px]"
                                     sortDescriptor={sortDescriptor}
                                     onSortChange={setSortDescriptor}
                                 >
                                     <Table.Header>
-                                        <Table.Column allowsSorting isRowHeader id="title">
+                                        <Table.Column allowsSorting isRowHeader id="title" className="min-w-[280px]">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
-                                                    Lesson
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
+                                                    Title
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column allowsSorting id="userName">
+                                        <Table.Column allowsSorting id="userName" className="min-w-[180px]">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
-                                                    Creator
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
+                                                    Publisher
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column allowsSorting id="category">
+                                        <Table.Column allowsSorting id="category" className="min-w-[160px]">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
                                                     Category
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column allowsSorting id="accessLevel">
+                                        <Table.Column allowsSorting id="privacy" className="min-w-[140px]">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
-                                                    Access
-                                                </Table.SortableColumnHeader>
-                                            )}
-                                        </Table.Column>
-                                        <Table.Column allowsSorting id="privacy">
-                                            {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
                                                     Privacy
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column allowsSorting id="status">
+                                        <Table.Column allowsSorting id="accessLevel" className="min-w-[130px] text-center">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
+                                                    Access
+                                                </Table.SortableColumnHeader>
+                                            )}
+                                        </Table.Column>
+                                        <Table.Column allowsSorting id="status" className="min-w-[140px] text-center">
+                                            {({ sortDirection }) => (
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
                                                     Status
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column id="actions">Actions</Table.Column>
+                                        <Table.Column allowsSorting id="createdTime" className="min-w-[150px] text-center">
+                                            {({ sortDirection }) => (
+                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
+                                                    Upload time
+                                                </Table.SortableColumnHeader>
+                                            )}
+                                        </Table.Column>
+                                        <Table.Column id="actions" className="min-w-[200px] text-right">
+                                            Actions
+                                        </Table.Column>
                                     </Table.Header>
                                     <Table.Body>
                                         {filteredLessons.length > 0 ? (
-                                            filteredLessons.map((lesson) => (
-                                                <Table.Row key={lesson.productId}>
-                                                    <Table.Cell>
-                                                        <div className="max-w-xs">
-                                                            <p className="font-semibold text-slate-900 dark:text-white">{lesson.title}</p>
-                                                            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                                                                {new Date(lesson.createdTime).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                                                            </p>
-                                                        </div>
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        <p className="font-medium text-slate-900 dark:text-white">{lesson.userName}</p>
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 dark:bg-slate-900 dark:text-slate-300">
-                                                            {lesson.category}
-                                                        </span>
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${lesson.accessLevel === "premium" ? "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
-                                                            {capitalize(lesson.accessLevel)}
-                                                        </span>
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${normalizePrivacy(lesson.privacy) === "Private" ? "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300" : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200"}`}>
-                                                            {normalizePrivacy(lesson.privacy)}
-                                                        </span>
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase ${lesson.status === "pending" ? "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-200" : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200"}`}>
-                                                            {capitalize(lesson.status)}
-                                                        </span>
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        <div className="flex items-center justify-center gap-2">
-                                                            <button className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white transition hover:bg-slate-700">
-                                                                <FiEye className="h-5 w-5" />
-                                                            </button>
-                                                            <button className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-violet-500 text-white transition hover:bg-violet-600">
-                                                                <FiStar className="h-5 w-5" />
-                                                            </button>
-                                                            <button className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white transition hover:bg-red-600">
-                                                                <FiTrash2 className="h-5 w-5" />
-                                                            </button>
-                                                        </div>
-                                                    </Table.Cell>
-                                                </Table.Row>
-                                            ))
+                                            filteredLessons.map((user, ind) => {
+                                                const data = { ...session?.user, ...user };
+                                                const viewHandling = async () => {
+                                                    await AdminViewOrNot(data);
+                                                };
+                                                const statusHandling = async (value) => {
+                                                    console.log(value);
+                                                    const res = await StatusChangeAction(data, value);
+                                                    console.log(res);
+                                                };
+
+                                                return (
+                                                    <Table.Row key={ind} className="transition hover:bg-slate-50 dark:hover:bg-slate-900">
+                                                        <Table.Cell onClick={viewHandling} className="min-w-[70px] max-w-[80px] whitespace-normal px-3 py-3">
+                                                            <p className="font-semibold truncate line-clamp-1 text-sm leading-6 text-slate-700 dark:text-slate-300">{user.title}</p> 
+                                                        </Table.Cell>
+                                                        <Table.Cell onClick={viewHandling} className="min-w-[70px] max-w-[80px] whitespace-normal px-3 py-3 text-sm text-slate-700 dark:text-slate-300">
+                                                            {user.userName}
+                                                        </Table.Cell>
+                                                        <Table.Cell onClick={viewHandling} className="min-w-[160px] px-3 py-3 text-sm">
+                                                            <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-700 dark:bg-slate-900 dark:text-slate-300">
+                                                                {user.category}
+                                                            </span>
+                                                        </Table.Cell>
+                                                        <Table.Cell onClick={viewHandling} className="min-w-[140px] px-3 py-3 text-sm">
+                                                            <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase ${user.plan === "premium" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
+                                                                {user.privacy}
+                                                            </span>
+                                                        </Table.Cell>
+                                                        <Table.Cell onClick={viewHandling} className="min-w-[130px] px-3 py-3 text-center text-sm text-slate-700 dark:text-slate-200">
+                                                            {user.accessLevel || 0}
+                                                        </Table.Cell>
+                                                        <Table.Cell className="min-w-[140px] px-3 py-3 text-center">
+                                                            <select
+                                                                name="plan"
+                                                                defaultValue={`${user?.status || "pending"}`}
+                                                                onChange={(e) => statusHandling(e.target.value)}
+                                                                className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                                            >
+                                                                <option value="pending">Pending</option>
+                                                                <option value="approved">Approved</option>
+                                                                <option value="rejected">Rejected</option>
+                                                            </select>
+                                                        </Table.Cell>
+                                                        <Table.Cell onClick={viewHandling} className="min-w-[150px] whitespace-nowrap px-3 py-3 text-sm text-slate-600 dark:text-slate-400">
+                                                            {user.createdTime || "—"}
+                                                        </Table.Cell>
+                                                        <Table.Cell className="min-w-[80px] pr-4 py-3">
+                                                            <div className="flex items-center justify-end gap-1">
+                                                                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full ">
+                                                                    <LessonDetails data={data} />
+                                                                </span>
+                                                                <span className="inline-flex pr-3 h-10 w-10 items-center justify-center rounded-full ">
+                                                                    <DeleteButtonLesson data={data} />
+                                                                </span>
+                                                                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full ">
+                                                                    <FeaturedAndReviewSection data={data} />
+                                                                </span>
+                                                            </div>
+                                                        </Table.Cell>
+                                                    </Table.Row>
+                                                );
+                                            })
                                         ) : (
                                             <Table.Row>
                                                 <Table.Cell>
-                                                    <div className="px-4 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
-                                                        No lessons matched your filter. Try a different search or status.
+                                                    <div className="px-4 py-10 text-center text-xs text-slate-500 dark:text-slate-400">
+                                                        No users found matching those filters.
                                                     </div>
                                                 </Table.Cell>
+                                                <Table.Cell />
                                                 <Table.Cell />
                                                 <Table.Cell />
                                                 <Table.Cell />

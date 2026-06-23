@@ -1,18 +1,21 @@
 "use client";
- 
-import { DeleteUserFormAdmin } from "@/lib/api/adminApi/DeleteUserIdFromServerByAdmin";
+
+import { AdminViewOrNot } from "@/lib/api/adminApi/LessonManaging/AdminViewOrNot";
+import { DeleteLessonFormAdmin } from "@/lib/api/adminApi/LessonManaging/DeleteLessonFormAdmin";
 import { TrashBin } from "@gravity-ui/icons";
-import { AlertDialog, Button } from "@heroui/react"; 
+import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-const DeleteButton = ({ clientId }) => {
+const DeleteButtonLesson = ({ data }) => {
+
     const [loading, setLoading] = useState(false);
 
     const handleDelete = async () => {
+        console.log(data);
         try {
             setLoading(true);
-            const res = await DeleteUserFormAdmin(clientId);
+            const res = await DeleteLessonFormAdmin(data);
             console.log("Deleted:", res);
         } catch (err) {
             console.log(err);
@@ -21,13 +24,14 @@ const DeleteButton = ({ clientId }) => {
             window.location.reload()
         }
     };
-
+    const viewHandling = async () => {
+        await AdminViewOrNot(data)
+    }
     return (
         <AlertDialog>
-            {/* ✅ Trigger MUST NOT be inside another button */}
-            <AlertDialog.Trigger>
+            <AlertDialog.Trigger onClick={viewHandling}>
                 <span className="inline-flex items-center justify-center cursor-pointer  ">
-                    <FiTrash2 className="h-5 w-5" />
+                    <FiTrash2 className="h-4 w-4 mt-1" />
                 </span>
             </AlertDialog.Trigger>
 
@@ -62,7 +66,7 @@ const DeleteButton = ({ clientId }) => {
                         <AlertDialog.Footer>
                             <Button slot="close" variant="tertiary">
                                 Cancel
-                            </Button> 
+                            </Button>
                             <Button
                                 slot="close"
                                 onClick={handleDelete}
@@ -80,4 +84,4 @@ const DeleteButton = ({ clientId }) => {
     );
 };
 
-export default DeleteButton;
+export default DeleteButtonLesson;

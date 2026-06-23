@@ -1,4 +1,4 @@
-import { ServerMutationDelete } from "../mutation/delete";
+import { ServerMutationDelete } from "../../mutation/delete";
 
   
 export const DeleteUserFormAdmin = async (userId) => {

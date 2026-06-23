@@ -1,11 +1,10 @@
 "use client";
 
-import { userSessionClient } from "@/lib/actions/sessionClient"; 
-import { UpdateUserPlan } from "@/lib/api/adminApi/UpdateUserPlan";
+import { userSessionClient } from "@/lib/actions/sessionClient";
+import { UpdateUserPlan } from "@/lib/api/adminApi/UserManaging/UpdateUserPlan";
 import { AlertDialog, Button } from "@heroui/react";
-import { useState } from "react"; 
-import { IoIosPricetags, IoMdPricetags } from "react-icons/io";
-import { RiGitRepositoryPrivateFill } from "react-icons/ri";
+import { useState } from "react";
+import { IoIosPricetags, IoMdPricetags } from "react-icons/io"; 
 
 const PlanUpdateByAdmin = ({ clientId }) => {
     const [loading, setLoading] = useState(false);
@@ -21,7 +20,7 @@ const PlanUpdateByAdmin = ({ clientId }) => {
 
         const data = { userId: clientId, plan: RoleData.plan, myId: myId };
 
-  
+
         try {
             setLoading(true);
             const res = await UpdateUserPlan(data);
@@ -36,9 +35,9 @@ const PlanUpdateByAdmin = ({ clientId }) => {
     };
 
     return (
-        <AlertDialog> 
+        <AlertDialog>
             <AlertDialog.Trigger>
-                <span className="inline-flex items-center justify-center cursor-pointer text-white hover:text-white">
+                <span className="inline-flex items-center justify-center cursor-pointer   ">
                     <IoMdPricetags className="size-5 mt-1" />
                 </span>
             </AlertDialog.Trigger>
@@ -56,7 +55,7 @@ const PlanUpdateByAdmin = ({ clientId }) => {
                             </AlertDialog.Icon>
 
                             <AlertDialog.Heading>
-                                Change the user Plan?
+                                Change the users Plan?
                             </AlertDialog.Heading>
                         </AlertDialog.Header>
                         <form onSubmit={handelSubmit}>
@@ -70,17 +69,15 @@ const PlanUpdateByAdmin = ({ clientId }) => {
                                 </p>
 
                                 {/* Visibility or Privacy */}
-                                <div className="p-4 rounded-2xl border bg-indigo-50 dark:bg-slate-800">
-                                    <p className="text-sm font-semibold mb-2">Privacy</p>
-                                    <select
-                                        name="plan"
-                                        // defaultValue={`${ ?.role || ''}`}
-                                        className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border"
-                                    >
-                                        <option value="free">User Free</option>
-                                        <option value="user_pro">User Premium</option>
-                                    </select>
-                                </div>
+                                <select
+                                    name="plan"
+                                    // defaultValue={`${ ?.role || ''}`}
+                                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border"
+                                >
+                                    <option value="free">User Free</option>
+                                    <option value="user_pro">User Premium</option>
+                                </select>
+
                             </AlertDialog.Body>
 
                             {/* FOOTER */}

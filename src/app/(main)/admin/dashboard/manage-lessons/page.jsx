@@ -2,9 +2,14 @@ import React from 'react';
 import ManageLesson from './ManageLesson';
 import Link from 'next/link';
 import { FiShield } from 'react-icons/fi';
+import { userSessionServer } from '@/lib/actions/session';
+import { GetLessonDataToShow } from '@/lib/api/adminApi/LessonManaging/GetLessonDataToShow';
 
-const ManageLessonPage = () => {
-    
+const ManageLessonPage = async () => {
+    const session = await userSessionServer()
+    const lessons = await GetLessonDataToShow(session);
+    console.log(session, 'lesson is : - ', lessons);
+
     return (
         <main>
             <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-8 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
@@ -38,7 +43,7 @@ const ManageLessonPage = () => {
                     </div>
                 </div>
             </section>
-            <ManageLesson />
+            <ManageLesson lessons={lessons}/>
         </main>
     );
 };

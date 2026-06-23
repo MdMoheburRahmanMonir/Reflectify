@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 
-import { planIdList, stripe } from '../../../lib/stripe'
+import { stripe } from '../../../lib/stripe'
 import { userSessionServer } from '@/lib/actions/session'
 
 export async function POST(request) {
     const formData = await request.formData()
     const planId = formData.get('planId')
-    const priceId = planIdList[planId];
     const session = await userSessionServer()
     const userEmail = session?.user?.email
     const userUpgrade = 'user_pro'
@@ -28,7 +27,7 @@ export async function POST(request) {
                 },
             ],
             mode: 'subscription',
-            metadata: { userUpgrade , userEmail},
+            metadata: { userUpgrade, userEmail },
             success_url: `${origin}/plans/success?session_id={CHECKOUT_SESSION_ID}`,
             // automatic_tax: { enabled: true },
         });

@@ -1,4 +1,4 @@
-import { Navigation } from "@/components/adminDashboard/Navigation";
+import { Navigation } from "@/components/adminDashboard/UserAction/Navigation";
 import { userSessionServer } from "@/lib/actions/session";
 import { redirect } from "next/navigation";
 

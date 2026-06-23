@@ -92,7 +92,7 @@ export function CustomTrigger() {
           </Dropdown.Item>
           <Dropdown.Item id="profile" textValue="profile">
             <div className="flex w-full items-center justify-between gap-2">
-              <Link href="/profile/editprofile"  >
+              <Link href="/profile"  >
                 <Label>profile</Label>
               </Link>
               <FaUserCog className="size-3.5 text-muted" />

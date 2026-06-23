@@ -1,4 +1,4 @@
-import { ServerMutationGet } from "../mutation/get";
+import { ServerMutationGet } from "../../mutation/get";
 
 
 export const getUserFromAdmin = async (userId) => {

@@ -1,11 +1,10 @@
 "use client";
 
 import { userSessionClient } from "@/lib/actions/sessionClient";
-import { UpdateUserRole } from "@/lib/api/adminApi/UpdateUserRole";
+import { UpdateUserRole } from "@/lib/api/adminApi/UserManaging/UpdateUserRole";
 import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
 import { FiShield } from "react-icons/fi";
-import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 
 const RoleUpdateByAdmin = ({ clientId }) => {
     const [loading, setLoading] = useState(false);
@@ -21,7 +20,7 @@ const RoleUpdateByAdmin = ({ clientId }) => {
 
         const data = { userId: clientId, role: RoleData.role, myId: myId };
 
- 
+
 
         try {
             setLoading(true);
@@ -58,7 +57,7 @@ const RoleUpdateByAdmin = ({ clientId }) => {
                             </AlertDialog.Icon>
 
                             <AlertDialog.Heading>
-                                Change the user role?
+                                Change the user Role?
                             </AlertDialog.Heading>
                         </AlertDialog.Header>
                         <form onSubmit={handelSubmit}>
@@ -72,17 +71,17 @@ const RoleUpdateByAdmin = ({ clientId }) => {
                                 </p>
 
                                 {/* Visibility or Privacy */}
-                                <div className="p-4 rounded-2xl border bg-indigo-50 dark:bg-slate-800">
-                                    <p className="text-sm font-semibold mb-2">Privacy</p>
-                                    <select
-                                        name="role"
-                                        // defaultValue={`${ ?.role || ''}`}
-                                        className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border"
-                                    >
-                                        <option value="user">Make User Only</option>
-                                        <option value="admin">Make Admin</option>
-                                    </select>
-                                </div>
+
+
+                                <select
+                                    name="role"
+                                    // defaultValue={`${ ?.role || ''}`}
+                                    className="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border"
+                                >
+                                    <option value="user">Make User</option>
+                                    <option value="admin">Make Admin</option>
+                                </select>
+
                             </AlertDialog.Body>
 
                             {/* FOOTER */}

@@ -1,6 +1,6 @@
 import React from 'react';
 import ManageUserPage from './ManageUserPage'; 
-import { getUserFromAdmin } from '@/lib/api/adminApi/getUserFromAdmin';
+import { getUserFromAdmin } from '@/lib/api/adminApi/UserManaging/getUserFromAdmin';
 import { userSessionServer } from '@/lib/actions/session';
 
 const ManageUserPageToEditDelete = async () => {
