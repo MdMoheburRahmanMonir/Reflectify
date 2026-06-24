@@ -1,16 +1,16 @@
 "use client";
 
-import { FaHeart, FaBookmark, FaLock, FaStar, FaFreeCodeCamp, FaRegBookmark } from "react-icons/fa";
+import React from 'react';
+import { FaBookmark, FaLock, FaStar, FaFreeCodeCamp, FaRegBookmark } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
-import { useState } from "react";
 import Link from "next/link";
-import { FiAlertCircle } from "react-icons/fi";
-import { RiHeart3Fill, RiHeart3Line } from "react-icons/ri";
+import LikeButton from "./LikeButton";
+import { SessionClient } from '@/lib/actions/sessionClient';
+import SavedButton from './SavedButton';
 
-export default function FeaturedLessons({ featuredLessonsSeed, session }) {
-    console.log(session);
-
+export default function FeaturedLessons({ featuredLessonsSeed }) {
+    const session = SessionClient();
     return (
         <section className="relative w-full py-16 bg-white dark:bg-slate-950 transition-colors duration-300">
             {/* Background Glow */}
@@ -34,25 +34,9 @@ export default function FeaturedLessons({ featuredLessonsSeed, session }) {
                 </div>
 
                 {/* Loading State */}
-                {
-                    /* Grid */
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {featuredLessonsSeed.map((lesson, index) => {
-
-                            const [likedLessons, setLikedLessons] = useState(true);
-                            const [savedLessons, setSavedLessons] = useState(true);
-
-                            const handelLike = () => {
-                                setLikedLessons(!likedLessons)
-                                console.log('Click Like');
-
-                            }
-                            const handelSaved = () => {
-                                setSavedLessons(!savedLessons)
-                                console.log('Click Saved');
-
-                            }
-
+                <div className="grid w-7xl grid-cols-1 md:grid-cols-3 gap-2">
+                    {
+                        featuredLessonsSeed?.slice(0, 5).map((lesson, index) => {
                             return (
                                 <motion.div
                                     key={lesson._id || index}
@@ -127,26 +111,13 @@ export default function FeaturedLessons({ featuredLessonsSeed, session }) {
                                         {/* Bottom actions */}
                                         <div className="flex items-center justify-between mt-4">
 
-                                            <div className="flex items-center gap-4 text-white/80 text-sm">
-
-                                                <button onClick={handelLike} className="flex gap-1 " >
-                                                    {likedLessons ? <RiHeart3Line /> :
-                                                        <RiHeart3Fill className="text-red-500" />}
-                                                    1
-                                                </button>
-                                                <button onClick={handelSaved} className="flex gap-1 ">
-                                                    {savedLessons ? <FaRegBookmark /> :
-                                                        <FaBookmark className="text-red-500" />}
-                                                    1
-                                                </button>
-
-
-
-
+                                            <div className="flex items-center gap-2 text-white/80 text-sm">
+                                                <LikeButton lesson={lesson} session={session} />
+                                                <SavedButton lesson={lesson} session={session} />
                                             </div>
 
                                             <Link href={`/lesson-details/${lesson._id}`} >
-                                                <button className="px-6 py-2.5 rounded-tl-2xl rounded-br-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white text-sm font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200">
+                                                <button className="px-3 py-[5px] rounded-tl-2xl rounded-br-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white text-xs font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200">
                                                     View Details
                                                 </button>
 
@@ -156,9 +127,9 @@ export default function FeaturedLessons({ featuredLessonsSeed, session }) {
                                     </div>
                                 </motion.div>
                             )
-                        })}
-                    </div>
-                }
+                        })
+                    }
+                </div>
             </div>
         </section >
     );

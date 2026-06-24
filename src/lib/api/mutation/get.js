@@ -8,7 +8,6 @@ export const ServerMutationGet = async (path, session) => {
             "Content-Type": "application/json",
             ...(session && { "session": JSON.stringify(session) })
         }
-    });
-    // if (!res.ok) throw new Error(`API error: from GetApi ${res.status}`);
+    }); 
     return res.json();
 }

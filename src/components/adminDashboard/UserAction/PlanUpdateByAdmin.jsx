@@ -1,6 +1,6 @@
 "use client";
-
-import { userSessionClient } from "@/lib/actions/sessionClient";
+ 
+import { SessionClient } from "@/lib/actions/sessionClient";
 import { UpdateUserPlan } from "@/lib/api/adminApi/UserManaging/UpdateUserPlan";
 import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { IoIosPricetags, IoMdPricetags } from "react-icons/io";
 
 const PlanUpdateByAdmin = ({ clientId }) => {
     const [loading, setLoading] = useState(false);
-    const session = userSessionClient();
+    const session = SessionClient();
     const myId = session?.user?.id;
 
 

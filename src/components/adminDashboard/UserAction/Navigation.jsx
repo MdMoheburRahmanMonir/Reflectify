@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiHome, FiMenu } from "react-icons/fi";
-import { Button, Drawer } from "@heroui/react";
-import { userSessionClient } from "@/lib/actions/sessionClient";
+import { Button, Drawer } from "@heroui/react"; 
 import { FaAddressBook, FaUserAstronaut } from "react-icons/fa";
 import { MdBugReport, MdManageAccounts } from "react-icons/md";
+import { SessionClient } from "@/lib/actions/sessionClient";
 const navItems = [
   { icon: FiHome, label: "Home", href: "/admin/dashboard" },
   { icon: MdManageAccounts, label: "Manage User", href: "/admin/dashboard/manage-users" },
@@ -17,7 +17,7 @@ const navItems = [
 
 export function Navigation() {
   const pathname = usePathname();
-  const session = userSessionClient();
+  const session = SessionClient();
 
   return (
     <>

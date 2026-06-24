@@ -14,7 +14,7 @@ export default async function Home() {
   return (
     <main className="">
       <HeroSwiperSection />
-      <FeaturedLessons featuredLessonsSeed={featuredLessonsSeed} session={session} />
+      <FeaturedLessons featuredLessonsSeed={featuredLessonsSeed}  />
       <WhyLifeMatters />
       <TopContributors />
       <MostSavedLessons />

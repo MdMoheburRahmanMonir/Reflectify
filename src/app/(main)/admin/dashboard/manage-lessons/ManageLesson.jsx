@@ -2,7 +2,7 @@
 import DeleteButtonLesson from "@/components/adminDashboard/LessonAction/DeleteButtonLesson";
 import { FeaturedAndReviewSection } from "@/components/adminDashboard/LessonAction/FeaturedAndReviewSection";
 import { LessonDetails } from "@/components/adminDashboard/LessonAction/LessonDetails";
-import { userSessionClient } from "@/lib/actions/sessionClient";
+import { SessionClient } from "@/lib/actions/sessionClient";
 import { AdminViewOrNot } from "@/lib/api/adminApi/LessonManaging/AdminViewOrNot";
 import { StatusChangeAction } from "@/lib/api/adminApi/LessonManaging/StatusChangeAction";
 import { Table } from "@heroui/react";
@@ -23,7 +23,7 @@ const ManageLesson = ({ lessons }) => {
     const [sortDescriptor, setSortDescriptor] = useState({ column: "title", direction: "ascending" });
 
 
-    const session = userSessionClient();
+    const session = SessionClient();
     const filteredLessons = useMemo(() => {
         return lessons.filter((lesson) => {
             const normalizedStatus = String(lesson.status || "").toLowerCase();
@@ -37,7 +37,12 @@ const ManageLesson = ({ lessons }) => {
                 lesson.category.toLowerCase().includes(searchTerm.toLowerCase());
 
             return matchesFilter && matchesSearch;
-        });
+        }).sort((a, b) => {
+            const first = String(a[sortDescriptor.column]);
+            const second = String(b[sortDescriptor.column]);
+            const comparison = first.localeCompare(second);
+            return sortDescriptor.direction === "descending" ? -comparison : comparison;
+        });;
     }, [statusFilter, searchTerm, sortDescriptor]);
 
     return (
@@ -193,7 +198,7 @@ const ManageLesson = ({ lessons }) => {
                                                 return (
                                                     <Table.Row key={ind} className="transition hover:bg-slate-50 dark:hover:bg-slate-900">
                                                         <Table.Cell onClick={viewHandling} className="min-w-[70px] max-w-[80px] whitespace-normal px-3 py-3">
-                                                            <p className="font-semibold truncate line-clamp-1 text-sm leading-6 text-slate-700 dark:text-slate-300">{user.title}</p> 
+                                                            <p className="font-semibold truncate line-clamp-1 text-sm leading-6 text-slate-700 dark:text-slate-300">{user.title}</p>
                                                         </Table.Cell>
                                                         <Table.Cell onClick={viewHandling} className="min-w-[70px] max-w-[80px] whitespace-normal px-3 py-3 text-sm text-slate-700 dark:text-slate-300">
                                                             {user.userName}

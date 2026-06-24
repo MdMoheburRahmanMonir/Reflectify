@@ -78,14 +78,14 @@ const ManageUserPage = ({ users }) => {
                     </div>
                     <div className="rounded-[28px] border border-slate-200/70 bg-white/90 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/80">
                         <p className="text-sm uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Admins</p>
-                        <h2 className="mt-4 text-3xl font-bold">{users.filter((user) => user.role === "admin").length}</h2>
+                        <h2 className="mt-4 text-3xl font-bold">{users?.filter((user) => user.role === "admin").length}</h2>
                         <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                             Users with admin privileges.
                         </p>
                     </div>
                     <div className="rounded-[28px] border border-slate-200/70 bg-white/90 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/80">
                         <p className="text-sm uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Premium users</p>
-                        <h2 className="mt-4 text-3xl font-bold">{users.filter((user) => user.plan === "user_pro").length}</h2>
+                        <h2 className="mt-4 text-3xl font-bold">{users?.filter((user) => user.plan === "user_pro").length}</h2>
                         <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                             Users with premium membership.
                         </p>

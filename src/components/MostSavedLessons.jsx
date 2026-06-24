@@ -42,10 +42,12 @@ const dummyLessons = [
 ];
 
 export default function MostSavedLessons() {
-    const [lessons, setLessons] = useState(dummyLessons);
+    const [lessons, setLessons] = useState(dummyLessons); 
     console.log(lessons);
-
+    
     const toggleLike = (id) => {
+        console.log(id);
+        
         setLessons((prev) =>
             prev.map((item) =>
                 item._id === id

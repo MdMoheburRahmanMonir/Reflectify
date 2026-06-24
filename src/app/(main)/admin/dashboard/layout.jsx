@@ -11,7 +11,7 @@ export default async function DashboardLayout({ children }) {
   const session = await userSessionServer();
   console.log(session);
   if (session?.user?.role !== 'admin') {
-    redirect('/')
+    redirect('/login')
   }
 
   return (

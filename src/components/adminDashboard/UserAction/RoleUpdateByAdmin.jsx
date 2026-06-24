@@ -1,6 +1,6 @@
 "use client";
-
-import { userSessionClient } from "@/lib/actions/sessionClient";
+ 
+import { SessionClient } from "@/lib/actions/sessionClient";
 import { UpdateUserRole } from "@/lib/api/adminApi/UserManaging/UpdateUserRole";
 import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { FiShield } from "react-icons/fi";
 
 const RoleUpdateByAdmin = ({ clientId }) => {
     const [loading, setLoading] = useState(false);
-    const session = userSessionClient();
+    const session = SessionClient();
     const myId = session?.user?.id;
 
 

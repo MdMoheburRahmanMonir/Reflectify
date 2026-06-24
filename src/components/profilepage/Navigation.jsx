@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiMenu } from "react-icons/fi";
 
-import { Button, Drawer } from "@heroui/react";
-import { userSessionClient } from "@/lib/actions/sessionClient";
+import { Button, Drawer } from "@heroui/react"; 
 import { FaEdit, FaQuoteLeft, FaRegUserCircle } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { SessionClient } from "@/lib/actions/sessionClient";
 const navItems = [ 
     { icon: FaRegUserCircle, label: "Profile", href: "/profile" },
     { icon: FaEdit, label: "Edit Profile", href: "/profile/editprofile" },
@@ -16,7 +16,7 @@ const navItems = [
 
 export function Navigation() {
     const pathname = usePathname();
-    const session = userSessionClient(); 
+    const session = SessionClient(); 
 
     return (
         <>

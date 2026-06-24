@@ -1,10 +1,11 @@
 'use client'
 import { AdminViewOrNot } from "@/lib/api/adminApi/LessonManaging/AdminViewOrNot";
 import { Button, Modal, Surface } from "@heroui/react";
+import Link from "next/link";
 import { FaRegEye } from "react-icons/fa";
 
 export function LessonDetails({ data }) {
-    const { title, description, category, emotionalTone, accessLevel, privacy, lessonPhoto, status, userName, userEmail, userImage, userId, createdTime, productId } = data;
+    const { title, _id, description, category, emotionalTone, accessLevel, privacy, lessonPhoto, status, userName, userEmail, userImage, userId, createdTime, productId } = data;
     const viewHandling = async () => {
         await AdminViewOrNot(data)
     }
@@ -112,6 +113,11 @@ export function LessonDetails({ data }) {
 
                                                     <span className="px-4 py-2 rounded-xl bg-purple-50 dark:bg-slate-800 text-sm font-medium">
                                                         ✨ {emotionalTone}
+                                                    </span>
+                                                    <span className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium">
+                                                        <Link href={`/lesson-details/${_id}`}>
+                                                            View Details
+                                                        </Link>
                                                     </span>
                                                 </div>
 

@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiHome, FiMenu } from "react-icons/fi";
 
-import { Button, Drawer } from "@heroui/react";
-import { userSessionClient } from "@/lib/actions/sessionClient";
+import { Button, Drawer } from "@heroui/react"; 
 import { FaAddressBook, FaUserAstronaut } from "react-icons/fa";
 import { MdCreateNewFolder, MdFavoriteBorder } from "react-icons/md";
+import { SessionClient } from "@/lib/actions/sessionClient";
 const navItems = [
   { icon: FiHome, label: "Home", href: "/user/dashboard" },
   { icon: MdCreateNewFolder, label: "Post Lesson", href: "/user/dashboard/add-lesson" },
@@ -18,8 +18,7 @@ const navItems = [
 
 export function Navigation() {
   const pathname = usePathname();
-  const session = userSessionClient();
-  console.log(session?.user?.plan);
+  const session = SessionClient(); 
 
   return (
     <>

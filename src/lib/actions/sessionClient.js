@@ -1,6 +1,6 @@
 import { authClient } from "../auth-client";
 
-export const userSessionClient = () => {
+export const  SessionClient = () => {
     const { data: session } = authClient.useSession();
     return session;
 }

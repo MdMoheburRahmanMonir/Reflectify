@@ -1,3 +1,4 @@
+// 'use server'
 import { Navigation } from "@/components/userDashboard/Navigation";
 import { userSessionServer } from "@/lib/actions/session";
 import { redirect } from "next/navigation";
@@ -11,7 +12,7 @@ export default async function DashboardLayout({ children }) {
   const session = await userSessionServer();
   console.log(session);
   if (session?.user?.role !== 'user') {
-    redirect('/')
+    redirect('/login')
   }
 
 

@@ -1,5 +1,5 @@
-'use client'
-import { userSessionClient } from "@/lib/actions/sessionClient";
+'use client' 
+import { SessionClient } from "@/lib/actions/sessionClient";
 import { UpdateUserLesson } from "@/lib/api/userapi/updatelesson";
 import { Envelope } from "@gravity-ui/icons";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 export function EditFormUserDashboard({ lesson }) {
     const [image, setImage] = useState(`${lesson?.lessonPhoto}`);
-    const session = userSessionClient();
+    const session = SessionClient();
 
 
 
@@ -53,6 +53,7 @@ export function EditFormUserDashboard({ lesson }) {
 
         const res = await UpdateUserLesson(data);
         if (res.matchedCount) {
+            toast.success('Lesson Update Successfully!')
             window.location.reload();
         }
         if (!res.matchedCount) {

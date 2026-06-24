@@ -1,15 +1,24 @@
 "use client";
-import { Pagination } from "@heroui/react";
-import { useEffect, useMemo, useState } from "react";
 
-export default function JobsPage() {
-    const [jobs, setJobs] = useState([]);
+import React, { useEffect, useMemo, useState } from 'react';
+import { FaLock, FaStar, FaFreeCodeCamp } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { MdOutlineWorkspacePremium } from "react-icons/md";
+import Link from "next/link";
+import LikeButton from "@/components/LikeButton";
+import { SessionClient } from '@/lib/actions/sessionClient';
+import SavedButton from '@/components/SavedButton';
+
+export default function PublicLessonPage() {
+    const session = SessionClient();
+    const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [query, setQuery] = useState("");
-    const [department, setDepartment] = useState("");
-    const [status, setStatus] = useState("");
-    const [isRemote, setIsRemote] = useState(null);
+    const [category, setCategory] = useState("");
+    const [emotionalTone, setEmotionalTone] = useState("");
+    const [accessLevel, setAccessLevel] = useState("");
+    const [privacy, setPrivacy] = useState("");
 
     const [page, setPage] = useState(1);
     const itemsPerPage = 6;
@@ -17,9 +26,11 @@ export default function JobsPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await fetch("http://localhost:5000/api/jobs");
+                const res = await fetch("/api/lessons");
                 const data = await res.json();
-                setJobs(Array.isArray(data) ? data : [data]);
+                setLessons(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error("Error fetching lessons:", error);
             } finally {
                 setLoading(false);
             }
@@ -28,32 +39,29 @@ export default function JobsPage() {
     }, []);
 
     const filtered = useMemo(() => {
-        return jobs.filter((j) => {
+        return lessons.filter((lesson) => {
             const q = query.toLowerCase();
 
             if (query) {
-                const inText = [j.title, j.company, j.location, j.department]
+                const inText = [lesson.title, lesson.description, lesson.userName]
                     .filter(Boolean)
                     .join(" ")
                     .toLowerCase()
                     .includes(q);
 
-                const inSkills = (j.skills || []).some((s) =>
-                    s.toLowerCase().includes(q)
-                );
-
-                if (!inText && !inSkills) return false;
+                if (!inText) return false;
             }
 
-            if (department && j.department !== department) return false;
-            if (status && j.status !== status) return false;
-            if (isRemote !== null && j.isRemote !== isRemote) return false;
+            if (category && lesson.category !== category) return false;
+            if (emotionalTone && lesson.emotionalTone !== emotionalTone) return false;
+            if (accessLevel && lesson.accessLevel !== accessLevel) return false;
+            if (privacy && lesson.privacy !== privacy) return false;
 
             return true;
         });
-    }, [jobs, query, department, status, isRemote]);
+    }, [lessons, query, category, emotionalTone, accessLevel, privacy]);
 
-    const paginatedJobs = useMemo(() => {
+    const paginatedLessons = useMemo(() => {
         const start = (page - 1) * itemsPerPage;
         return filtered.slice(start, start + itemsPerPage);
     }, [filtered, page]);
@@ -61,154 +69,236 @@ export default function JobsPage() {
     const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
     return (
-        <main className="min-h-screen px-4 py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100">
+        <main className="min-h-screen px-4 py-12 bg-white dark:bg-slate-950 transition-colors duration-300">
+            {/* Background Glow */}
+            <div className="absolute -top-20 left-10 w-72 h-72 bg-purple-400/20 dark:bg-purple-500/10 blur-3xl rounded-full" />
+            <div className="absolute -bottom-20 right-10 w-72 h-72 bg-blue-400/20 dark:bg-blue-500/10 blur-3xl rounded-full" />
 
-            <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-7xl relative">
 
                 {/* HEADER */}
-                <div className="mb-10 text-center">
-                    <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text">
-                        Explore Jobs
+                <div className="mb-12 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+                        ⭐ Explore All{" "}
+                        <span className="bg-gradient-to-r from-purple-500 to-blue-600 bg-clip-text text-transparent">
+                            Life Lessons
+                        </span>
                     </h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-2">
-                        Find your next opportunity with smart filtering
+                    <p className="text-slate-600 dark:text-slate-300 mt-3 text-sm md:text-base">
+                        Discover wisdom shared by our community members. Find lessons that inspire your growth.
                     </p>
                 </div>
 
                 {/* FILTER BAR (Gorgeous Glass UI) */}
-                <div className="mb-10 rounded-3xl border border-white/20 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-lg p-5 grid gap-4 sm:grid-cols-4">
+                <div className="mb-10 rounded-3xl border border-white/20 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-lg p-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
 
                     <input
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Search jobs..."
-                        className="w-full rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-400 outline-none"
+                        placeholder="Search lessons..."
+                        className="w-full rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-purple-400 outline-none lg:col-span-2"
                     />
 
                     <select
-                        value={department}
-                        onChange={(e) => setDepartment(e.target.value)}
-                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-purple-400 outline-none"
                     >
-                        <option value="">All Departments</option>
-                        <option>Engineering</option>
-                        <option>Marketing</option>
-                        <option>Design</option>
+                        <option value="">All Categories</option>
+                        <option value="mindset">Mindset</option>
+                        <option value="health">Health</option>
+                        <option value="relationships">Relationships</option>
+                        <option value="career">Career</option>
+                        <option value="finance">Finance</option>
+                        <option value="personal-growth">Personal Growth</option>
                     </select>
 
                     <select
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border"
+                        value={emotionalTone}
+                        onChange={(e) => setEmotionalTone(e.target.value)}
+                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-purple-400 outline-none"
                     >
-                        <option value="">All Status</option>
-                        <option>active</option>
-                        <option>closed</option>
+                        <option value="">All Tones</option>
+                        <option value="inspiring">Inspiring</option>
+                        <option value="sad">Sad</option>
+                        <option value="realization">Realization</option>
+                        <option value="motivating">Motivating</option>
+                        <option value="thoughtful">Thoughtful</option>
+                    </select>
+
+                    <select
+                        value={accessLevel}
+                        onChange={(e) => setAccessLevel(e.target.value)}
+                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-purple-400 outline-none"
+                    >
+                        <option value="">All Access</option>
+                        <option value="free">Free</option>
+                        <option value="premium">Premium</option>
+                    </select>
+
+                    <select
+                        value={privacy}
+                        onChange={(e) => setPrivacy(e.target.value)}
+                        className="rounded-2xl px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-purple-400 outline-none"
+                    >
+                        <option value="">All Privacy</option>
+                        <option value="public">Public</option>
+                        <option value="privet">Private</option>
                     </select>
 
                     <button
                         onClick={() => {
                             setQuery("");
-                            setDepartment("");
-                            setStatus("");
-                            setIsRemote(null);
+                            setCategory("");
+                            setEmotionalTone("");
+                            setAccessLevel("");
+                            setPrivacy("");
                             setPage(1);
                         }}
-                        className="rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold hover:scale-[1.02] transition"
+                        className="rounded-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white font-semibold hover:scale-[1.02] transition col-span-1"
                     >
-                        Reset Filters
+                        Reset
                     </button>
                 </div>
 
-                {/* JOB GRID */}
+                {/* LESSONS GRID */}
                 {loading ? (
                     <div className="text-center py-20 text-slate-500">
-                        Loading amazing opportunities...
+                        Loading amazing lessons...
                     </div>
                 ) : (
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                        {paginatedJobs.map((job) => (
-                            <article
-                                key={job._id}
-                                className="group rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-6 shadow-md hover:shadow-2xl transition transform hover:-translate-y-1"
+                        {paginatedLessons.map((lesson, index) => (
+                            <motion.div
+                                key={lesson._id || index}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                                className="group relative rounded-3xl overflow-hidden shadow-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 hover:shadow-2xl transition-all duration-300"
                             >
 
-                                {/* TITLE */}
-                                <h3 className="text-lg font-bold group-hover:text-indigo-500 transition">
-                                    {job.title}
-                                </h3>
-
-                                <p className="text-sm text-slate-500 mt-1">
-                                    {job.company} • {job.location}
-                                </p>
-
-                                {/* META */}
-                                <div className="mt-4 flex justify-between text-sm">
-                                    <span className="font-semibold text-indigo-500">
-                                        {job.salary ? `$${job.salary}` : "N/A"}
-                                    </span>
-                                    <span className="text-slate-500">{job.experience} yrs</span>
-                                </div>
-
-                                {/* TAGS */}
-                                <div className="mt-4 flex flex-wrap gap-2">
-                                    {(job.skills || []).slice(0, 3).map((s) => (
-                                        <span
-                                            key={s}
-                                            className="px-3 py-1 text-xs rounded-full bg-indigo-50 dark:bg-slate-700 text-indigo-600 dark:text-slate-200"
+                                {session?.user?.plan === 'free' && lesson.accessLevel === 'premium' && (
+                                    <div className="absolute flex flex-col gap-3 justify-center items-center text-center top-0 left-0 w-full h-full bg-gray-500/20 backdrop-blur-2xl shadow-md shadow-white/70 dark:shadow-black z-20">
+                                        <FaLock className="text-4xl text-white" />
+                                        <p className="text-white text-lg">Please unlock to go premium</p>
+                                        <Link
+                                            href="/plans"
+                                            className="text-md font-medium px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
                                         >
-                                            {s}
+                                            Upgrade to Premium ✦
+                                        </Link>
+                                    </div>
+                                )}
+
+                                {!session?.user && lesson.accessLevel === 'premium' && (
+                                    <div className="absolute flex flex-col gap-3 justify-center items-center text-center top-0 left-0 w-full h-full bg-gray-500/20 backdrop-blur-2xl shadow-md shadow-white/70 dark:shadow-black z-20">
+                                        <FaLock className="text-4xl text-white" />
+                                        <p className="text-white text-lg">Please unlock to go premium</p>
+                                        <Link
+                                            href="/login"
+                                            className="text-md font-medium px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
+                                        >
+                                            Login First
+                                        </Link>
+                                    </div>
+                                )}
+
+                                {/* Image Background */}
+                                <div className="absolute inset-0">
+                                    <img
+                                        src={lesson.lessonPhoto || "https://i.ibb.co/placeholder.jpg"}
+                                        alt={lesson.title}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+                                </div>
+
+                                {/* Content */}
+                                <div className="relative p-6 flex flex-col justify-between h-72">
+
+                                    {/* Top badges */}
+                                    <div className="flex items-center justify-between">
+                                        <span className="flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-purple-500/80 text-white border border-purple-400/30">
+                                            <FaStar className="text-yellow-400" />
+                                            {lesson.category}
                                         </span>
-                                    ))}
-                                </div>
 
-                                {/* FOOTER */}
-                                <div className="mt-6 flex justify-between items-center">
-                                    <span className="text-xs text-slate-400">
-                                        {new Date(job.posted).toLocaleDateString()}
-                                    </span>
+                                        <span className="flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-black/30 text-white border border-white/10">
+                                            {lesson.accessLevel === 'premium' ? <MdOutlineWorkspacePremium className="text-white" /> : <FaFreeCodeCamp className="text-white" />}
+                                            {lesson.accessLevel.toUpperCase()}
+                                        </span>
+                                    </div>
 
-                                    <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm hover:scale-105 transition">
-                                        View
-                                    </button>
+                                    {/* Text */}
+                                    <div>
+                                        <h3 className="text-xl font-bold text-white line-clamp-2">
+                                            {lesson.title}
+                                        </h3>
+
+                                        <p className="text-sm text-white/80 mt-2 line-clamp-2">
+                                            {lesson.description}
+                                        </p>
+
+                                        <p className="text-xs text-white/60 mt-2">
+                                            By {lesson.userName}
+                                        </p>
+                                    </div>
+
+                                    {/* Bottom actions */}
+                                    <div className="flex items-center justify-between mt-4">
+
+                                        <div className="flex items-center gap-2 text-white/80 text-sm">
+                                            <LikeButton lesson={lesson} session={session} />
+                                            <SavedButton lesson={lesson} session={session} />
+                                        </div>
+
+                                        <Link href={`/lesson-details/${lesson._id}`}>
+                                            <button className="px-3 py-[5px] rounded-tl-2xl rounded-br-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white text-xs font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200">
+                                                View Details
+                                            </button>
+                                        </Link>
+                                    </div>
+
                                 </div>
-                            </article>
+                            </motion.div>
                         ))}
 
-                        {paginatedJobs.length === 0 && (
+                        {paginatedLessons.length === 0 && (
                             <div className="col-span-full text-center py-10 text-slate-500">
-                                No jobs found 😢
+                                No lessons found 😢
                             </div>
                         )}
                     </div>
                 )}
 
                 {/* PAGINATION (CLEAN PREMIUM STYLE) */}
-                <div className="mt-12 flex justify-center">
-                    <div className="flex items-center gap-2 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl px-4 py-3 rounded-2xl border">
+                {totalPages > 1 && (
+                    <div className="mt-12 flex justify-center">
+                        <div className="flex items-center gap-2 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl px-4 py-3 rounded-2xl border border-white/20">
 
-                        <button
-                            disabled={page === 1}
-                            onClick={() => setPage((p) => p - 1)}
-                            className="px-3 py-1 rounded-lg disabled:opacity-40"
-                        >
-                            Prev
-                        </button>
+                            <button
+                                disabled={page === 1}
+                                onClick={() => setPage((p) => p - 1)}
+                                className="px-3 py-1 rounded-lg disabled:opacity-40 hover:bg-purple-500/20 transition"
+                            >
+                                Prev
+                            </button>
 
-                        <span className="text-sm font-semibold">
-                            {page} / {totalPages || 1}
-                        </span>
+                            <span className="text-sm font-semibold text-slate-900 dark:text-white">
+                                {page} / {totalPages || 1}
+                            </span>
 
-                        <button
-                            disabled={page === totalPages}
-                            onClick={() => setPage((p) => p + 1)}
-                            className="px-3 py-1 rounded-lg disabled:opacity-40"
-                        >
-                            Next
-                        </button>
+                            <button
+                                disabled={page === totalPages}
+                                onClick={() => setPage((p) => p + 1)}
+                                className="px-3 py-1 rounded-lg disabled:opacity-40 hover:bg-purple-500/20 transition"
+                            >
+                                Next
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
 
             </div>
         </main>

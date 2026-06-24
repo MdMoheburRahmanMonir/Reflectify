@@ -1,5 +1,5 @@
-"use client";
-import { userSessionClient } from "@/lib/actions/sessionClient";
+"use client"; 
+import { SessionClient } from "@/lib/actions/sessionClient";
 import { AddLessonApi } from "@/lib/api/userapi/addlesson";
 import { redirect } from "next/navigation";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 export default function AddLesson() {
     const [image, setImage] = useState('');
-    const session = userSessionClient();
+    const session = SessionClient();
 
 
 

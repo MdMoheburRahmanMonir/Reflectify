@@ -1,7 +1,7 @@
-'use client';
-import { Navigation } from "@/components/profilepage/Navigation";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+
+import { Navigation } from "@/components/profilepage/Navigation"; 
+import { userSessionServer } from "@/lib/actions/session";
+import { redirect } from "next/navigation";
 
 const navigationItems = [
   { href: "/profile", label: "Home", subtitle: "Profile overview and recent activity" },
@@ -9,9 +9,12 @@ const navigationItems = [
   { href: "/profile/faq", label: "FAQ", subtitle: "Frequently asked questions and help" },
 ];
 
-export default function ProfileLayout({ children }) {
-  const pathname = usePathname();
-
+export default async function ProfileLayout({ children }) { 
+  const session = await userSessionServer();
+  console.log(session);
+  if (session?.user?.role !== 'admin' && session?.user?.role !== 'user') {
+    redirect('/login')
+  }
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <div className="mx-auto flex min-h-screen max-w-7xl">

@@ -1,24 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { userSessionClient } from "@/lib/actions/sessionClient";
+import { useEffect, useState } from "react"; 
 import { GetUserLessons } from "@/lib/api/userapi/getlessons";
 import UserTableData from "@/components/userDashboard/TableData";
 import { Database } from "lucide-react";
+import { SessionClient } from "@/lib/actions/sessionClient";
 
 
 export default function MyLessonsPage() {
-    const session = userSessionClient();
-
-
-    const [lessons, setLessons] = useState([]);
-
-
+    const session = SessionClient(); 
+    const [lessons, setLessons] = useState([]);  
     useEffect(() => {
-        if (!session?.user?.id) return;
-
-        let canceled = false;
-
+        if (!session?.user?.id) return; 
+        let canceled = false; 
         async function loadLessons() {
             try {
                 const data = await GetUserLessons(session.user.id);
