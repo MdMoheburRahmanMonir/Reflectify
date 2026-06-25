@@ -12,7 +12,7 @@ const AdminDashboardPage = async () => {
         redirect('/login')
     }
     const data = await TotalCollection(session);
-    console.log(data);
+    console.log(data, 'data is all api ');
     
     const lessonGrowth = data?.lessonGrowth ?? [];
     const userGrowth = data?.userGrowth ?? [];

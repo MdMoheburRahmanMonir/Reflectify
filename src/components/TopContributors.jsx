@@ -4,51 +4,24 @@ import { motion } from "framer-motion";
 import { FaTrophy, FaBookOpen } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi2";
 
-const contributors = [
-    {
-        id: 1,
-        name: "Sarah Rahman",
-        lessons: 24,
-        category: "Personal Growth",
-    },
-    {
-        id: 2,
-        name: "Mahir Hasan",
-        lessons: 19,
-        category: "Career & Mindset",
-    },
-    {
-        id: 3,
-        name: "Tasnia Akter",
-        lessons: 15,
-        category: "Relationships",
-    },
-    {
-        id: 4,
-        name: "Rahim Khan",
-        lessons: 12,
-        category: "Mistakes Learned",
-    },
-    {
-        id: 5,
-        name: "Nadia Jahan",
-        lessons: 8,
-        category: "Gratitude",
-    },
-    {
-        id: 6,
-        name: "Farhan Ali",
-        lessons: 6,
-        category: "Realization",
-    },
-];
-
 const getInitials = (name) =>
-    name
+    String(name || "")
         .split(" ")
+        .filter(Boolean)
         .map((word) => word[0])
         .join("")
         .toUpperCase();
+
+const normalizeContributors = (contributors = []) =>
+    Array.isArray(contributors)
+        ? contributors.map((user, index) => ({
+              _id: user._id || index,
+              userName: user.userName || user.name || "Unknown",
+              category: user.category || "Contributor",
+              userImage: user.userImage || user.avatar || "",
+              lessonCount: user.lessonCount ?? user.lessons ?? 0,
+          }))
+        : [];
 
 const container = {
     hidden: {},
@@ -73,7 +46,7 @@ const item = {
     },
 };
 
-export default function TopContributors() {
+export default function TopContributors({ TopContributors }) {
     return (
         <section className="relative py-24 px-5 overflow-hidden bg-gradient-to-b from-white via-violet-50/50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
 
@@ -122,9 +95,9 @@ export default function TopContributors() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true }}
-                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6"
+                    className="flex justify-center gap-6"
                 >
-                    {contributors.map((user, index) => {
+                    {normalizeContributors(TopContributors).map((user, index) => {
                         const topThree =
                             index === 0
                                 ? "from-yellow-400/70 to-orange-500/70"
@@ -136,40 +109,45 @@ export default function TopContributors() {
 
                         return (
                             <motion.div
-                                key={user.id}
+                                key={user._id}
                                 variants={item}
                                 whileHover={{
                                     y: -10,
                                     scale: 1.03,
                                 }}
-                                className="group relative"
+                                className="group relative w-52"
                             >
-                                {/* Glow */}
                                 <div
                                     className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${topThree} opacity-0 blur-xl transition duration-500 group-hover:opacity-30`}
                                 />
 
                                 <div className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl p-5 text-center shadow-lg">
 
-                                    {/* Rank */}
                                     <div
                                         className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-bold bg-gradient-to-r ${topThree}`}
                                     >
                                         #{index + 1}
                                     </div>
 
-                                    {/* Avatar */}
                                     <motion.div
                                         whileHover={{ rotate: 8 }}
-                                        className={`w-20 h-20 mx-auto mt-4 mb-4 rounded-full bg-gradient-to-r ${topThree} p-[2px]`}
+                                        className={`w-20 h-20 mx-auto mt-4 mb-4 rounded-full p-[2px] bg-gradient-to-r ${topThree}`}
                                     >
-                                        <div className="w-full h-full rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-lg font-bold text-slate-800 dark:text-white">
-                                            {getInitials(user.name)}
-                                        </div>
+                                        {user.userImage ? (
+                                            <img
+                                                src={user.userImage}
+                                                alt={user.userName}
+                                                className="w-full h-full rounded-full object-cover"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full mb-9 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-lg font-bold text-slate-800 dark:text-white">
+                                                {getInitials(user.userName)}
+                                            </div>
+                                        )}
                                     </motion.div>
 
-                                    <h3 className="font-bold text-slate-800 dark:text-white">
-                                        {user.name}
+                                    <h3 className="font-bold line-clamp-1 text-slate-800 dark:text-white">
+                                        {user.userName}
                                     </h3>
 
                                     <p className="text-xs text-slate-500 mt-1">
@@ -180,7 +158,7 @@ export default function TopContributors() {
                                         <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">
                                             <FaBookOpen className="text-violet-500" />
                                             <span className="font-bold">
-                                                {user.lessons}
+                                                {user.lessonCount}
                                             </span>
                                         </div>
                                     </div>

@@ -11,7 +11,31 @@ import {
   YAxis,
 } from 'recharts';
 
-const GrowthChart = ({ data , title, heading}) => {
+const GrowthChart = ({ data, title, heading }) => {
+  const normalizedData = Array.isArray(data)
+    ? data.map((item) => {
+        if (item?.date !== undefined && item?.count !== undefined) {
+          return item;
+        }
+
+        if (item?.createdLessons !== undefined && item?.count !== undefined) {
+          const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          const dayIndex = Number(item.count) - 1;
+          return {
+            ...item,
+            date: dayNames[dayIndex] ?? String(item.count),
+            count: item.createdLessons,
+          };
+        }
+
+        return {
+          date: item?.date ?? item?.label ?? item?.day ?? String(item?.count ?? item?.createdLessons ?? ''),
+          count: item?.count ?? item?.createdLessons ?? item?.value ?? 0,
+          ...item,
+        };
+      })
+    : [];
+
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -55,7 +79,7 @@ const GrowthChart = ({ data , title, heading}) => {
 
       <div style={{ width: '100%', aspectRatio: '1.618', maxWidth: 600, minHeight: 280 }}>
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+          <AreaChart data={normalizedData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="lessonGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={chartTheme.gradientStart} stopOpacity={0.8} />

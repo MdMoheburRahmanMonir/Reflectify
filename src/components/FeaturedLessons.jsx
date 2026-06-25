@@ -36,7 +36,7 @@ export default function FeaturedLessons({ featuredLessonsSeed }) {
                 {/* Loading State */}
                 <div className="grid w-7xl grid-cols-1 md:grid-cols-3 gap-2">
                     {
-                        featuredLessonsSeed?.slice(0, 5).map((lesson, index) => {
+                        featuredLessonsSeed?.slice(0, 6).map((lesson, index) => {
                             return (
                                 <motion.div
                                     key={lesson._id || index}

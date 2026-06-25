@@ -1,4 +1,4 @@
-"use client";
+
 
 import {
     FiBookOpen,
@@ -9,259 +9,136 @@ import {
     FiPlusCircle,
     FiBookmark,
 } from "react-icons/fi";
+import GrowthChart from '@/components/adminDashboard/GrowthChart';
+import Link from "next/link";
+import { AdminDashboardFullData } from "@/lib/api/userapi/Dashboard/AdminDashboardFullData";
+import { userSessionServer } from "@/lib/actions/session";
 
-const features = [
-    {
-        icon: FiBookOpen,
-        title: "My Lessons",
-        value: 24,
-        description: "Life lessons you've created and shared.",
-    },
-    {
-        icon: FiBookmark,
-        title: "Saved Lessons",
-        value: 48,
-        description: "Lessons you've bookmarked for later.",
-    },
-    {
-        icon: FiHeart,
-        title: "Total Likes",
-        value: "1.2K",
-        description: "Community engagement on your lessons.",
-    },
-    {
-        icon: FiStar,
-        title: "Premium Status",
-        value: "Active",
-        description: "Access premium content and features.",
-    },
-];
 
-const activity = [
-    {
-        title: "New lesson published",
-        subtitle: "The Power of Self Reflection",
-        date: "Today",
-    },
-    {
-        title: "Lesson added to favorites",
-        subtitle: "Lessons from Failure",
-        date: "Yesterday",
-    },
-    {
-        title: "Received 12 new likes",
-        subtitle: "Growth Mindset Journey",
-        date: "2 days ago",
-    },
-];
+const DashBoardPage = async () => {
+    const session = await userSessionServer();
+    const data = await AdminDashboardFullData(session);
+    console.log(data, 'public like is ');
 
-const DashBoardPage = () => {
+    const topContributors = data?.topContributors ?? [];
+    const UserContributorsResult = data?.Average ?? [];
+
     return (
-        <main className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 transition-colors duration-300 text-slate-900 dark:text-white p-4 md:p-8">
-
-            {/* Background Glow */}
-            <div className="pointer-events-none fixed top-0 left-0 w-72 h-72 bg-purple-500/20 blur-[120px] rounded-full" />
-            <div className="pointer-events-none fixed bottom-0 right-0 w-72 h-72 bg-blue-500/20 blur-[120px] rounded-full" />
-
-            <div className="relative max-w-7xl mx-auto space-y-8">
-
-                {/* Hero */}
-                <section className="overflow-hidden rounded-[32px] border border-slate-200/60 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl shadow-xl">
-
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-transparent to-blue-500/10" />
-
-                    <div className="relative p-8 md:p-12 flex flex-col lg:flex-row justify-between gap-8">
-
+        <main className="min-h-screen p-6 md:p-8  dark:text-white">
+            <div className="max-w-7xl mx-auto space-y-8">
+                <header className="rounded-3xl bg-gradient-to-r from-purple-500 to-blue-600 p-8 shadow-2xl text-white">
+                    <div className="flex items-center justify-between">
                         <div>
-                            <span className="inline-flex items-center gap-2 rounded-full border border-purple-300 dark:border-purple-500/20 bg-purple-50 dark:bg-purple-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-purple-600 dark:text-purple-300">
-                                Reflectify Dashboard
-                            </span>
-
-                            <h1 className="mt-5 text-4xl md:text-5xl font-bold leading-tight">
-                                Welcome Back to{" "}
-                                <span className="bg-gradient-to-r from-purple-500 to-blue-600 bg-clip-text text-transparent">
-                                    Reflectify
-                                </span>
-                            </h1>
-
-                            <p className="mt-4 max-w-2xl text-slate-600 dark:text-slate-300 leading-relaxed">
-                                Track your personal growth journey, manage life
-                                lessons, discover community wisdom, and monitor
-                                your learning progress from one beautiful
-                                dashboard.
-                            </p>
-                        </div>
-
-                        <div className="rounded-3xl bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 md:min-w-[280px] shadow-xl">
-
-                            <p className="uppercase tracking-widest text-sm text-white/70">
-                                Growth Progress
-                            </p>
-
-                            <h2 className="mt-4 text-4xl font-bold">
-                                82%
-                            </h2>
-
-                            <p className="mt-2 text-sm text-white/80">
-                                You've completed most of your learning journey
-                                goals this month.
-                            </p>
+                            <p className="text-sm uppercase tracking-[0.3em] text-white/90">User overview</p>
+                            <h1 className="mt-2 text-3xl font-bold">Your dashboard</h1>
+                            <p className="mt-2 text-sm text-white/80 max-w-xl">A focused view of your lessons, progress, and activity on Reflectify.</p>
                         </div>
                     </div>
-                </section>
+                </header>
 
-                {/* Stats Cards */}
-                <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-
-                    {features.map((feature, index) => (
-                        <div
-                            key={index}
-                            className="group rounded-[28px] border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-                        >
-                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white shadow-lg">
-                                <feature.icon size={24} />
-                            </div>
-
-                            <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
-                                {feature.title}
-                            </p>
-
-                            <h3 className="mt-2 text-3xl font-bold">
-                                {feature.value}
-                            </h3>
-
-                            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-                                {feature.description}
-                            </p>
-                        </div>
-                    ))}
-                </section>
-
-                {/* Content Grid */}
-                <section className="grid xl:grid-cols-[1.6fr_1fr] gap-6">
-
-                    {/* Activity */}
-                    <div className="rounded-[30px] border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl p-8">
-
-                        <div className="flex justify-between items-center">
-
+                <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    <article className="rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-xl shadow-slate-200/40 ring-1 ring-slate-200/50 transition hover:-translate-y-1 dark:border-slate-800/70 dark:bg-slate-950/90 dark:shadow-slate-950/40 dark:ring-slate-800/70">
+                        <div className="flex items-center justify-between gap-4">
                             <div>
-                                <p className="text-sm uppercase tracking-widest text-slate-500">
-                                    Recent Activity
+                                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                                    Total Lesson Created
                                 </p>
-
-                                <h2 className="mt-2 text-2xl font-bold">
-                                    Latest Updates
-                                </h2>
+                                <p className="mt-4 text-4xl font-bold text-slate-950 dark:text-white">{data.totalLessonCreated}</p>
                             </div>
-
-                            <button className="px-5 py-2 rounded-xl border border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 transition">
-                                View All
-                            </button>
                         </div>
+                        <div className="mt-6 flex items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
+                            <span>In this week you have created {data.totalLessonCreated} lessons</span>
+                        </div>
+                    </article>
 
-                        <div className="mt-8 space-y-4">
-                            {activity.map((item, idx) => (
-                                <div
-                                    key={idx}
-                                    className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/40 p-5"
-                                >
-                                    <div className="flex justify-between">
+                    <article className="rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-xl shadow-slate-200/40 ring-1 ring-slate-200/50 transition hover:-translate-y-1 dark:border-slate-800/70 dark:bg-slate-950/90 dark:shadow-slate-950/40 dark:ring-slate-800/70">
+                        <div className="flex items-center justify-between gap-4">
+                            <div>
+                                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                                    Total Saved Lesson
+                                </p>
+                                <p className="mt-4 text-4xl font-bold text-slate-950 dark:text-white">{data.TotalSavedLesson}</p>
+                            </div>
+                        </div>
+                        <div className="mt-6 flex items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
+                            <span>Lessons you have saved</span>
+                        </div>
+                    </article>
 
-                                        <div>
-                                            <h3 className="font-semibold">
-                                                {item.title}
-                                            </h3>
+                    <article className="rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-xl shadow-slate-200/40 ring-1 ring-slate-200/50 transition hover:-translate-y-1 dark:border-slate-800/70 dark:bg-slate-950/90 dark:shadow-slate-950/40 dark:ring-slate-800/70">
+                        <div className="flex items-center justify-between gap-4">
+                            <div>
+                                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+                                    Public Likes
+                                </p>
+                                <p className="mt-4 text-4xl font-bold text-slate-950 dark:text-white">{data?.PublicLike[0]?.totalLikes || 0}</p>
+                            </div>
+                        </div>
+                        <div className="mt-6 flex items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
+                            <span>Public Liked your lessons</span>
+                        </div>
+                    </article>
+                </section>
 
-                                            <p className="text-sm mt-1 text-slate-500 dark:text-slate-400">
-                                                {item.subtitle}
-                                            </p>
-                                        </div>
-
-                                        <span className="text-xs bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-300 px-3 py-1 rounded-full">
-                                            {item.date}
-                                        </span>
-                                    </div>
-                                </div>
-                            ))}
+                <section className="grid gap-6 xl:grid-cols-[1.55fr_1fr]">
+                    <div className="space-y-6">
+                        <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 p-6 shadow">
+                            <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Lesson growth</h2>
+                            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Recent lesson creation activity</p>
+                            <div className="mt-4">
+                                <GrowthChart data={UserContributorsResult} />
+                            </div>
                         </div>
                     </div>
 
-                    {/* Right Side */}
                     <div className="space-y-6">
-
-                        {/* Progress */}
-                        <div className="rounded-[30px] border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl p-8">
-
-                            <div className="flex justify-between">
-
-                                <div>
-                                    <p className="uppercase tracking-widest text-sm text-slate-500">
-                                        Monthly Progress
-                                    </p>
-
-                                    <h3 className="mt-2 text-xl font-bold">
-                                        Reflection Journey
-                                    </h3>
-                                </div>
-
-                                <FiTrendingUp
-                                    size={28}
-                                    className="text-purple-500"
-                                />
-                            </div>
-
-                            <div className="mt-6 h-4 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-                                <div className="h-full w-[82%] rounded-full bg-gradient-to-r from-purple-500 to-blue-600" />
-                            </div>
-
-                            <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">
-                                Keep sharing meaningful lessons to reach 100%
-                                growth this month.
-                            </p>
-                        </div>
-
-                        {/* Quick Actions */}
-                        <div className="rounded-[30px] border border-slate-200 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl p-8">
-
-                            <div className="flex justify-between">
-
-                                <div>
-                                    <p className="uppercase tracking-widest text-sm text-slate-500">
-                                        Quick Actions
-                                    </p>
-
-                                    <h3 className="mt-2 text-xl font-bold">
-                                        Get Started
-                                    </h3>
-                                </div>
-
-                                <FiBell
-                                    size={24}
-                                    className="text-blue-500"
-                                />
-                            </div>
+                        <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 p-6 shadow">
+                            <h2 className="text-2xl font-semibold  ">Top contributors</h2>
+                            <p className="mt-1 text-sm  ">Most active creators this week</p>
 
                             <div className="mt-6 space-y-3">
-
-                                <button className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-blue-600 py-3 text-white font-semibold shadow-lg">
-                                    <FiPlusCircle />
-                                    Add New Lesson
-                                </button>
-
-                                <button className="w-full rounded-xl border border-slate-300 dark:border-white/10 py-3 hover:bg-slate-100 dark:hover:bg-white/10 transition">
-                                    Manage My Lessons
-                                </button>
-
-                                <button className="w-full rounded-xl border border-slate-300 dark:border-white/10 py-3 hover:bg-slate-100 dark:hover:bg-white/10 transition">
-                                    Browse Public Lessons
-                                </button>
+                                {topContributors.length > 0 ? (
+                                    topContributors.map((contributor, index) => (
+                                        <div key={contributor._id || index} className="rounded-3xl border border-slate-200/80 bg-slate-50 p-4 dark:border-slate-800/80 dark:bg-slate-900/80">
+                                            <div className="flex items-center justify-between gap-4">
+                                                <div>
+                                                    <p className="text-lg font-semibold  ">{contributor.userName}</p>
+                                                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Lessons: {contributor.lessonCount}</p>
+                                                </div>
+                                                <div className="rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                                                    #{index + 1}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="rounded-3xl border border-slate-200/80 bg-slate-50 p-4 dark:border-slate-800/80 dark:bg-slate-900/80">
+                                        <p className="text-sm text-slate-500 dark:text-slate-400">No contributor data available.</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
+                        <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 p-6 shadow">
+                            <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Quick actions</h2>
+                            <div className="mt-4 space-y-3 gap-1 flex flex-col">
+                                <Link href='/profile' >
+                                    <button className="w-full rounded-xl border border-slate-200 dark:border-slate-800 py-3">View My Profile</button>
+                                </Link>
+                                <Link href='/user/dashboard/add-lesson' >
+                                    <button className="w-full rounded-xl bg-gradient-to-r from-purple-500 to-blue-600 py-3 text-white font-semibold">Add New Lesson</button>
+                                </Link>
+                                <Link href='/user/dashboard/my-lessons' >
+                                    <button className="w-full rounded-xl border border-slate-200 dark:border-slate-800 py-3">Manage My Lessons</button>
+                                </Link>
+                                <Link href='/user/dashboard/my-favorites' >
+                                    <button className="w-full rounded-xl border border-slate-200 dark:border-slate-800 py-3">View My Favorites</button>
+                                </Link>
+
+                            </div>
+                        </div>
                     </div>
                 </section>
-
             </div>
         </main>
     );

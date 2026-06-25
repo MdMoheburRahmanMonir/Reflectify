@@ -30,14 +30,14 @@ const ProfilePage = () => {
 
           <div className="px-8 pb-8 ">
             {/* Avatar */}
-            <div className="-mt-20 flex flex-col items-center">
+            <div className="-mt-20 flex flex-col items-center ">
               <img
                 src={
                   user?.image ||
                   "https://i.ibb.co/4pDNDk1/avatar.png"
                 }
                 alt={user?.name}
-                className="w-36 z-20 h-36 rounded-full border-4 border-white object-cover shadow-lg"
+                className="w-36 z-20 h-36 rounded-full border-4 bg-black/20 backdrop-blur-2xl border-white object-cover shadow-lg"
               />
 
               <h1 className="mt-4 text-3xl font-bold text-center">

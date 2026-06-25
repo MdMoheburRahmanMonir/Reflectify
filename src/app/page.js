@@ -10,14 +10,15 @@ import { GetFeaturedLesson } from "@/lib/api/HomePageApi/GetFeaturedLesson";
 export default async function Home() {
   const session = await userSessionServer();
   const featuredLessonsSeed = await GetFeaturedLesson(session)
+  console.log(featuredLessonsSeed, "Fetch data is ");
 
   return (
     <main className="">
       <HeroSwiperSection />
-      <FeaturedLessons featuredLessonsSeed={featuredLessonsSeed}  />
+      <FeaturedLessons featuredLessonsSeed={featuredLessonsSeed.featuredLessonsSeed}  />
       <WhyLifeMatters />
-      <TopContributors />
-      <MostSavedLessons />
+      <TopContributors TopContributors={featuredLessonsSeed.TopContributors} />
+      <MostSavedLessons MostSaveLesson={featuredLessonsSeed.MostSaveLesson} />
     </main>
   );
 }
