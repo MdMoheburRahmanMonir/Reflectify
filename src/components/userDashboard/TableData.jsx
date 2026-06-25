@@ -12,6 +12,8 @@ import { LessonDetails } from '../adminDashboard/LessonAction/LessonDetails';
 
 
 const UserTableData = ({ lessons }) => {
+    console.log(lessons, 'lessons is');
+    
     const [selectedKeys, setSelectedKeys] = useState(new Set());
     const [sortDescriptor, setSortDescriptor] = useState({
         column: "title",
@@ -76,6 +78,20 @@ const UserTableData = ({ lessons }) => {
                                 </Table.SortableColumnHeader>
                             )}
                         </Table.Column>
+                        <Table.Column allowsSorting id="likeCount">
+                            {({ sortDirection }) => (
+                                <Table.SortableColumnHeader className="text-lg line-clamp-1 font-bold text-black dark:text-white" sortDirection={sortDirection}>
+                                    Like Count
+                                </Table.SortableColumnHeader>
+                            )}
+                        </Table.Column>
+                        <Table.Column allowsSorting id="savedCount">
+                            {({ sortDirection }) => (
+                                <Table.SortableColumnHeader className="text-lg line-clamp-1 font-bold text-black dark:text-white" sortDirection={sortDirection}>
+                                    Saved Count
+                                </Table.SortableColumnHeader>
+                            )}
+                        </Table.Column>
 
                         <Table.Column className="text-lg font-bold text-black dark:text-white"  >Actions</Table.Column>
                     </Table.Header>
@@ -128,6 +144,24 @@ const UserTableData = ({ lessons }) => {
                                         className={`text-md`}
                                     >
                                         {lesson.privacy}
+                                    </Chip>
+                                </Table.Cell>
+                                <Table.Cell className="min-w-25">
+                                    <Chip
+                                        size="sm"
+                                        variant="soft"
+                                        className={`text-md`}
+                                    >
+                                        {lesson.likeCount}
+                                    </Chip>
+                                </Table.Cell>
+                                <Table.Cell className="min-w-25">
+                                    <Chip
+                                        size="sm"
+                                        variant="soft"
+                                        className={`text-md`}
+                                    >
+                                        {lesson.savedCount}
                                     </Chip>
                                 </Table.Cell>
 

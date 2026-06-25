@@ -4,18 +4,22 @@ import SavedButton from '@/components/SavedButton';
 import { userSessionServer } from '@/lib/actions/session';
 import { LessonDetails } from '@/lib/api/Lesson_Details_page/Lesson_Details_page';
 import { redirect } from 'next/navigation';
-import React from 'react';
-import { FaBookmark } from 'react-icons/fa';
+import React from 'react'; 
 
 
 const LessonDetailsPage = async ({ params }) => {
     const { id } = await params;
-    const session = await userSessionServer();
+    const session = await userSessionServer(); 
+    const lessonData = await LessonDetails(id, session);
+    console.log(lessonData, "Lesson data fetched from API");
     if (!session?.user) {
         redirect('/login');
     }
-
-    const lessonData = await LessonDetails(id, session);
+    if (lessonData?.accessLevel === 'premium') {
+        if (session?.user?.plan === 'free') {
+            redirect('/plans');
+        }
+    } 
 
     if (!lessonData) {
         return (
@@ -74,7 +78,7 @@ const LessonDetailsPage = async ({ params }) => {
                         <div className="absolute bottom-6 left-6 z-20 flex flex-wrap gap-3">
                             <LikeButton lesson={lessonData} session={session} />
                             <SavedButton lesson={lessonData} session={session} />
-                            <ReportButton lesson={lessonData} /> 
+                            <ReportButton lesson={lessonData} />
                         </div>
                     </div>
                 </div>
