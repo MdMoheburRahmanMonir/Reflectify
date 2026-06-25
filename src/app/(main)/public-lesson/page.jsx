@@ -8,9 +8,12 @@ import Link from "next/link";
 import LikeButton from "@/components/LikeButton";
 import { SessionClient } from '@/lib/actions/sessionClient';
 import SavedButton from '@/components/SavedButton';
+import { AllLessonForLessonPage } from '@/lib/api/Lesson_Details_page/AllLessonForLessonPage';
+import { authClient } from '@/lib/auth-client';
+import { RiResetLeftFill } from 'react-icons/ri';
 
 export default function PublicLessonPage() {
-    const session = SessionClient();
+    const { data: session } = authClient.useSession();
     const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -26,8 +29,9 @@ export default function PublicLessonPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await fetch("/api/lessons");
-                const data = await res.json();
+                const data = await AllLessonForLessonPage();
+                console.log(data);
+
                 setLessons(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("Error fetching lessons:", error);
@@ -88,9 +92,8 @@ export default function PublicLessonPage() {
                         Discover wisdom shared by our community members. Find lessons that inspire your growth.
                     </p>
                 </div>
-
-                {/* FILTER BAR (Gorgeous Glass UI) */}
-                <div className="mb-10 rounded-3xl border border-white/20 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-lg p-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+ 
+                <div className="mb-10 rounded-3xl border border-white/20 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-lg p-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-7">
 
                     <input
                         value={query}
@@ -155,9 +158,9 @@ export default function PublicLessonPage() {
                             setPrivacy("");
                             setPage(1);
                         }}
-                        className="rounded-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white font-semibold hover:scale-[1.02] transition col-span-1"
+                        className="rounded-2xl flex justify-center items-center gap-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white font-semibold hover:scale-[1.02] transition col-span-1"
                     >
-                        Reset
+                       <RiResetLeftFill className='size-5'/> Reset
                     </button>
                 </div>
 
@@ -253,7 +256,7 @@ export default function PublicLessonPage() {
                                             <SavedButton lesson={lesson} session={session} />
                                         </div>
 
-                                        <Link href={`/lesson-details/${lesson._id}`}>
+                                        <Link href={!session?.user ? `/login` : `/lesson-details/${lesson._id}`}>
                                             <button className="px-3 py-[5px] rounded-tl-2xl rounded-br-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white text-xs font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200">
                                                 View Details
                                             </button>

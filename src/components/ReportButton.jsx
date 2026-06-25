@@ -53,7 +53,7 @@ export function ReportButton({ lesson }) {
             reportImage: image || 'N/A',
         };
         // console.log(data);
-        
+
         try {
             const reportRes = await PostAReport(data)
             console.log(reportRes);

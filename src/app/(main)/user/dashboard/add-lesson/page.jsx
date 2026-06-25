@@ -51,6 +51,7 @@ export default function AddLesson() {
 
         const post = await AddLessonApi(data);
         if (post.insertedId) {
+            toast.success('Lesson submitted successfully!')
             redirect('/user/dashboard/my-lessons')
         }
         if (!post.insertedId) {

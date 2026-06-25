@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reflectify Client
+
+Reflectify is a personal growth and learning platform built with Next.js and React. It helps users discover, save, and share life lessons through a community-driven experience with premium access, user profiles, lessons management, and admin moderation.
+
+## Key Features
+
+- Home landing page with featured lessons, most saved lessons, community insights, and growth-focused content.
+- Public Lessons page with search, filtering, pagination, like/save actions, and premium access controls.
+- Authenticated user dashboard for managing personal lessons, editing lesson details, and deleting content.
+- Profile and edit-profile flows with image upload support.
+- Plan upgrade flow with Stripe checkout and premium plan validation.
+- Admin dashboard for moderation, reporting, and user/lesson management.
+- Theme toggle, responsive navigation, and mobile-friendly UI.
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- Tailwind CSS v4
+- HeroUI React
+- Better Auth with MongoDB adapter
+- Stripe payments
+- Framer Motion / Lottie for animations
+- React Toastify for notifications
+- Swiper for hero carousel
 
 ## Getting Started
 
-First, run the development server:
+### Install dependencies
+
+```bash
+cd reflectify-client
+npm install
+```
+
+### Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Build for production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+### Start production server
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Create a `.env.local` file in `reflectify-client` and add the following variables:
 
-## Deploy on Vercel
+```env
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_IMAGE_UPLOAD_API=<your_imgbb_api_key>
+MONGO_DB_URI=<your_mongodb_connection_string>
+GITHUB_CLIENT_ID=<your_github_oauth_client_id>
+GITHUB_CLIENT_SECRET=<your_github_oauth_client_secret>
+GOOGLE_CLIENT_ID=<your_google_oauth_client_id>
+GOOGLE_CLIENT_SECRET=<your_google_oauth_client_secret>
+STRIPE_SECRET_KEY=<your_stripe_secret_key>
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> Note: `NEXT_PUBLIC_BASE_URL` is used for API requests, and `STRIPE_SECRET_KEY` is used by Stripe server-side code.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+- `src/app` — Next.js app routes, layouts, and pages.
+- `src/components` — Reusable UI components, dashboard widgets, and feature sections.
+- `src/lib` — Auth setup, Stripe integration, API clients, and helper actions.
+- `src/app/api` — Stripe checkout API route.
+
+## Authentication
+
+This app uses `better-auth` for email/password plus GitHub and Google OAuth providers. New users are created with a default role of `user` and a default plan of `free`.
+
+## Deployment
+
+This project is ready to deploy on Vercel or any Node.js hosting provider that supports Next.js. Make sure the environment variables are configured in your deployment platform.
+
+## Notes
+
+- The client expects a backend that handles lessons, user profiles, and payment flows.
+- Premium lesson access is gated based on the user plan.
+- Image uploads use `imgbb` with `NEXT_PUBLIC_IMAGE_UPLOAD_API`.
+
+## Contact
+
+For support or questions, reach out to `mdmohiburrahmanmanik@gmail.com`.

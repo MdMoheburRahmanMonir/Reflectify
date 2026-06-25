@@ -48,23 +48,7 @@ const ManageUserPage = ({ users }) => {
                             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                                 Review accounts, promote contributors, and remove inactive or abusive users quickly.
                             </p>
-                        </div>
-                        <div className="grid gap-3 sm:grid-cols-2 lg:justify-end">
-                            <Link
-                                href="/admin/dashboard/manage-lessons"
-                                className="inline-flex items-center justify-center gap-2 rounded-3xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-600"
-                            >
-                                <FiShield className="h-5 w-5" />
-                                Manage lessons
-                            </Link>
-                            <Link
-                                href="/admin/dashboard/reported-lessons"
-                                className="inline-flex items-center justify-center gap-2 rounded-3xl   px-5 py-3 text-sm font-semibold  transition hover:border-violet-500 hover:bg-violet-50 shadow-lg dark:shadow-white/10 shadow-black/10  dark:bg-slate-900 "
-                            >
-                                <FiShield className="h-5 w-5" />
-                                Reported lessons
-                            </Link>
-                        </div>
+                        </div> 
                     </div>
                 </section>
 

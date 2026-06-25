@@ -1,15 +1,17 @@
 'use client'
 import { PublicLikeButton } from '@/lib/api/PulicLikeButton';
+import { redirect } from 'next/navigation';
 import React, { useState } from 'react';
 import { RiHeart3Fill, RiHeart3Line } from 'react-icons/ri';
+import { toast } from 'react-toastify';
 
 const LikeButton = ({ lesson, session }) => {
     const filter = lesson?.likes?.includes(session?.user?.id);
     const [likedLessons, setLikedLessons] = useState(filter || false);
     const [isSaving, setIsSaving] = useState(false);
 
-   
-    const totalLikes = 1200 + lesson?.likeCount;
+
+    const totalLikes = 1200 + (lesson?.likeCount || 0);
     const likeLabel = `${totalLikes} ${totalLikes === 1 ? 'like' : 'likes'}`;
 
     const data = {
@@ -19,6 +21,10 @@ const LikeButton = ({ lesson, session }) => {
     };
 
     const handelLike = async () => {
+        if (!session?.user) {
+            toast.error("You have to login First!")
+            redirect("/login")
+        }
         if (!lesson?._id || !session?.user?.id) return;
         setLikedLessons(prev => !prev);
         setIsSaving(true);

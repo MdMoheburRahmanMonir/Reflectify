@@ -1,14 +1,16 @@
 'use client'
 import { PublicSavedButton } from '@/lib/api/PublicSavedButton';
+import { redirect } from 'next/navigation';
 import React, { useState } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const SavedButton = ({ lesson, session }) => {
     const filter = lesson?.savedLesson?.includes(session?.user?.id);
     const [savedLesson, setSavedLesson] = useState(filter || false);
     const [isSaving, setIsSaving] = useState(false);
 
-    const savedCount = 1200 + lesson?.savedCount;
+    const savedCount = 1200 + (lesson?.savedCount || 0);
     const saveLabel = `${savedCount} ${savedCount === 1 ? 'save' : 'saves'}`;
  
     const data = {
@@ -18,6 +20,10 @@ const SavedButton = ({ lesson, session }) => {
     };
 
     const handleSaved = async () => {
+        if (!session?.user) {
+            toast.error("You have to login First!")
+            redirect("/login")
+        }
         if (!lesson?._id || !session?.user?.id) return;
         setSavedLesson(prev => !prev);
         setIsSaving(true);

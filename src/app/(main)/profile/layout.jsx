@@ -1,5 +1,5 @@
 
-import { Navigation } from "@/components/profilepage/Navigation"; 
+import { Navigation } from "@/components/profilepage/Navigation";
 import { userSessionServer } from "@/lib/actions/session";
 import { redirect } from "next/navigation";
 
@@ -9,10 +9,10 @@ const navigationItems = [
   { href: "/profile/faq", label: "FAQ", subtitle: "Frequently asked questions and help" },
 ];
 
-export default async function ProfileLayout({ children }) { 
+export default async function ProfileLayout({ children }) {
   const session = await userSessionServer();
   console.log(session);
-  if (session?.user?.role !== 'admin' && session?.user?.role !== 'user') {
+  if (!session?.user) {
     redirect('/login')
   }
   return (

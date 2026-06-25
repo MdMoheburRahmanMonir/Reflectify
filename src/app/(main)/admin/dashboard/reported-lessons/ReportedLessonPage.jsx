@@ -59,23 +59,7 @@ export const ReportedLessonPage = ({ reportedLessons }) => {
                             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                                 Resolve flagged lessons, inspect reports, and take action to keep the community safe.
                             </p>
-                        </div>
-                        <div className="grid gap-3 sm:grid-cols-2 lg:justify-end">
-                            <Link
-                                href="/admin/dashboard/manage-lessons"
-                                className="inline-flex items-center justify-center gap-2 rounded-3xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-600"
-                            >
-                                <FiShield className="h-5 w-5" />
-                                Manage lessons
-                            </Link>
-                            <Link
-                                href="/admin/dashboard/manage-users"
-                                className="inline-flex items-center justify-center gap-2 rounded-3xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-violet-500 hover:bg-violet-50 shadow-lg shadow-black/10 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:shadow-white/10"
-                            >
-                                <FiShield className="h-5 w-5" />
-                                Manage users
-                            </Link>
-                        </div>
+                        </div> 
                     </div>
                 </section>
 
