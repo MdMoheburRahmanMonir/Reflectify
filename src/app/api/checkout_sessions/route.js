@@ -29,6 +29,7 @@ export async function POST(request) {
             mode: 'subscription',
             metadata: { userUpgrade, userEmail },
             success_url: `${origin}/plans/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/plans/cancel`,
             // automatic_tax: { enabled: true },
         });
         return NextResponse.redirect(session.url, 303)
