@@ -8,7 +8,7 @@ const UnsavedButton = ({ lesson, session }) => {
     const [savedLesson, setSavedLesson] = useState(filter || false);
     const [isSaving, setIsSaving] = useState(false);
 
-    const savedCount = 1200 + lesson?.savedCount;
+    const savedCount = 342 + lesson?.savedCount;
     const saveLabel = `${savedCount} ${savedCount === 1 ? 'save' : 'saves'}`;
  
     const data = {

@@ -37,6 +37,13 @@ export default function ThemeToggle() {
     localStorage.setItem('theme-mode', next);
     applyMode(next);
   }
+  const [effect, setEffect] = useState(false);
+
+  useEffect(() => {
+    setEffect(true);
+  }, [])
+
+  if (!effect) return <div className="size-4"></div>;
 
   return (
     <button

@@ -3,17 +3,22 @@ import { TotalCollection } from '@/lib/api/adminApi/DashboardApi/TotalCollection
 import React from 'react';
 import GrowthChart from '@/components/adminDashboard/GrowthChart';
 import { redirect } from 'next/navigation';
-
-const userGrowth = [8, 14, 21, 27, 35, 42, 50, 55, 61, 70];
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth';
 
 const AdminDashboardPage = async () => {
-    const session = await userSessionServer();
+    const { token } = await auth.api.getToken({ headers: await headers()});
+    
+    
+    
+    const session = await userSessionServer(token);
     if (session?.user?.role !== 'admin') {
         redirect('/login')
     }
-    const data = await TotalCollection(session);
-    console.log(data, 'data is all api ');
-    
+    console.log(token,'Token From the admin', session, 'Session From the admin');
+    const data = await TotalCollection(session, token);
+    // console.log(data, 'data is all api ');
+
     const lessonGrowth = data?.lessonGrowth ?? [];
     const userGrowth = data?.userGrowth ?? [];
     const topContributors = data?.topContributors ?? [];
