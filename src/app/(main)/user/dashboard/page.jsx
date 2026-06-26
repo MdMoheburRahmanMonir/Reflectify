@@ -39,7 +39,7 @@ const DashBoardPage = async () => {
                                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                                     Total Lesson Created
                                 </p>
-                                <p className="mt-4 text-4xl font-bold text-slate-950 dark:text-white">{data.totalLessonCreated}</p>
+                                <p className="mt-4 text-4xl font-bold ">{data.totalLessonCreated}</p>
                             </div>
                         </div>
                         <div className="mt-6 flex items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
@@ -53,7 +53,7 @@ const DashBoardPage = async () => {
                                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                                     Total Saved Lesson
                                 </p>
-                                <p className="mt-4 text-4xl font-bold text-slate-950 dark:text-white">{data.TotalSavedLesson}</p>
+                                <p className="mt-4 text-4xl font-bold ">{data.TotalSavedLesson}</p>
                             </div>
                         </div>
                         <div className="mt-6 flex items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
@@ -67,7 +67,7 @@ const DashBoardPage = async () => {
                                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                                     Public Likes
                                 </p>
-                                <p className="mt-4 text-4xl font-bold text-slate-950 dark:text-white">{data?.PublicLike[0]?.totalLikes || 0}</p>
+                                <p className="mt-4 text-4xl font-bold ">{data?.PublicLike[0]?.totalLikes || 0}</p>
                             </div>
                         </div>
                         <div className="mt-6 flex items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">

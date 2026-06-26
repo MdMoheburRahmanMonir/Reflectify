@@ -33,7 +33,7 @@ const ManageUserPage = ({ users, token }) => {
     }, [searchTerm, roleFilter, sortDescriptor]);
 
     return (
-        <main className="min-h-screen text-slate-900 dark:text-white px-4 py-8">
+        <main className="min-h-screen  px-4 py-8">
             <div className="mx-auto max-w-7xl space-y-8">
                 <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-8 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
                     <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -78,15 +78,24 @@ const ManageUserPage = ({ users, token }) => {
                 <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-6 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div>
-                            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">User accounts</h2>
+                            <h2 className="text-2xl font-bold ">User accounts</h2>
                             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                                 Search, filter, and act on any user account in the system.
                             </p>
                         </div>
-                        <div className="grid gap-3 sm:grid-cols-[1fr_auto] lg:w-[520px]">
-
+                        <div className="grid gap-3 w-full sm:grid-cols-[1fr_auto] lg:w-[520px]">
                             <div className="relative">
-                                <FiFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <FiSearch className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="search"
+                                    value={searchTerm}
+                                    onChange={(event) => setSearchTerm(event.target.value)}
+                                    placeholder="Search name or email"
+                                    className="w-full rounded-3xl border border-slate-200 bg-white py-3 pl-12 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-violet-400"
+                                />
+                            </div>
+                            <div className="relative">
+                                <FiFilter className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                 <select
                                     value={roleFilter}
                                     onChange={(event) => setRoleFilter(event.target.value)}
@@ -100,16 +109,17 @@ const ManageUserPage = ({ users, token }) => {
                         </div>
                     </div>
 
-                    <div className="mt-8 overflow-x-auto">
+                    <div className="mt-8">
+                        <div className="hidden md:block overflow-x-auto">
                         <Table>
                             <Table.ScrollContainer>
                                 <Table.Content
                                     aria-label="User accounts"
-                                    className="min-w-[1000px]"
+                                    className="min-w-[950px]"
                                     sortDescriptor={sortDescriptor}
                                     onSortChange={setSortDescriptor}
                                 >
-                                    <Table.Header>
+                                    <Table.Header className="bg-slate-50 dark:bg-slate-900/80">
                                         <Table.Column allowsSorting isRowHeader id="name">
                                             {({ sortDirection }) => (
                                                 <Table.SortableColumnHeader className="text-sm " sortDirection={sortDirection}>
@@ -119,63 +129,63 @@ const ManageUserPage = ({ users, token }) => {
                                         </Table.Column>
                                         <Table.Column allowsSorting id="email" >
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader className="text-sm max-w-14" sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm " sortDirection={sortDirection}>
                                                     Email
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
                                         <Table.Column allowsSorting id="role">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm " sortDirection={sortDirection}>
                                                     Role
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
                                         <Table.Column allowsSorting id="plan">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader className="text-sm" sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm " sortDirection={sortDirection}>
                                                     Plan
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
                                         <Table.Column allowsSorting id="lessons">
                                             {({ sortDirection }) => (
-                                                <Table.SortableColumnHeader className="text-sm max-w-5" sortDirection={sortDirection}>
+                                                <Table.SortableColumnHeader className="text-sm " sortDirection={sortDirection}>
                                                     Lessons
                                                 </Table.SortableColumnHeader>
                                             )}
                                         </Table.Column>
-                                        <Table.Column className="text-sm" id="actions">Actions</Table.Column>
+                                        <Table.Column className="text-sm " id="actions">Actions</Table.Column>
                                     </Table.Header>
                                     <Table.Body>
                                         {filteredUsers.length > 0 ? (
                                             filteredUsers.map((user, ind) => (
-                                                <Table.Row key={ind}>
-                                                    <Table.Cell className={`overflow-hidden w-32`}>
+                                                <Table.Row key={ind} className="even:bg-slate-50 dark:even:bg-slate-900/80">
+                                                    <Table.Cell className="max-w-[220px]">
                                                         <p className="font-semibold ">{user.name}</p>
                                                         <p className="text-xs text-slate-500 dark:text-slate-400">{user.id}</p>
                                                     </Table.Cell>
-                                                    <Table.Cell className={`overflow-hidden max-w-16 min-w-10`} >{user.email}</Table.Cell>
-                                                    <Table.Cell className={`overflow-hidden w-32`}>
+                                                    <Table.Cell className="max-w-[220px] overflow-hidden text-ellipsis whitespace-nowrap">{user.email}</Table.Cell>
+                                                    <Table.Cell>
                                                         <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase ${user.role === "admin" ? "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
                                                             {user.role}
                                                         </span>
                                                     </Table.Cell>
-                                                    <Table.Cell className={`overflow-hidden w-32`}>
+                                                    <Table.Cell>
                                                         <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase ${user.plan === "premium" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
                                                             {user.plan}
                                                         </span>
                                                     </Table.Cell>
-                                                    <Table.Cell className={`overflow-hidden w-32`}>{user.lessons || 0}</Table.Cell>
-                                                    <Table.Cell className={`overflow-hidden w-32`}>
-                                                        <div className="flex items-center justify-center  ">
-                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
+                                                    <Table.Cell>{user.lessons || 0}</Table.Cell>
+                                                    <Table.Cell>
+                                                        <div className="flex flex-wrap items-center justify-center gap-2">
+                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full transition">
                                                                 <PlanUpdateByAdmin clientId={user._id} token={token}/>
                                                             </span>
-                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
+                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full transition">
                                                                 <RoleUpdateByAdmin clientId={user._id} token={token}/>
                                                             </span>
-                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
+                                                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full transition">
                                                                 <DeleteButton clientId={user._id} token={token}/>
                                                             </span>
                                                         </div>
@@ -184,23 +194,59 @@ const ManageUserPage = ({ users, token }) => {
                                             ))
                                         ) : (
                                             <Table.Row>
-                                                <Table.Cell>
+                                                <Table.Cell colSpan={6}>
                                                     <div className="px-4 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
                                                         No users found matching those filters.
                                                     </div>
                                                 </Table.Cell>
-                                                <Table.Cell />
-                                                <Table.Cell />
-                                                <Table.Cell />
-                                                <Table.Cell />
-                                                <Table.Cell />
-                                                <Table.Cell />
                                             </Table.Row>
                                         )}
                                     </Table.Body>
                                 </Table.Content>
                             </Table.ScrollContainer>
                         </Table>
+                        </div>
+
+                        <div className="flex flex-col gap-4 md:hidden">
+                            {filteredUsers.length > 0 ? (
+                                filteredUsers.map((user, ind) => (
+                                    <div key={ind} className="rounded-3xl border border-slate-200/70 bg-slate-50 p-4 shadow-sm dark:border-white/10 dark:bg-slate-900/80">
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex flex-col gap-1">
+                                                <p className="text-lg font-semibold text-slate-950 dark:text-white">{user.name}</p>
+                                                <p className="text-sm text-slate-500 dark:text-slate-400 break-all">{user.email}</p>
+                                            </div>
+                                            <div className="flex flex-wrap gap-2 text-xs font-semibold uppercase">
+                                                <span className={`rounded-full px-3 py-1 ${user.role === "admin" ? "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
+                                                    {user.role}
+                                                </span>
+                                                <span className={`rounded-full px-3 py-1 ${user.plan === "premium" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200" : "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-300"}`}>
+                                                    {user.plan}
+                                                </span>
+                                                <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-700 dark:bg-slate-900 dark:text-slate-300">
+                                                    Lessons: {user.lessons || 0}
+                                                </span>
+                                            </div>
+                                            <div className="flex flex-wrap gap-3">
+                                                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-slate-900 shadow-sm transition dark:bg-slate-950 dark:text-white">
+                                                    <PlanUpdateByAdmin clientId={user._id} token={token}/>
+                                                </span>
+                                                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-slate-900 shadow-sm transition dark:bg-slate-950 dark:text-white">
+                                                    <RoleUpdateByAdmin clientId={user._id} token={token}/>
+                                                </span>
+                                                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-slate-900 shadow-sm transition dark:bg-slate-950 dark:text-white">
+                                                    <DeleteButton clientId={user._id} token={token}/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="rounded-3xl border border-slate-200/70 bg-slate-50 p-6 text-center text-sm text-slate-500 dark:border-white/10 dark:bg-slate-900/80 dark:text-slate-400">
+                                    No users found matching those filters.
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </section>
             </div>

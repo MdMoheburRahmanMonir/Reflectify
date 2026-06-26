@@ -75,7 +75,7 @@ const ManageLesson = ({ lessons, token }) => {
                 <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-6 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="flex-1">
-                            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Lessons list</h2>
+                            <h2 className="text-2xl font-bold ">Lessons list</h2>
                             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                                 Filter, search, and take action on lesson submissions.
                             </p>
@@ -90,7 +90,7 @@ const ManageLesson = ({ lessons, token }) => {
                                     value={searchTerm}
                                     onChange={(event) => setSearchTerm(event.target.value)}
                                     placeholder="Search by title, author, or category"
-                                    className="w-full rounded-3xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                    className="w-full rounded-3xl border border-slate-200  py-3 pl-10 pr-4 text-sm  outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900  dark:focus:border-violet-400"
                                 />
                             </label>
                             <div className="relative">
@@ -98,7 +98,7 @@ const ManageLesson = ({ lessons, token }) => {
                                 <select
                                     value={statusFilter}
                                     onChange={(event) => setStatusFilter(event.target.value)}
-                                    className="w-full rounded-3xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                    className="w-full rounded-3xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900  dark:focus:border-violet-400"
                                 >
                                     <option value="all">All lessons</option>
                                     <option value="pending">Pending</option>
@@ -112,7 +112,7 @@ const ManageLesson = ({ lessons, token }) => {
                                     setSearchTerm("");
                                     setStatusFilter("all");
                                 }}
-                                className="inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-violet-500 hover:bg-white hover:text-violet-600 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                                className="inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-semibold transition hover:border-violet-500 hover:bg-white hover:text-violet-600 dark:border-white/10 dark:bg-slate-900  dark:hover:bg-slate-800"
                             >
                                 Reset
                             </button>

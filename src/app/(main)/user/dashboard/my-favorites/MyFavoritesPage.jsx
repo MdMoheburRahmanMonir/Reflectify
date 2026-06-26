@@ -3,8 +3,8 @@
 import { useMemo, useState } from 'react';
 import { Button, Chip, Table } from '@heroui/react';
 import { FiSearch, FiFilter, FiTrash2 } from 'react-icons/fi';
-import { RiResetLeftLine } from 'react-icons/ri'; 
-import { LessonDetails } from '@/components/adminDashboard/LessonAction/LessonDetails';  
+import { RiResetLeftLine } from 'react-icons/ri';
+import { LessonDetails } from '@/components/adminDashboard/LessonAction/LessonDetails';
 import { authClient } from '@/lib/auth-client';
 import UnsavedButton from '@/components/userDashboard/MyFavoritePage/MyFavoriteDeleteButton';
 
@@ -14,7 +14,7 @@ const statusColorMap = {
     rejected: 'danger',
 };
 
-export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
+export const MyFavoritesPage = ({ savedLessons = [], token }) => {
     const { data: session } = authClient.useSession();
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('all');
@@ -101,14 +101,14 @@ export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
                 <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div>
-                            <h2 className="text-[20px] font-bold text-slate-900 dark:text-white">Your Favorites</h2>
+                            <h2 className="text-[20px] font-bold ">Your Favorites</h2>
                             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                                 View and manage all your saved lessons with filtering options.
                             </p>
                         </div>
-                        <div className="grid gap-2 sm:grid-cols-[1fr_auto_auto_auto] lg:w-[800px]">
+                        <div className="grid gap-3 grid-cols-1 md:grid-cols-[1fr_auto_auto_auto] lg:w-[800px]">
                             <label className="relative block">
-                                <span className="sr-only">Search lessons</span>
+                                <span className="sr-only hidden">Search lessons</span>
                                 <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                                     <FiSearch className="h-4 w-4" />
                                 </span>
@@ -116,7 +116,7 @@ export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
                                     value={searchTerm}
                                     onChange={(event) => setSearchTerm(event.target.value)}
                                     placeholder="Search by title"
-                                    className="w-full rounded-3xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                    className="shadow-lg  dark:shadow-white/15 shadow-black/15 w-full pl-10 rounded-full  px-4 py-2 bg-white dark:bg-slate-900"
                                 />
                             </label>
 
@@ -125,11 +125,11 @@ export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
                                 <select
                                     value={categoryFilter}
                                     onChange={(event) => setCategoryFilter(event.target.value)}
-                                    className="w-full rounded-3xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                    className="shadow-lg dark:shadow-white/15 shadow-black/15 w-full pl-10 rounded-full  px-4 py-2 bg-white dark:bg-slate-900"
                                 >
-                                    <option value="all">All categories</option>
+                                    <option value="all" className='text-slate-900 dark:text-white'>All categories</option>
                                     {categories.map((cat) => (
-                                        <option key={cat} value={cat}>
+                                        <option key={cat} value={cat} className='text-slate-900 dark:text-white'>
                                             {cat}
                                         </option>
                                     ))}
@@ -141,11 +141,11 @@ export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
                                 <select
                                     value={emotionalToneFilter}
                                     onChange={(event) => setEmotionalToneFilter(event.target.value)}
-                                    className="w-full rounded-3xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                    className="shadow-lg  dark:shadow-white/15 shadow-black/15 w-full pl-10 rounded-full  px-4 py-2 bg-white dark:bg-slate-900"
                                 >
-                                    <option value="all">All tones</option>
+                                    <option value="all" className='text-black dark:text-white'>All tones</option>
                                     {emotionalTones.map((tone) => (
-                                        <option key={tone} value={tone}>
+                                        <option key={tone} value={tone} className='text-black dark:text-white'>
                                             {tone}
                                         </option>
                                     ))}
@@ -159,7 +159,7 @@ export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
                                     setCategoryFilter('all');
                                     setEmotionalToneFilter('all');
                                 }}
-                                className="inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-violet-500 hover:bg-white hover:text-violet-600 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                                className="inline-flex  items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold transition hover:border-violet-500 hover:bg-white hover:text-violet-600 dark:border-white/50 shadow-lg dark:shadow-white/15 shadow-black/15 w-full  dark:bg-slate-900 "
                             >
                                 <RiResetLeftLine />
                             </button>
@@ -167,80 +167,111 @@ export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
                     </div>
 
                     <div className="mt-6 overflow-x-auto">
-                        <Table>
-                            <Table.ScrollContainer>
-                                <Table.Content aria-label="Saved lessons" className="min-w-[1000px]">
-                                    <Table.Header>
-                                        <Table.Column isRowHeader id="title" className="min-w-[240px]">
-                                            Lesson Title
-                                        </Table.Column>
-                                        <Table.Column id="category" className="min-w-[140px]">
-                                            Category
-                                        </Table.Column>
-                                        <Table.Column id="emotionalTone" className="min-w-[140px]">
-                                            Emotional Tone
-                                        </Table.Column>
-                                        <Table.Column id="accessLevel" className="min-w-[120px]">
-                                            Access
-                                        </Table.Column>
-                                        <Table.Column id="description" className="min-w-[200px]">
-                                            Description
-                                        </Table.Column>
-                                        <Table.Column id="actions" className="min-w-[300px]">
-                                            Actions
-                                        </Table.Column>
-                                    </Table.Header>
-                                    <Table.Body>
-                                        {filteredLessons.length > 0 ? (
-                                            filteredLessons.map((lesson) => (
-                                                <Table.Row
-                                                    key={lesson._id || lesson.id}
-                                                    className="transition hover:bg-slate-50 dark:hover:bg-slate-900"
-                                                >
-                                                    <Table.Cell className="font-medium text-slate-700 dark:text-slate-200 truncate">
-                                                        {lesson.title || 'Untitled'}
-                                                    </Table.Cell>
-                                                    <Table.Cell className="text-slate-600 dark:text-slate-300">
-                                                        <Chip size="sm" variant="flat" className="text-xs">
-                                                            {lesson.category || 'N/A'}
-                                                        </Chip>
-                                                    </Table.Cell>
-                                                    <Table.Cell className="text-slate-600 dark:text-slate-300">
-                                                        <Chip size="sm" variant="flat" className="text-xs">
-                                                            {lesson.emotionalTone || 'N/A'}
-                                                        </Chip>
-                                                    </Table.Cell>
-                                                    <Table.Cell className="text-sm text-slate-600 dark:text-slate-300">
-                                                        {lesson.accessLevel || 'Public'}
-                                                    </Table.Cell>
-                                                    <Table.Cell className="text-sm text-slate-600 dark:text-slate-300 truncate">
-                                                        {lesson.description ? lesson.description.substring(0, 50) + '...' : 'N/A'}
-                                                    </Table.Cell>
-                                                    <Table.Cell className={`w-full`}>
-                                                        <div className="flex items-center w-full gap-3">
-                                                            <span className="w-7 h-7 rounded-full flex justify-center items-center">
-                                                                <LessonDetails data={lesson} token={token} />
-                                                            </span>
-                                                            <span className="w-7 h-7 rounded-full flex justify-center items-center">
-                                                                <UnsavedButton lesson={lesson} session={session} token={token} />
-                                                            </span>
+                        <div className="hidden md:block">
+                            <Table>
+                                <Table.ScrollContainer>
+                                    <Table.Content aria-label="Saved lessons" className="min-w-[850px]">
+                                        <Table.Header>
+                                            <Table.Column isRowHeader id="title" className="min-w-[200px]">
+                                                Lesson Title
+                                            </Table.Column>
+                                            <Table.Column id="category" className="min-w-[120px]">
+                                                Category
+                                            </Table.Column>
+                                            <Table.Column id="emotionalTone" className="min-w-[120px]">
+                                                Emotional Tone
+                                            </Table.Column>
+                                            <Table.Column id="accessLevel" className="min-w-[100px]">
+                                                Access
+                                            </Table.Column>
+                                            <Table.Column id="description" className="min-w-[160px]">
+                                                Description
+                                            </Table.Column>
+                                            <Table.Column id="actions" className="min-w-[180px]">
+                                                Actions
+                                            </Table.Column>
+                                        </Table.Header>
+                                        <Table.Body>
+                                            {filteredLessons.length > 0 ? (
+                                                filteredLessons.map((lesson) => (
+                                                    <Table.Row
+                                                        key={lesson._id || lesson.id}
+                                                        className="transition hover:bg-slate-50 dark:hover:bg-slate-900"
+                                                    >
+                                                        <Table.Cell className="font-medium text-slate-700 dark:text-slate-200 truncate">
+                                                            {lesson.title || 'Untitled'}
+                                                        </Table.Cell>
+                                                        <Table.Cell className="text-slate-600 dark:text-slate-300">
+                                                            <Chip size="sm" variant="flat" className="text-xs">
+                                                                {lesson.category || 'N/A'}
+                                                            </Chip>
+                                                        </Table.Cell>
+                                                        <Table.Cell className="text-slate-600 dark:text-slate-300">
+                                                            <Chip size="sm" variant="flat" className="text-xs">
+                                                                {lesson.emotionalTone || 'N/A'}
+                                                            </Chip>
+                                                        </Table.Cell>
+                                                        <Table.Cell className="text-sm text-slate-600 dark:text-slate-300">
+                                                            {lesson.accessLevel || 'Public'}
+                                                        </Table.Cell>
+                                                        <Table.Cell className="text-sm text-slate-600 dark:text-slate-300 truncate">
+                                                            {lesson.description ? lesson.description.substring(0, 50) + '...' : 'N/A'}
+                                                        </Table.Cell>
+                                                        <Table.Cell className={`w-full`}>
+                                                            <div className="flex items-center w-full gap-3">
+                                                                <span className="w-7 h-7 rounded-full flex justify-center items-center">
+                                                                    <LessonDetails data={lesson} token={token} />
+                                                                </span>
+                                                                <span className="w-7 h-7 rounded-full flex justify-center items-center">
+                                                                    <UnsavedButton lesson={lesson} session={session} token={token} />
+                                                                </span>
+                                                            </div>
+                                                        </Table.Cell>
+                                                    </Table.Row>
+                                                ))
+                                            ) : (
+                                                <Table.Row>
+                                                    <Table.Cell colSpan={6}>
+                                                        <div className="px-4 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
+                                                            No saved lessons match your current filters.
                                                         </div>
                                                     </Table.Cell>
                                                 </Table.Row>
-                                            ))
-                                        ) : (
-                                            <Table.Row>
-                                                <Table.Cell colSpan={6}>
-                                                    <div className="px-4 py-10 text-center text-sm text-slate-500 dark:text-slate-400">
-                                                        No saved lessons match your current filters.
-                                                    </div>
-                                                </Table.Cell>
-                                            </Table.Row>
-                                        )}
-                                    </Table.Body>
-                                </Table.Content>
-                            </Table.ScrollContainer>
-                        </Table>
+                                            )}
+                                        </Table.Body>
+                                    </Table.Content>
+                                </Table.ScrollContainer>
+                            </Table>
+                        </div>
+                        <div className="md:hidden grid gap-4">
+                            {filteredLessons.length > 0 ? (
+                                filteredLessons.map((lesson) => (
+                                    <div key={lesson._id || lesson.id} className="rounded-3xl border border-slate-200/70 bg-slate-50 p-4 shadow-sm dark:border-white/10 dark:bg-slate-900/80">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="min-w-0">
+                                                <h3 className="text-base font-semibold text-slate-900 dark:text-white truncate">{lesson.title || 'Untitled'}</h3>
+                                                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 truncate">{lesson.category || 'Category'}</p>
+                                                <p className="text-sm text-slate-500 dark:text-slate-400">{lesson.emotionalTone || 'Tone'}</p>
+                                            </div>
+                                            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                                                {lesson.accessLevel || 'Public'}
+                                            </span>
+                                        </div>
+                                        <p className="mt-3 text-sm text-slate-600 dark:text-slate-300 line-clamp-2">
+                                            {lesson.description ? lesson.description.substring(0, 80) + '...' : 'No description available.'}
+                                        </p>
+                                        <div className="mt-4 flex flex-wrap gap-3">
+                                            <LessonDetails data={lesson} token={token} />
+                                            <UnsavedButton lesson={lesson} session={session} token={token} />
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="rounded-3xl border border-slate-200/70 bg-slate-50 p-6 text-center text-sm text-slate-500 dark:border-white/10 dark:bg-slate-900/80 dark:text-slate-400">
+                                    No saved lessons match your current filters.
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </section>
             </div>

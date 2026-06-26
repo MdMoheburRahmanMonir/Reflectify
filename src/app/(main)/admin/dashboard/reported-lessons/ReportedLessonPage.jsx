@@ -78,7 +78,7 @@ export const ReportedLessonPage = ({ reportedLessons, session, token }) => {
                 <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div>
-                            <h2 className="text-[20px] font-bold text-slate-900 dark:text-white">Reported lessons table</h2>
+                            <h2 className="text-[20px] font-bold  ">Reported lessons table</h2>
                             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                                 Filter by status, search reports, and inspect each issue before resolving.
                             </p>
@@ -93,7 +93,7 @@ export const ReportedLessonPage = ({ reportedLessons, session, token }) => {
                                     value={searchTerm}
                                     onChange={(event) => setSearchTerm(event.target.value)}
                                     placeholder="Search by lesson title"
-                                    className="w-full rounded-3xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                    className="w-full rounded-3xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-4 text-sm  outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:focus:border-violet-400"
                                 />
                             </label>
 
@@ -102,7 +102,7 @@ export const ReportedLessonPage = ({ reportedLessons, session, token }) => {
                                 <select
                                     value={countFilter}
                                     onChange={(event) => setCountFilter(event.target.value)}
-                                    className="w-full rounded-3xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:focus:border-violet-400"
+                                    className="w-full rounded-3xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-violet-500 focus:ring-2 focus:ring-violet-200 dark:border-white/10 dark:bg-slate-900  dark:focus:border-violet-400"
                                 >
                                     <option value="all">All counts</option>
                                     <option value="1">1</option>
@@ -119,7 +119,7 @@ export const ReportedLessonPage = ({ reportedLessons, session, token }) => {
                                     setStatusFilter("all");
                                     setCountFilter("all");
                                 }}
-                                className="inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-violet-500 hover:bg-white hover:text-violet-600 dark:border-white/10 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                                className="inline-flex items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold   transition hover:border-violet-500 hover:bg-white hover:text-violet-600 dark:border-white/10 dark:bg-slate-900  dark:hover:bg-slate-800"
                             >
                                 <RiResetLeftLine />
                             </button>

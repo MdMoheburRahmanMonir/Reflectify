@@ -25,9 +25,9 @@ const AdminDashboardPage = async () => {
     const maxUserCount = Math.max(1, ...userGrowth.map((item) => item?.count ?? 0));
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
             <NavigationDrowerForAdmin />
-            <header className="rounded-3xl bg-gradient-to-r from-purple-500 to-blue-500 p-8 shadow-2xl shadow-slate-900/20 text-white  ">
+            <header className="rounded-3xl bg-gradient-to-r from-purple-500 to-blue-500 p-6 sm:p-8 shadow-2xl shadow-slate-900/20 text-white">
                 <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                     <div>
                         <p className="text-sm uppercase tracking-[0.3em] text-cyan-100/90">Admin overview</p>
@@ -44,9 +44,9 @@ const AdminDashboardPage = async () => {
                 </div>
             </header>
 
-            <section className="grid gap-6 xl:grid-cols-4 lg:grid-cols-2">
+            <section className="grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
 
-                <article className="rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-xl shadow-slate-200/40 ring-1 ring-slate-200/50 transition hover:-translate-y-1 dark:border-slate-800/70 dark:bg-slate-950/90 dark:shadow-slate-950/40 dark:ring-slate-800/70">
+                <article className="rounded-3xl border border-slate-200/70 bg-white/90 p-5 sm:p-6 shadow-xl shadow-slate-200/40 ring-1 ring-slate-200/50 transition hover:-translate-y-1 dark:border-slate-800/70 dark:bg-slate-950/90 dark:shadow-slate-950/40 dark:ring-slate-800/70">
                     <div className="flex items-center justify-between gap-4">
                         <div>
                             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
@@ -103,11 +103,11 @@ const AdminDashboardPage = async () => {
                 </article>
             </section>
 
-            <section className="grid gap-2 max-w-4xl xl:grid-cols-[1fr_0.8fr]">
+            <section className="grid gap-6 lg:grid-cols-2">
                 <GrowthChart data={lessonGrowth} title={"Lesson Growth"} heading={`Weekly lesson activity`} />
                 <GrowthChart data={userGrowth} title={"User Growth"} heading={`Weekly user activity`} />
             </section>
-            <section className="grid gap-6 xl:grid-cols-[1fr_0.8fr]">
+            <section className="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
                 <div className="rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-xl shadow-slate-200/40 ring-1 ring-slate-200/50 dark:border-slate-800/70 dark:bg-slate-950/90 dark:shadow-slate-950/40 dark:ring-slate-800/70">
                     <div className="flex items-center justify-between gap-4">
                         <div>
@@ -121,12 +121,12 @@ const AdminDashboardPage = async () => {
                         {topContributors.length > 0 ? (
                             topContributors.map((contributor, index) => (
                                 <div key={contributor._id || index} className="rounded-3xl border border-slate-200/80 bg-slate-50 p-4 dark:border-slate-800/80 dark:bg-slate-900/80">
-                                    <div className="flex items-center justify-between gap-4">
+                                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                         <div>
                                             <p className="text-lg font-semibold text-slate-950 dark:text-white">{contributor.userName}</p>
                                             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Lessons: {contributor.lessonCount}</p>
                                         </div>
-                                        <div className="rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                                        <div className="self-start sm:self-auto rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
                                             #{index + 1}
                                         </div>
                                     </div>

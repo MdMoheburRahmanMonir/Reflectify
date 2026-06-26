@@ -34,7 +34,7 @@ const UnsavedButton = ({ lesson, session, token }) => {
             type="button"
             onClick={handleSaved}
             disabled={isSaving}
-            className="inline-flex items-center gap-2 rounded-full border   px-2 py-1 text-xs font-medium text-neutral-700 shadow-sm transition hover:border-red-500  "
+            className="inline-flex items-center gap-2 rounded-full px-2 py-1 text-xs font-medium text-neutral-700 shadow-sm transition hover:border-red-500  "
         >
             {savedLesson ? (
                 <FaBookmark className="h-5 w-5 text-purple-500" />
