@@ -14,7 +14,7 @@ const statusColorMap = {
     rejected: 'danger',
 };
 
-export const MyFavoritesPage = ({ savedLessons = [] }) => {
+export const MyFavoritesPage = ({ savedLessons = [] , token}) => {
     const { data: session } = authClient.useSession();
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('all');
@@ -48,7 +48,7 @@ export const MyFavoritesPage = ({ savedLessons = [] }) => {
     const handleRemoveFavorite = async (lessonId) => {
         try {
             // TODO: Implement API call to remove from favorites
-            console.log('Removing favorite:', lessonId);
+            // console.log('Removing favorite:', lessonId);
         } catch (error) {
             console.error('Error removing favorite:', error);
         }
@@ -219,10 +219,10 @@ export const MyFavoritesPage = ({ savedLessons = [] }) => {
                                                     <Table.Cell className={`w-full`}>
                                                         <div className="flex items-center w-full gap-3">
                                                             <span className="w-7 h-7 rounded-full flex justify-center items-center">
-                                                                <LessonDetails data={lesson} />
+                                                                <LessonDetails data={lesson} token={token} />
                                                             </span>
                                                             <span className="w-7 h-7 rounded-full flex justify-center items-center">
-                                                                <UnsavedButton lesson={lesson} session={session} />
+                                                                <UnsavedButton lesson={lesson} session={session} token={token} />
                                                             </span>
                                                         </div>
                                                     </Table.Cell>

@@ -11,8 +11,7 @@ import PrivacyEditPage from './PrivacyEditPage';
 import { LessonDetails } from '../adminDashboard/LessonAction/LessonDetails';
 
 
-const UserTableData = ({ lessons }) => {
-    console.log(lessons, 'lessons is');
+const UserTableData = ({ lessons,session, token }) => { 
     
     const [selectedKeys, setSelectedKeys] = useState(new Set());
     const [sortDescriptor, setSortDescriptor] = useState({
@@ -169,16 +168,16 @@ const UserTableData = ({ lessons }) => {
                                 <Table.Cell>
                                     <div className="flex items-center group gap-3 justify-center text-center">
                                         <span className=" w-7 h-7 rounded-full flex justify-center items-center">
-                                            <PrivacyEditPage lesson={lesson} />
+                                            <PrivacyEditPage lesson={lesson} session={session} token={token} />
                                         </span>
                                         <span className="w-7 h-7 rounded-full flex justify-center items-center">
-                                            <LessonDetails data={lesson} />
+                                            <LessonDetails data={lesson} token={token} />
                                         </span>
                                         <span className="w-7 h-7 rounded-full flex justify-center items-center">
-                                            <EditFormUserDashboard lesson={lesson} />
+                                            <EditFormUserDashboard lesson={lesson} token={token}/>
                                         </span>
                                         <span className="pt-1 w-7 h-7 rounded-full flex justify-center items-center">
-                                            <DeleteButton lesson={lesson} />
+                                            <DeleteButton data={lesson} token={token}/>
                                         </span>
 
                                     </div>

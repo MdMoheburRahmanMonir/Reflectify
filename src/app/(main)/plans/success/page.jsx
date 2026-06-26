@@ -8,8 +8,7 @@ import { subscriptionUpdate } from '@/lib/api/subscriptionUpdate';
 export default async function Success({ searchParams }) {
     const { session_id } = await searchParams
     const session = await userSessionServer();
-    const userId = session?.user?.id;
-    console.log(userId);
+    const userId = session?.user?.id; 
 
     if (!session_id) {
         throw new Error('Please provide a valid session_id (`cs_test_...`)')
@@ -31,12 +30,10 @@ export default async function Success({ searchParams }) {
             id: userId,
             plan: metadata.userUpgrade,
             userEmail: metadata.userEmail,
-        }
-        console.log(data);
+        } 
 
         const update = await subscriptionUpdate(data)
-        const res = await update;
-        console.log(res);
+        const res = await update; 
 
         return (
             <main className="min-h-screen bg-gray-50 flex items-center justify-center px-6">

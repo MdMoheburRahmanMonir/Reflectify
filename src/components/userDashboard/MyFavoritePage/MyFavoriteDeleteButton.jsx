@@ -3,14 +3,15 @@ import { PublicSavedButton } from '@/lib/api/PublicSavedButton';
 import React, { useState } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 
-const UnsavedButton = ({ lesson, session }) => {
+const UnsavedButton = ({ lesson, session, token }) => {
+
     const filter = lesson?.savedLesson?.includes(session?.user?.id);
     const [savedLesson, setSavedLesson] = useState(filter || false);
     const [isSaving, setIsSaving] = useState(false);
 
     const savedCount = 342 + lesson?.savedCount;
     const saveLabel = `${savedCount} ${savedCount === 1 ? 'save' : 'saves'}`;
- 
+
     const data = {
         saverId: session?.user?.id,
         lessonId: lesson?._id,
@@ -22,7 +23,7 @@ const UnsavedButton = ({ lesson, session }) => {
         setSavedLesson(prev => !prev);
         setIsSaving(true);
         try {
-            await PublicSavedButton(data);
+            await PublicSavedButton(data, token);
         } finally {
             setIsSaving(false);
         }
@@ -39,7 +40,7 @@ const UnsavedButton = ({ lesson, session }) => {
                 <FaBookmark className="h-5 w-5 text-purple-500" />
             ) : (
                 <FaRegBookmark className="h-5 w-5 text-neutral-500" />
-            )} 
+            )}
         </button>
     );
 };

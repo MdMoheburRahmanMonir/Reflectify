@@ -5,19 +5,18 @@ import GrowthChart from '@/components/adminDashboard/GrowthChart';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
+import NavigationDrowerForAdmin from '@/components/adminDashboard/DrowerAdmin';
 
 const AdminDashboardPage = async () => {
-    const { token } = await auth.api.getToken({ headers: await headers()});
-    
-    
-    
+    const { token } = await auth.api.getToken({ headers: await headers() });
+
+
+
     const session = await userSessionServer(token);
     if (session?.user?.role !== 'admin') {
         redirect('/login')
     }
-    console.log(token,'Token From the admin', session, 'Session From the admin');
     const data = await TotalCollection(session, token);
-    // console.log(data, 'data is all api ');
 
     const lessonGrowth = data?.lessonGrowth ?? [];
     const userGrowth = data?.userGrowth ?? [];
@@ -27,6 +26,7 @@ const AdminDashboardPage = async () => {
 
     return (
         <div className="space-y-8">
+            <NavigationDrowerForAdmin />
             <header className="rounded-3xl bg-gradient-to-r from-purple-500 to-blue-500 p-8 shadow-2xl shadow-slate-900/20 text-white  ">
                 <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                     <div>

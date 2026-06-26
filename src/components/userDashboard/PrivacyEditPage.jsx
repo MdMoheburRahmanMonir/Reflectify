@@ -5,29 +5,26 @@ import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
 import { RiGitRepositoryPrivateFill } from "react-icons/ri";
 
-const PrivacyEditPage = ({ lesson }) => {
+const PrivacyEditPage = ({ lesson, session, token }) => {
     const [loading, setLoading] = useState(false);
-    console.log(lesson);
 
     const handelSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target)
         const PrivacyData = Object.fromEntries(formData.entries());
         const data = { productId: lesson._id, privacy: PrivacyData.privacy };
-          
 
-        console.log(data, 'Lesson is' );
 
         try {
             setLoading(true);
-            const res = await UpdateUserLesson(data);
-            console.log("Deleted:", res);
+            const res = await UpdateUserLesson(data, token);
+
         } catch (err) {
             console.log(err);
         } finally {
             setLoading(false);
             window.location.reload()
-        } 
+        }
     };
 
     return (

@@ -15,16 +15,14 @@ const PlanUpdateByAdmin = ({ clientId, token }) => {
     const handelSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target)
-        const RoleData = Object.fromEntries(formData.entries());
-        console.log("Role Data is: ", RoleData);
+        const RoleData = Object.fromEntries(formData.entries()); 
 
         const data = { userId: clientId, plan: RoleData.plan, myId: myId };
 
 
         try {
             setLoading(true);
-            const res = await UpdateUserPlan(data, token);
-            console.log("Deleted:", res);
+            const res = await UpdateUserPlan(data, token); 
         } catch (err) {
             console.log(err);
         } finally {

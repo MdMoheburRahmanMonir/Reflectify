@@ -4,6 +4,7 @@ import { getUserFromAdmin } from '@/lib/api/adminApi/UserManaging/getUserFromAdm
 import { userSessionServer } from '@/lib/actions/session';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import NavigationDrowerForAdmin from '@/components/adminDashboard/DrowerAdmin';
 
 const ManageUserPageToEditDelete = async () => {
     const { token } = await auth.api.getToken({ headers: await headers() });
@@ -13,6 +14,7 @@ const ManageUserPageToEditDelete = async () => {
 
     return (
         <div>
+            <NavigationDrowerForAdmin />
             <ManageUserPage users={users} token={token} />
         </div>
     );

@@ -1,7 +1,7 @@
 import { ServerMutationGet } from "../../mutation/get"
 
 
-export const TotalReportData = async (lessonId) => {  
-    const res = await ServerMutationGet(`api/get-all-report-by-lesson-id/${lessonId}`)
+export const TotalReportData = async (lessonId, session, token) => {
+    const res = await ServerMutationGet(`api/get-all-report-by-lesson-id/${lessonId}`, session, token)
     return res;
-}
+}  

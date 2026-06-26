@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { RiHeart3Fill, RiHeart3Line } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 
-const LikeButton = ({ lesson, session }) => {
+const LikeButton = ({ lesson, session, token }) => {
     const filter = lesson?.likes?.includes(session?.user?.id);
     const [likedLessons, setLikedLessons] = useState(filter || false);
     const [isSaving, setIsSaving] = useState(false);

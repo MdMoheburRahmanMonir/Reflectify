@@ -4,39 +4,39 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
     return (
-        <footer className="bg-white text-gray-700 dark:bg-[#0B0F1A] dark:text-gray-300 pt-16 pb-8 px-6 mt-20 transition-colors duration-300">
+        <footer className="bg-white text-gray-700 dark:bg-[#0B0F1A] dark:text-gray-300 pt-8 sm:pt-12 md:pt-16 pb-6 sm:pb-8 px-4 sm:px-6 md:px-8 mt-12 md:mt-20 transition-colors duration-300">
 
             {/* TOP GRID */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
 
                 {/* BRAND */}
                 <div>
-                    <Link href="/" className="flex items-center gap-3">
+                    <Link href="/" className="flex items-center gap-2 sm:gap-3">
 
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-md bg-gray-100 dark:bg-white">
+                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex items-center justify-center shadow-md bg-gray-100 dark:bg-white shrink-0">
                             <img
                                 src="/ChatGPT Image Jun 18, 2026, 10_34_43 AM.png"
                                 alt="logo"
-                                className="w-8 h-8"
+                                className="w-7 sm:w-8 h-7 sm:h-8"
                             />
                         </div>
 
-                        <span className="font-bold text-2xl tracking-tight bg-gradient-to-l from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                        <span className="font-bold text-lg sm:text-xl md:text-2xl tracking-tight bg-linear-to-l from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent truncate">
                             REFLECTIFY
                         </span>
                     </Link>
 
-                    <p className="mt-3 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                    <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                         A platform to preserve wisdom, reflect on life experiences, and grow
                         through shared human insights.
                     </p>
 
                     {/* SOCIALS */}
-                    <div className="flex gap-3 mt-5">
+                    <div className="flex gap-2 sm:gap-3 mt-4 sm:mt-5">
                         <Link
                             href="https://x.com/MohiburMd2288"
                             target="_blank"
-                            className="p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition"
+                            className="p-1.5 sm:p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition text-sm sm:text-base"
                         >
                             <FaXTwitter />
                         </Link>
@@ -44,7 +44,7 @@ export default function Footer() {
                         <Link
                             href="https://web.facebook.com/mdmohiburrahmanmanik0"
                             target="_blank"
-                            className="p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition"
+                            className="p-1.5 sm:p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition text-sm sm:text-base"
                         >
                             <FaFacebookF />
                         </Link>
@@ -52,7 +52,7 @@ export default function Footer() {
                         <Link
                             href="https://www.linkedin.com/in/md-mohebur-rahman-monir/"
                             target="_blank"
-                            className="p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition"
+                            className="p-1.5 sm:p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition text-sm sm:text-base"
                         >
                             <FaLinkedinIn />
                         </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
                         <Link
                             href="https://www.instagram.com/mdmohiburrahmanmanik0/"
                             target="_blank"
-                            className="p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition"
+                            className="p-1.5 sm:p-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-blue-100 dark:hover:bg-blue-500/30 transition text-sm sm:text-base"
                         >
                             <FaInstagram />
                         </Link>
@@ -69,11 +69,11 @@ export default function Footer() {
 
                 {/* QUICK LINKS */}
                 <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
                         Quick Links
                     </h3>
 
-                    <div className="flex flex-col gap-3 text-sm">
+                    <div className="flex flex-col gap-2 sm:gap-3 text-xs sm:text-sm">
                         <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition">
                             Home
                         </Link>
@@ -82,7 +82,7 @@ export default function Footer() {
                             Dashboard
                         </Link>
 
-                        <Link href="/public-post" className="hover:text-blue-600 dark:hover:text-blue-400 transition">
+                        <Link href="/public-lesson" className="hover:text-blue-600 dark:hover:text-blue-400 transition">
                             Public Lessons
                         </Link>
 
@@ -94,11 +94,11 @@ export default function Footer() {
 
                 {/* FEATURES */}
                 <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
                         Features
                     </h3>
 
-                    <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         <li>Save & Favorite Lessons</li>
                         <li>Premium Learning Access</li>
                         <li>Community Insights</li>
@@ -109,21 +109,21 @@ export default function Footer() {
 
                 {/* CONTACT */}
                 <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
                         Contact
                     </h3>
 
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-all">
                         Email: mdmohiburrahmanmanik@gmail.com
                     </p>
 
-                    <p className="text-sm mt-2 mb-5 text-gray-600 dark:text-gray-400">
+                    <p className="text-xs sm:text-sm mt-2 mb-4 sm:mb-5 text-gray-600 dark:text-gray-400">
                         Sylhet, Bangladesh
                     </p>
 
                     <Link href="/contact" className="">
                         <button
-                            className="relative flex items-center  px-6 py-3 overflow-hidden font-medium transition-all bg-indigo-500 rounded-md group"
+                            className="relative flex items-center px-4 sm:px-6 py-2 sm:py-3 overflow-hidden font-medium transition-all bg-indigo-500 rounded-md group text-xs sm:text-sm"
                         >
                             <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-indigo-700 rounded group-hover:-mr-4 group-hover:-mt-4">
                             </span>
@@ -138,7 +138,7 @@ export default function Footer() {
                                 className="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full bg-indigo-600 rounded-md group-hover:translate-x-0"
                             ></span>
                             <span
-                                className="relative w-full px-20 text-left text-white transition-colors duration-200 ease-in-out group-hover:text-white"
+                                className="relative w-full px-6 sm:px-20 text-left text-white transition-colors duration-200 ease-in-out group-hover:text-white"
                             >
                                 Contact Us
                             </span>
@@ -148,14 +148,14 @@ export default function Footer() {
             </div>
 
             {/* DIVIDER */}
-            <div className="border-t border-gray-200 dark:border-white/10 my-10"></div>
+            <div className="border-t border-gray-200 dark:border-white/10 my-6 sm:my-8 md:my-10"></div>
 
             {/* BOTTOM */}
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left">
 
                 <p>© {new Date().getFullYear()} Reflectify. All rights reserved.</p>
 
-                <div className="flex gap-6 mt-4 md:mt-0">
+                <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm">
                     <span className="hover:text-gray-900 dark:hover:text-white cursor-pointer">
                         Privacy Policy
                     </span>

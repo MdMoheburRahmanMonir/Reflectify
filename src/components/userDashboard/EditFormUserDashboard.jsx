@@ -1,4 +1,4 @@
-'use client' 
+'use client'
 import { SessionClient } from "@/lib/actions/sessionClient";
 import { UpdateUserLesson } from "@/lib/api/userapi/updatelesson";
 import { Envelope } from "@gravity-ui/icons";
@@ -8,7 +8,7 @@ import { useState } from "react";
 import { FaCloudUploadAlt, FaRegEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-export function EditFormUserDashboard({ lesson }) {
+export function EditFormUserDashboard({ lesson, token }) {
     const [image, setImage] = useState(`${lesson?.lessonPhoto}`);
     const session = SessionClient();
 
@@ -48,10 +48,9 @@ export function EditFormUserDashboard({ lesson }) {
         data.userId = session?.user?.id;
         data.lessonPhoto = image || lesson.lessonPhoto;
 
-        console.log(data);
 
 
-        const res = await UpdateUserLesson(data);
+        const res = await UpdateUserLesson(data, token);
         if (res.matchedCount) {
             toast.success('Lesson Update Successfully!')
             window.location.reload();

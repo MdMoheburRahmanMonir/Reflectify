@@ -12,8 +12,7 @@ const DeleteButton = ({ clientId, token }) => {
     const handleDelete = async () => {
         try {
             setLoading(true);
-            const res = await DeleteUserFormAdmin(clientId, token);
-            console.log("Deleted:", res);
+            const res = await DeleteUserFormAdmin(clientId, token); 
         } catch (err) {
             console.log(err);
         } finally {

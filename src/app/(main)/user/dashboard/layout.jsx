@@ -9,8 +9,7 @@ export const metadata = {
 
 export default async function DashboardLayout({ children }) {
 
-  const session = await userSessionServer();
-  console.log(session);
+  const session = await userSessionServer(); 
   if (session?.user?.role !== 'user') {
     redirect('/login')
   }

@@ -42,40 +42,40 @@ export default function Navbar() {
 
   return (
     <nav className="w-11/12 px-0 backdrop-blur-[10px] mx-auto bg-transparent sticky top-0 z-50">
-      <div className="w-11/12 max-w-7xl mx-auto shadow-md shadow-black/10 dark:shadow-white/10 rounded-2xl grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2 px-6 md:px-2 py-3 items-center">
-        <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-md bg-white">
-              <img src="/ChatGPT Image Jun 18, 2026, 10_34_43 AM.png" alt="logo" className="w-8 h-8" />
+      <div className="w-full max-w-7xl mx-auto shadow-md shadow-black/10 dark:shadow-white/10 rounded-xl sm:rounded-2xl grid grid-cols-2 lg:grid-cols-3 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex items-center justify-center font-bold shadow-md bg-white shrink-0">
+              <img src="/ChatGPT Image Jun 18, 2026, 10_34_43 AM.png" alt="logo" className="w-7 sm:w-8 h-7 sm:h-8" />
             </div>
 
-            <span className="font-bold text-2xl tracking-tight bg-gradient-to-l from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent ">REFLECTIFY</span>
+            <span className="font-bold text-lg sm:text-xl md:text-2xl tracking-tight bg-linear-to-l from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent truncate">REFLECTIFY</span>
           </Link>
         </div>
 
-        <div className="hidden  lg:flex justify-center items-center gap-16">
+        <div className="hidden lg:flex justify-center items-center gap-8 md:gap-12">
           {links[0].map(link => {
             const isActive = pathname === link.href;
             const Icons = link.icon;
             return (
-              <Link key={link.href} href={link.href} className={`flex gap-10 text-lg whitespace-nowrap font-medium transition  px-3 ${isActive ? 'text-blue-600 border-b-[3px] pb-1 border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
-                <Icons className="h-7 w-7 font-bold hover:text-blue-600" />
+              <Link key={link.href} href={link.href} className={`flex gap-10 text-sm md:text-base whitespace-nowrap font-medium transition px-3 ${isActive ? 'text-blue-600 border-b-[3px] pb-1 border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
+                <Icons className="h-5 md:h-6 w-5 md:w-6 font-bold hover:text-blue-600" />
               </Link>
             );
           })}
 
         </div>
 
-        <div className="hidden justify-self-end md:flex lg:justify-end items-center gap-4">
+        <div className="hidden md:flex justify-end items-center gap-2 sm:gap-3">
           <ThemeToggle />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             {!session?.user ? (
               <Link
                 href="/login"
-                className="text-md flex font-medium text-center items-center px-4 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+                className="text-xs sm:text-sm flex font-medium text-center items-center px-2.5 sm:px-4 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
               >
                 Login
-                <div className='text-sm'>
+                <div className='text-xs sm:text-sm'>
                   <svg xmlns="http://www.w3.org/2000/svg" className="text-center justify-center flex h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -84,12 +84,12 @@ export default function Navbar() {
             ) : session?.user?.role === 'admin' ? '' : session?.user?.plan === "free" ? (
               <Link
                 href="/plans"
-                className="text-md font-medium px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
+                className="text-xs sm:text-sm font-medium px-2.5 sm:px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
               >
                 Upgrade to Premium ✦
               </Link>
             ) : (
-              <span className="text-md font-medium px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+              <span className="text-xs sm:text-sm font-medium px-2.5 sm:px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
                 ✦ Premium
               </span>
             )}
@@ -99,10 +99,11 @@ export default function Navbar() {
           {session?.user ? <CustomTrigger /> : ' '}
         </div>
 
-        <div className="lg:hidden md:hidden block flex justify-end items-center">
-          <button onClick={() => setMobileOpen(v => !v)} className="p-2 rounded-md bg-slate-100 dark:bg-slate-800">
+        <div className="md:hidden flex justify-end items-center gap-2">
+          <ThemeToggle />
+          <button onClick={() => setMobileOpen(v => !v)} className="p-1.5 sm:p-2 rounded-md bg-slate-100 dark:bg-slate-800 shrink-0">
             {/* simple hamburger */}
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
@@ -111,22 +112,21 @@ export default function Navbar() {
 
           {
             mobileOpen && (
-              <div className="absolute right-4 top-16 w-56 rounded-2xl bg-white p-3 shadow-lg dark:bg-slate-900">
-                <div className="flex flex-col gap-2">
-                  <ThemeToggle />
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
+              <div className="absolute right-3 sm:right-4 top-14 sm:top-16 w-48 sm:w-56 rounded-xl sm:rounded-2xl bg-white p-3 sm:p-4 shadow-lg dark:bg-slate-900">
+                <div className="flex flex-col gap-2 sm:gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="flex items-center gap-2 flex-1">
                       {session?.user?.plan === 'free' ? (
                         <>
                           <Link
                             href="/plans"
-                            className="text-md font-medium px-4 py-2 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
+                            className="text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors flex-1 text-center"
                           >
                             GoPremium ✦
                           </Link>
                         </>
                       ) : session?.user?.plan === 'user_pro' ? (
-                        <span className="text-md font-medium px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
+                        <span className="text-xs sm:text-sm font-medium px-2.5 sm:px-3 py-1 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
                           ✦ Premium
                         </span>
                       ) : ''}
@@ -134,21 +134,21 @@ export default function Navbar() {
 
 
                     {session?.user ? <CustomTrigger /> : (
-                      <Link href="/login" className=" mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-sm font-semibold">
+                      <Link href="/login" className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-xs sm:text-sm font-semibold">
                         Login
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                       </Link>
                     )}
                   </div>
-                  <div className='flex flex-col'>
+                  <div className='flex flex-col gap-1'>
                     {links[0].map(link => {
                       const isActive = pathname === link.href;
                       const Icons = link.icon;
                       return (
-                        <Link key={link.href} href={link.href} className={`flex gap-2 text-lg whitespace-nowrap font-medium transition  px-3 ${isActive ? 'text-blue-600 border-b-[2px] pb-1 border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
-                          <Icons className="h-5 pt-2 w-5 font-bold" />  <p> {link.name}</p>
+                        <Link key={link.href} href={link.href} className={`flex gap-2 text-sm whitespace-nowrap font-medium transition px-3 py-2 rounded-lg ${isActive ? 'text-blue-600 border-l-[3px] border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
+                          <Icons className="h-4 sm:h-5 w-4 sm:w-5 font-bold pt-0.5" />  <p> {link.name}</p>
                         </Link>
                       );
                     })}
@@ -156,10 +156,10 @@ export default function Navbar() {
 
                   {session?.user ? (
                     <>
-                      <button onClick={handelSignOut} className="px-3 py-2 text-md text-red-600 bg-black rounded-full flex text-center justify-center font-bold">Logout <ArrowRight className='text-sm' /></button>
+                      <button onClick={handelSignOut} className="px-3 py-2 text-xs sm:text-sm text-red-600 bg-red-50 dark:bg-red-900/20 rounded-full flex text-center justify-center font-bold hover:bg-red-100 dark:hover:bg-red-900/40 transition">Logout <ArrowRight className='text-xs sm:text-sm ml-2' /></button>
                     </>
                   ) : (
-                    <Link href="/login" className="px-3 py-2 rounded-md text-sm text-slate-700 dark:text-slate-200">Login</Link>
+                    <Link href="/login" className="px-3 py-2 rounded-md text-xs sm:text-sm text-slate-700 dark:text-slate-200">Login</Link>
                   )}
 
                 </div>

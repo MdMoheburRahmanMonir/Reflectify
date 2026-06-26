@@ -3,10 +3,12 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 const PlanPageLayout = async ({ children }) => {
-    const session = await userSessionServer();
-    console.log(session);
-    if (session?.user?.role !== 'user') {
+    const session = await userSessionServer(); 
+    if (!session?.user) {
         redirect('/')
+    }
+    if (session?.user?.plan === 'user_pro'){
+        redirect("/")
     }
     return (
         <div> 

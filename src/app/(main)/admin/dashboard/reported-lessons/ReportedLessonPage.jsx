@@ -9,12 +9,14 @@ import {
     FiShield,
 } from "react-icons/fi";
 import { RiResetLeftLine } from "react-icons/ri";
-import { ReportTable } from "@/components/adminDashboard/ReportActon/ReportTable"; 
+import { ReportTable } from "@/components/adminDashboard/ReportActon/ReportTable";
 import { DeleteReportAction } from "@/components/adminDashboard/ReportActon/DeleteReportAction";
 import { IgnoreReport } from "@/components/adminDashboard/ReportActon/IgnoreReport";
 
 
-export const ReportedLessonPage = ({ reportedLessons }) => {
+export const ReportedLessonPage = ({ reportedLessons, session, token }) => {
+  
+
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
     const [countFilter, setCountFilter] = useState("all");
@@ -59,7 +61,7 @@ export const ReportedLessonPage = ({ reportedLessons }) => {
                             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                                 Resolve flagged lessons, inspect reports, and take action to keep the community safe.
                             </p>
-                        </div> 
+                        </div>
                     </div>
                 </section>
 
@@ -70,7 +72,7 @@ export const ReportedLessonPage = ({ reportedLessons }) => {
                         <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                             Reported lessons awaiting admin attention.
                         </p>
-                    </div> 
+                    </div>
                 </section>
 
                 <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-4 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
@@ -143,12 +145,11 @@ export const ReportedLessonPage = ({ reportedLessons }) => {
                                                     </Table.Cell>
                                                     <Table.Cell className="px-3 py-3 text-sm text-slate-700 dark:text-slate-200">{item.count}</Table.Cell>
                                                     <Table.Cell className="px-3 py-3 text-sm text-slate-700 dark:text-slate-200">
-                                                        {/* <ReportShowButton   /> */}
-                                                        <ReportTable lessonId={item.lessonId} />
+                                                        <ReportTable lessonId={item.lessonId} session={session} token={token} />
                                                     </Table.Cell>
                                                     <Table.Cell className="px-3 py-3 gap-3 flex text-sm text-slate-600 dark:text-slate-400">
-                                                        <DeleteReportAction  lessonId={item.lessonId}/>
-                                                        <IgnoreReport  lessonId={item.lessonId}/>
+                                                        <DeleteReportAction lessonId={item.lessonId} session={session} token={token} />
+                                                        <IgnoreReport lessonId={item.lessonId} session={session} token={token} />
                                                     </Table.Cell>
                                                 </Table.Row>
                                             ))

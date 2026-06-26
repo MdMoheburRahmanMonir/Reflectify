@@ -11,12 +11,10 @@ const DeleteButtonLesson = ({ data, token }) => {
 
     const [loading, setLoading] = useState(false);
 
-    const handleDelete = async () => {
-        console.log(data);
+    const handleDelete = async () => { 
         try {
             setLoading(true);
-            const res = await DeleteLessonFormAdmin(data, token);
-            console.log("Deleted:", res);
+            const res = await DeleteLessonFormAdmin(data, token); 
         } catch (err) {
             console.log(err);
         } finally {

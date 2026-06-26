@@ -54,7 +54,7 @@ const ManageUserPage = ({ users, token }) => {
                 <section className="grid gap-4 md:grid-cols-3">
                     <div className="rounded-[28px] border border-slate-200/70 bg-white/90 p-6 shadow-sm dark:border-white/10 dark:bg-slate-950/80">
                         <p className="text-sm uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Total users</p>
-                        <h2 className="mt-4 text-3xl font-bold">{users.length}</h2>
+                        <h2 className="mt-4 text-3xl font-bold">{users?.length}</h2>
                         <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                             Registered users on the platform.
                         </p>

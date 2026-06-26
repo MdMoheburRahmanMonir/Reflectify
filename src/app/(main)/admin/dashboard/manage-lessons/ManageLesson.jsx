@@ -190,9 +190,9 @@ const ManageLesson = ({ lessons, token }) => {
                                                     await AdminViewOrNot(data);
                                                 };
                                                 const statusHandling = async (value) => {
-                                                    console.log(value);
+                                                
                                                     const res = await StatusChangeAction(data, value);
-                                                    console.log(res);
+                                                
                                                 };
 
                                                 return (

@@ -2,7 +2,7 @@ import { ServerMutationDelete } from "../mutation/delete";
 
 
 
-export const DeleteUserLessons = async (lesson) => {
-    const data = await ServerMutationDelete(`api/user/dashboard/delete-lesson/${lesson._id}`, lesson);
-    return data;
+export const DeleteUserLessons = async (data, token) => {
+    const GetDataResponse = await ServerMutationDelete(`api/user/dashboard/delete-lesson/${data._id}`, data, token);
+    return GetDataResponse;
 };

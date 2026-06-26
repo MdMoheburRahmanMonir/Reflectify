@@ -6,14 +6,13 @@ import { AlertDialog, Button } from "@heroui/react";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 
-const DeleteButton = ({ lesson }) => {
-    const [loading, setLoading] = useState(false); 
-    
+const DeleteButton = ({ data, token }) => {
+    const [loading, setLoading] = useState(false);
+
     const handleDelete = async () => {
         try {
-            setLoading(true); 
-            const res = await DeleteUserLessons(lesson); 
-            console.log("Deleted:", res);
+            setLoading(true);
+            const res = await DeleteUserLessons(data,token);
         } catch (err) {
             console.log(err);
         } finally {

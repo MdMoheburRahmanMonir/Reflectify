@@ -39,9 +39,7 @@ export default function LoginPage() {
         e.preventDefault();
         setIsLoading(true);
         const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        console.log(data.email);
-        console.log(data.password);
+        const data = Object.fromEntries(formData.entries()); 
 
         const { data: loginData, error } = await authClient.signIn.email({
             email: data.email,
@@ -55,8 +53,7 @@ export default function LoginPage() {
             onError: (ctx) => {
                 toast.error('Login Fail!')
             }
-        });
-        console.log('loginData and error', loginData, error);
+        }); 
         setIsLoading(false);
     }
 

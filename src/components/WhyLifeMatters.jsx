@@ -221,7 +221,7 @@ export default function WhyLifeMatters() {
                     <p className="text-slate-500 dark:text-slate-400 text-sm">
                         Ready to start capturing your life lessons?
                     </p>
-                    <Link href='/public-post'>
+                    <Link href='/public-lesson'>
                         <button className="px-6 py-2.5 rounded-tl-2xl rounded-br-2xl bg-gradient-to-r from-purple-500 to-blue-600 text-white text-sm font-medium shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-200">
                             Get Started Free
                         </button>

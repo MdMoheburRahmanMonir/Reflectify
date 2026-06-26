@@ -4,14 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Button, Modal, Table } from "@heroui/react";
 import { TotalReportData } from "@/lib/api/adminApi/ReportManaging/TotalReportData";
 
-export function ReportTable({ lessonId }) {
+export function ReportTable({ lessonId, session, token }) {
 
     const [reports, setReport] = useState([]);
 
 
     const handleTable = async () => {
-        const data = await TotalReportData(lessonId);
-        console.log(data, 'and lesson id is', lessonId);
+        const data = await TotalReportData(lessonId, session, token);  
         setReport(data)
     }
 
@@ -102,7 +101,7 @@ export function ReportTable({ lessonId }) {
                                             </Table.Column>
 
                                             <Table.Column>Description</Table.Column>
-                                            <Table.Column>Image</Table.Column> 
+                                            <Table.Column>Image</Table.Column>
                                         </Table.Header>
 
                                         <Table.Body>
@@ -141,7 +140,7 @@ export function ReportTable({ lessonId }) {
                                                             className="h-12 w-12 rounded-md object-cover"
                                                         />
                                                     </Table.Cell>
- 
+
                                                 </Table.Row>
                                             ))}
                                         </Table.Body>

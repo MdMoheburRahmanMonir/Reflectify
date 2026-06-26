@@ -6,8 +6,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function ProfileEditPage() {
-    const [image, setImage] = useState('');
-    console.log(image);
+    const [image, setImage] = useState(''); 
 
     const handleLogoUpload = async (e) => {
         const file = e.target.files[0];
@@ -27,8 +26,7 @@ export default function ProfileEditPage() {
                 method: 'POST',
                 body: formData,
             });
-            const data = await response.json();
-            console.log(data)
+            const data = await response.json(); 
             setImage(`${data?.data?.url}`);
         } catch (err) {
             toast.error('Image upload fail');
@@ -38,8 +36,7 @@ export default function ProfileEditPage() {
 
     const router = useRouter()
 
-    const { data: session } = authClient.useSession();
-    console.log(session);
+    const { data: session } = authClient.useSession(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();

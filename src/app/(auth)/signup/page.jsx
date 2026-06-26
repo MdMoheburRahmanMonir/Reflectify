@@ -20,8 +20,7 @@ export default function SignupPage() {
     };
     const [image, setImage] = useState('');
     const [eye, setEye] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    console.log(image);
+    const [isLoading, setIsLoading] = useState(false); 
 
     const options = {
         animationData: registerAnimation,
@@ -48,8 +47,7 @@ export default function SignupPage() {
                 method: 'POST',
                 body: formData,
             });
-            const data = await response.json();
-            console.log(data)
+            const data = await response.json(); 
             setImage(`${data?.data?.url}`);
         } catch (err) {
             toast.error('Image upload fail');

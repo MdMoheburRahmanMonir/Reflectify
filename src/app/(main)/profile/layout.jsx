@@ -10,8 +10,7 @@ const navigationItems = [
 ];
 
 export default async function ProfileLayout({ children }) {
-  const session = await userSessionServer();
-  console.log(session);
+  const session = await userSessionServer(); 
   if (!session?.user) {
     redirect('/login')
   }

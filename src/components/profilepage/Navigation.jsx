@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiMenu } from "react-icons/fi";
 
-import { Button, Drawer } from "@heroui/react"; 
+import { Button, Drawer } from "@heroui/react";
 import { FaEdit, FaQuoteLeft, FaRegUserCircle } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { SessionClient } from "@/lib/actions/sessionClient";
-const navItems = [ 
+const navItems = [
     { icon: FaRegUserCircle, label: "Profile", href: "/profile" },
     { icon: FaEdit, label: "Edit Profile", href: "/profile/editprofile" },
     { icon: FaQuoteLeft, label: "FAQ", href: "/profile/faq" },
@@ -16,102 +16,10 @@ const navItems = [
 
 export function Navigation() {
     const pathname = usePathname();
-    const session = SessionClient(); 
+    const session = SessionClient();
 
     return (
         <>
-            {/* MOBILE DRAWER */}
-            <div className="lg:hidden px-4 py-4">
-
-                <Drawer>
-                    <Button
-                        className="
-                        bg-white dark:bg-slate-900
-                        border border-slate-200 dark:border-white/10
-                        text-slate-700 dark:text-slate-200
-                        shadow-md
-                        "
-                    >
-                        <div className="flex items-center gap-2">
-                            <FiMenu className="h-5 w-5" />
-                            Menu
-                        </div>
-                    </Button>
-
-                    <Drawer.Backdrop className="backdrop-blur-sm bg-black/30" />
-
-                    <Drawer.Content placement="left">
-                        <Drawer.Dialog
-                            className="
-                            h-full
-                            border-r border-slate-200 dark:border-white/10
-                            bg-white/95 dark:bg-slate-950/95
-                            backdrop-blur-xl
-                            "
-                        >
-                            <Drawer.CloseTrigger
-                                className="
-                                absolute right-4 top-4
-                                h-10 w-10
-                                rounded-full
-                                flex items-center justify-center
-                                bg-slate-100 dark:bg-slate-800
-                                text-slate-700 dark:text-slate-200
-                                "
-                            >
-                                ✕
-                            </Drawer.CloseTrigger>
-
-                            <Drawer.Header>
-                                <Drawer.Heading>
-                                    <div>
-                                        <h2 className="font-bold text-xl bg-gradient-to-r from-purple-500 to-blue-600 bg-clip-text text-transparent">
-                                            Reflectify
-                                        </h2>
-
-                                        <p className="text-xs text-slate-500 dark:text-slate-400">
-                                            Dashboard Navigation
-                                        </p>
-                                    </div>
-                                </Drawer.Heading>
-                            </Drawer.Header>
-
-                            <Drawer.Body>
-                                <nav className="flex flex-col gap-2 p-4">
-                                    {navItems.map((item) => {
-                                        const Icon = item.icon;
-
-                                        const active =
-                                            pathname === item.href;
-
-                                        return (
-                                            <Link
-                                                key={item.label}
-                                                href={item.href}
-                                                className={`
-                                                flex items-center gap-3
-                                                rounded-2xl px-4 py-3
-                                                transition-all duration-300
-
-                                                ${active
-                                                        ? "bg-gradient-to-r from-purple-500 to-blue-600 text-white shadow-lg"
-                                                        : "text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5"
-                                                    }
-                                                `}
-                                            >
-                                                <Icon className="h-5 w-5" />
-                                                {item.label}
-                                            </Link>
-                                        );
-                                    })}
-                                </nav>
-                            </Drawer.Body>
-                        </Drawer.Dialog>
-                    </Drawer.Content>
-                </Drawer>
-            </div>
-
-            {/* DESKTOP SIDEBAR */}
             <aside
                 className="
                 hidden lg:flex

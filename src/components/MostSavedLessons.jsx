@@ -27,8 +27,8 @@ export default function MostSavedLessons({ MostSaveLesson }) {
                         Most Saved Lessons
                     </span>
 
-                    <h2 className="mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-                        Learn from the community’s most saved lessons
+                    <h2 className="mt-6 text-4xl md:text-5xl font-bold tracking-tight text-black dark:text-white">
+                        Learn From The Community’s <span className="from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent truncate bg-linear-to-l"> Most Saved Lessons </span>
                     </h2>
 
                     <p className="mt-4 max-w-2xl mx-auto text-sm text-slate-600 dark:text-slate-300">
@@ -65,7 +65,7 @@ export default function MostSavedLessons({ MostSaveLesson }) {
 
 
                                 {!session?.user && lesson.accessLevel === 'premium' &&
-                                    <div classNa    me="absolute flex flex-col gap-3 justify-center items-center text-center top-0 left-0 w-full h-full bg-gray-500/20 backdrop-blur-2xl   shadow shadow-md shadow-white/70 dark:shadow-black z-20">
+                                    <div className="absolute flex flex-col gap-3 justify-center items-center text-center top-0 left-0 w-full h-full bg-gray-500/20 backdrop-blur-2xl   shadow shadow-md shadow-white/70 dark:shadow-black z-20">
                                         <FaLock className="text-4xl text-white" />
                                         <p className="text-white text-lg">Please unlock to go premium</p>
                                         <Link

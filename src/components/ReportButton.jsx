@@ -29,8 +29,7 @@ export function ReportButton({ lesson }) {
                 method: 'POST',
                 body: formData,
             });
-            const data = await response.json();
-            console.log(data)
+            const data = await response.json(); 
             setImage(`${data?.data?.url}`);
         } catch (err) {
             toast.error('Image upload fail');

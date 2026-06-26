@@ -9,8 +9,7 @@ export async function POST(request) {
     const planId = formData.get('planId')
     const session = await userSessionServer()
     const userEmail = session?.user?.email
-    const userUpgrade = 'user_pro'
-    console.log(userEmail);
+    const userUpgrade = 'user_pro' 
 
     try {
         const headersList = await headers()

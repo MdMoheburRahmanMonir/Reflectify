@@ -1,30 +1,26 @@
 
 
-import {
-    FiBookOpen,
-    FiHeart,
-    FiStar,
-    FiTrendingUp,
-    FiBell,
-    FiPlusCircle,
-    FiBookmark,
-} from "react-icons/fi";
 import GrowthChart from '@/components/adminDashboard/GrowthChart';
 import Link from "next/link";
 import { AdminDashboardFullData } from "@/lib/api/userapi/Dashboard/AdminDashboardFullData";
 import { userSessionServer } from "@/lib/actions/session";
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth';
+import NavigationDrower from '@/components/userDashboard/NavigationDrower';
 
 
 const DashBoardPage = async () => {
+    const { token } = await auth.api.getToken({ headers: await headers() });
     const session = await userSessionServer();
-    const data = await AdminDashboardFullData(session);
-    console.log(data, 'public like is ');
-
+    const data = await AdminDashboardFullData(session, token);
+    console.log(data);
+    
     const topContributors = data?.topContributors ?? [];
     const UserContributorsResult = data?.Average ?? [];
 
     return (
         <main className="min-h-screen p-6 md:p-8  dark:text-white">
+            <NavigationDrower />
             <div className="max-w-7xl mx-auto space-y-8">
                 <header className="rounded-3xl bg-gradient-to-r from-purple-500 to-blue-600 p-8 shadow-2xl text-white">
                     <div className="flex items-center justify-between">

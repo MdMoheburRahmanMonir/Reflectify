@@ -4,15 +4,16 @@ import { userSessionServer } from '@/lib/actions/session';
 import { GetLessonDataToShow } from '@/lib/api/adminApi/LessonManaging/GetLessonDataToShow';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import NavigationDrowerForAdmin from '@/components/adminDashboard/DrowerAdmin';
 
 const ManageLessonPage = async () => {
     const { token } = await auth.api.getToken({ headers: await headers() });
     const session = await userSessionServer()
     const lessons = await GetLessonDataToShow(session, token);
-    console.log('token is here', token, 'lessons are here', lessons);
 
     return (
         <main>
+            <NavigationDrowerForAdmin />
             <section className="rounded-[32px] border border-slate-200/70 bg-white/90 p-8 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>

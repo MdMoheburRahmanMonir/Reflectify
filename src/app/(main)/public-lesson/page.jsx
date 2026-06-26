@@ -12,7 +12,7 @@ import { AllLessonForLessonPage } from '@/lib/api/Lesson_Details_page/AllLessonF
 import { authClient } from '@/lib/auth-client';
 import { RiResetLeftFill } from 'react-icons/ri';
 
-export default function PublicLessonPage() {
+export default function PublicLessonPage({token}) {    
     const { data: session } = authClient.useSession();
     const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,15 +29,13 @@ export default function PublicLessonPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const data = await AllLessonForLessonPage();
-                console.log(data);
-
+                const data = await AllLessonForLessonPage();  
                 setLessons(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("Error fetching lessons:", error);
             } finally {
                 setLoading(false);
-            }
+        }
         }
         fetchData();
     }, []);
@@ -187,7 +185,7 @@ export default function PublicLessonPage() {
                                         <p className="text-white text-lg">Please unlock to go premium</p>
                                         <Link
                                             href="/plans"
-                                            className="text-md font-medium px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
+                                            className="text-md line-clamp-1 font-medium px-4 py-1 rounded-full bg-purple-600 text-purple-50 hover:bg-purple-700 transition-colors"
                                         >
                                             Upgrade to Premium ✦
                                         </Link>

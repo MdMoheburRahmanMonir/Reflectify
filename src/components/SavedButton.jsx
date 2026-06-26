@@ -5,14 +5,14 @@ import React, { useState } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-const SavedButton = ({ lesson, session }) => {
+const SavedButton = ({ lesson, session, token }) => {
     const filter = lesson?.savedLesson?.includes(session?.user?.id);
     const [savedLesson, setSavedLesson] = useState(filter || false);
     const [isSaving, setIsSaving] = useState(false);
 
     const savedCount = 342 + (lesson?.savedCount || 0);
     const saveLabel = `${savedCount} ${savedCount === 1 ? 'save' : 'saves'}`;
- 
+
     const data = {
         saverId: session?.user?.id,
         lessonId: lesson?._id,

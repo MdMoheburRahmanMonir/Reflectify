@@ -3,21 +3,20 @@
 import { SessionClient } from "@/lib/actions/sessionClient";
 import { OnlyReportDelete } from "@/lib/api/adminApi/ReportManaging/OnlyReportDelete";
 import { AlertDialog, Button } from "@heroui/react";
-import { FiSlash } from "react-icons/fi"; 
+import { FiSlash } from "react-icons/fi";
 import { toast } from "react-toastify";
 
-export function IgnoreReport({ lessonId }) {
-    const session = SessionClient()
-    const data = { role: session?.user?.role };
+export function IgnoreReport({ lessonId, token }) {
+    const data = '';
     const HandleIgnore = async () => {
         try {
-            await OnlyReportDelete(lessonId, data)
+            await OnlyReportDelete(lessonId, data, token)
         } catch (error) {
             toast.error("Fail to Delete for invalid reason!")
         } finally {
             toast.success("Delete report successful!")
             window.location.reload();
-        } 
+        }
     }
     return (
         <AlertDialog>

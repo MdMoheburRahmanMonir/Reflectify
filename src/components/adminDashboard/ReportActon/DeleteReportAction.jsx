@@ -5,12 +5,12 @@ import { ReportDeletePermanently } from "@/lib/api/adminApi/ReportManaging/Repor
 import { AlertDialog, Button } from "@heroui/react";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
-export function DeleteReportAction({ lessonId }) {
+export function DeleteReportAction({ lessonId, token }) {
     const session = SessionClient()
     const data = { role: session?.user?.role };
     const HandleDelete = async () => {
         try {
-            await ReportDeletePermanently(lessonId, data)
+            await ReportDeletePermanently(lessonId, data, token)
         } catch (error) {
             toast.error("Fail to Delete for invalid reason!")
         } finally {
