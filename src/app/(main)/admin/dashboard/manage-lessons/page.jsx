@@ -1,14 +1,15 @@
 import React from 'react';
 import ManageLesson from './ManageLesson';
-import Link from 'next/link';
-import { FiShield } from 'react-icons/fi';
 import { userSessionServer } from '@/lib/actions/session';
 import { GetLessonDataToShow } from '@/lib/api/adminApi/LessonManaging/GetLessonDataToShow';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 const ManageLessonPage = async () => {
+    const { token } = await auth.api.getToken({ headers: await headers() });
     const session = await userSessionServer()
-    const lessons = await GetLessonDataToShow(session);
-    console.log(session, 'lesson is : - ', lessons);
+    const lessons = await GetLessonDataToShow(session, token);
+    console.log('token is here', token, 'lessons are here', lessons);
 
     return (
         <main>
@@ -24,10 +25,10 @@ const ManageLessonPage = async () => {
                         <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                             Review all lessons, mark featured content, resolve flagged items, and keep the public library safe.
                         </p>
-                    </div> 
+                    </div>
                 </div>
             </section>
-            <ManageLesson lessons={lessons}/>
+            <ManageLesson lessons={lessons} token={token} />
         </main>
     );
 };

@@ -1,12 +1,12 @@
 "use client";
- 
+
 import { SessionClient } from "@/lib/actions/sessionClient";
 import { UpdateUserPlan } from "@/lib/api/adminApi/UserManaging/UpdateUserPlan";
 import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
-import { IoIosPricetags, IoMdPricetags } from "react-icons/io"; 
+import { IoIosPricetags, IoMdPricetags } from "react-icons/io";
 
-const PlanUpdateByAdmin = ({ clientId }) => {
+const PlanUpdateByAdmin = ({ clientId, token }) => {
     const [loading, setLoading] = useState(false);
     const session = SessionClient();
     const myId = session?.user?.id;
@@ -23,7 +23,7 @@ const PlanUpdateByAdmin = ({ clientId }) => {
 
         try {
             setLoading(true);
-            const res = await UpdateUserPlan(data);
+            const res = await UpdateUserPlan(data, token);
             console.log("Deleted:", res);
         } catch (err) {
             console.log(err);

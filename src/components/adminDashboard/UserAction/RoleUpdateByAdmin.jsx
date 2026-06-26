@@ -1,12 +1,12 @@
 "use client";
- 
+
 import { SessionClient } from "@/lib/actions/sessionClient";
 import { UpdateUserRole } from "@/lib/api/adminApi/UserManaging/UpdateUserRole";
 import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
 import { FiShield } from "react-icons/fi";
 
-const RoleUpdateByAdmin = ({ clientId }) => {
+const RoleUpdateByAdmin = ({ clientId, token }) => {
     const [loading, setLoading] = useState(false);
     const session = SessionClient();
     const myId = session?.user?.id;
@@ -24,7 +24,7 @@ const RoleUpdateByAdmin = ({ clientId }) => {
 
         try {
             setLoading(true);
-            const res = await UpdateUserRole(data);
+            const res = await UpdateUserRole(data, token);
             console.log("Deleted:", res);
         } catch (err) {
             console.log(err);

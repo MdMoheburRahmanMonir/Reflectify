@@ -1,18 +1,18 @@
 "use client";
- 
+
 import { DeleteUserFormAdmin } from "@/lib/api/adminApi/UserManaging/DeleteUserIdFromServerByAdmin";
 import { TrashBin } from "@gravity-ui/icons";
-import { AlertDialog, Button } from "@heroui/react"; 
+import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-const DeleteButton = ({ clientId }) => {
+const DeleteButton = ({ clientId, token }) => {
     const [loading, setLoading] = useState(false);
 
     const handleDelete = async () => {
         try {
             setLoading(true);
-            const res = await DeleteUserFormAdmin(clientId);
+            const res = await DeleteUserFormAdmin(clientId, token);
             console.log("Deleted:", res);
         } catch (err) {
             console.log(err);
@@ -62,7 +62,7 @@ const DeleteButton = ({ clientId }) => {
                         <AlertDialog.Footer>
                             <Button slot="close" variant="tertiary">
                                 Cancel
-                            </Button> 
+                            </Button>
                             <Button
                                 slot="close"
                                 onClick={handleDelete}

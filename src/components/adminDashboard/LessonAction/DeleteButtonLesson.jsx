@@ -7,7 +7,7 @@ import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-const DeleteButtonLesson = ({ data }) => {
+const DeleteButtonLesson = ({ data, token }) => {
 
     const [loading, setLoading] = useState(false);
 
@@ -15,7 +15,7 @@ const DeleteButtonLesson = ({ data }) => {
         console.log(data);
         try {
             setLoading(true);
-            const res = await DeleteLessonFormAdmin(data);
+            const res = await DeleteLessonFormAdmin(data, token);
             console.log("Deleted:", res);
         } catch (err) {
             console.log(err);
@@ -25,7 +25,7 @@ const DeleteButtonLesson = ({ data }) => {
         }
     };
     const viewHandling = async () => {
-        await AdminViewOrNot(data)
+        await AdminViewOrNot(data, token)
     }
     return (
         <AlertDialog>

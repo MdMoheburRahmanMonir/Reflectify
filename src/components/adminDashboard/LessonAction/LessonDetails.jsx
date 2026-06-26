@@ -1,29 +1,30 @@
 'use client'
-import { AdminViewOrNot } from "@/lib/api/adminApi/LessonManaging/AdminViewOrNot";
+import { AdminViewOrNot } from "@/lib/api/adminApi/LessonManaging/AdminViewOrNot"; 
 import { Button, Modal, Surface } from "@heroui/react";
 import Link from "next/link";
 import { FaRegEye } from "react-icons/fa";
 
-export function LessonDetails({ data }) {
+export function LessonDetails({ data, token }) {
+
     const { title, _id, description, category, emotionalTone, accessLevel, privacy, lessonPhoto, status, userName, userEmail, userImage, userId, createdTime, productId } = data;
     const viewHandling = async () => {
-        await AdminViewOrNot(data)
+        await AdminViewOrNot(data, token)
     }
 
     return (
-        <Modal>
+        <Modal className={`w-full`}>
             <Button onClick={viewHandling} variant="secondary" className={`p-0 m-0 h-2 w-2 relative group`}>
                 <FaRegEye className="size-4" />
             </Button>
 
-            <Modal.Backdrop >
-                <Modal.Container placement="auto" >
+            <Modal.Backdrop className={`w-full`}>
+                <Modal.Container placement="auto w-full" >
                     <Modal.Dialog className="sm:max-w-md lg:max-w-3xl ">
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <Modal.Heading className="bg-gradient-to-l from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">User Published Lesson</Modal.Heading>
                         </Modal.Header>
-                        <Modal.Body className="p-6  ">
+                        <Modal.Body className="p-6 w-full">
                             <Surface variant="default">
                                 <div className="max-w-3xl mx-auto">
                                     <div className="overflow-hidden rounded-3xl border border-white/30 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl shadow-xl">

@@ -7,7 +7,7 @@ import Link from "next/link";
 import DeleteButton from "@/components/adminDashboard/UserAction/DeleteButton";
 import RoleUpdateByAdmin from "@/components/adminDashboard/UserAction/RoleUpdateByAdmin";
 import PlanUpdateByAdmin from "@/components/adminDashboard/UserAction/PlanUpdateByAdmin";
-const ManageUserPage = ({ users }) => {
+const ManageUserPage = ({ users, token }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [roleFilter, setRoleFilter] = useState("all");
     const [sortDescriptor, setSortDescriptor] = useState({ column: "name", direction: "ascending" });
@@ -31,7 +31,6 @@ const ManageUserPage = ({ users }) => {
                 return sortDescriptor.direction === "descending" ? -comparison : comparison;
             });
     }, [searchTerm, roleFilter, sortDescriptor]);
-    console.log(filteredUsers);
 
     return (
         <main className="min-h-screen text-slate-900 dark:text-white px-4 py-8">
@@ -48,7 +47,7 @@ const ManageUserPage = ({ users }) => {
                             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
                                 Review accounts, promote contributors, and remove inactive or abusive users quickly.
                             </p>
-                        </div> 
+                        </div>
                     </div>
                 </section>
 
@@ -168,16 +167,16 @@ const ManageUserPage = ({ users }) => {
                                                         </span>
                                                     </Table.Cell>
                                                     <Table.Cell className={`overflow-hidden w-32`}>{user.lessons || 0}</Table.Cell>
-                                                    <Table.Cell className={`overflow-hidden w-32`}> 
+                                                    <Table.Cell className={`overflow-hidden w-32`}>
                                                         <div className="flex items-center justify-center  ">
                                                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
-                                                                <PlanUpdateByAdmin clientId={user._id} />
+                                                                <PlanUpdateByAdmin clientId={user._id} token={token}/>
                                                             </span>
                                                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
-                                                                <RoleUpdateByAdmin clientId={user._id} />
+                                                                <RoleUpdateByAdmin clientId={user._id} token={token}/>
                                                             </span>
                                                             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full   transition  ">
-                                                                <DeleteButton clientId={user._id} />
+                                                                <DeleteButton clientId={user._id} token={token}/>
                                                             </span>
                                                         </div>
                                                     </Table.Cell>

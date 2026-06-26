@@ -17,7 +17,7 @@ const normalizePrivacy = (privacy) => {
     return normalized;
 };
 
-const ManageLesson = ({ lessons }) => {
+const ManageLesson = ({ lessons, token }) => {
     const [statusFilter, setStatusFilter] = useState("all");
     const [searchTerm, setSearchTerm] = useState("");
     const [sortDescriptor, setSortDescriptor] = useState({ column: "title", direction: "ascending" });
@@ -25,7 +25,7 @@ const ManageLesson = ({ lessons }) => {
 
     const session = SessionClient();
     const filteredLessons = useMemo(() => {
-        return lessons.filter((lesson) => {
+        return lessons?.filter((lesson) => {
             const normalizedStatus = String(lesson.status || "").toLowerCase();
             const matchesFilter =
                 statusFilter === "all" ||
@@ -234,13 +234,13 @@ const ManageLesson = ({ lessons }) => {
                                                         <Table.Cell className="min-w-[80px] pr-4 py-3">
                                                             <div className="flex items-center justify-end gap-1">
                                                                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full ">
-                                                                    <LessonDetails data={data} />
+                                                                    <LessonDetails data={data} token={token} />
                                                                 </span>
                                                                 <span className="inline-flex pr-3 h-10 w-10 items-center justify-center rounded-full ">
-                                                                    <DeleteButtonLesson data={data} />
+                                                                    <DeleteButtonLesson data={data} token={token} />
                                                                 </span>
                                                                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full ">
-                                                                    <FeaturedAndReviewSection data={data} />
+                                                                    <FeaturedAndReviewSection data={data} token={token} />
                                                                 </span>
                                                             </div>
                                                         </Table.Cell>
