@@ -14,10 +14,13 @@ const PublicPage = async ({ params }) => {
     const featuredLessons = data.publicData;
     const publicSessionData = data.publicSession;
     console.log(id, 'id is ');
+    const coverImage = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-user-cover/${id}`)
+    const img = await coverImage.json()
+    const coverPhoto = img?.coverImage;
 
     return (
-        <div> 
-            <PublicUserProfile featuredLessons={featuredLessons} publicSessionData={publicSessionData}  />
+        <div>
+            <PublicUserProfile featuredLessons={featuredLessons} publicSessionData={publicSessionData} coverPhoto={coverPhoto}/>
         </div>
     );
 };

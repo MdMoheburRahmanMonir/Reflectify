@@ -1,14 +1,50 @@
 'use client'
 import NavigationDrowerProfile from "@/components/profilepage/NavigationDrowerProfile";
+import { UploadImageForProfile } from "@/lib/api/userapi/profile/UploadImageForProfile";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { LuImagePlus } from "react-icons/lu";
+import { toast } from "react-toastify";
 
-const ProfilePage = ({ featuredLessons }) => {
+const ProfilePage = ({ featuredLessons, token, coverPhoto }) => {
+  const [userDatai, setUserData] = useState('')
+  console.log(userDatai);
+
   const { data: session } = authClient.useSession();
   const user = session?.user
+  const userId = session?.user?.id;
+  console.log(user, "MY User Id is");
 
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image Size Should be less then 5 MB');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API;
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+        method: 'POST',
+        body: formData,
+      });
+      const imgData = await response.json();
+      const image = imgData?.data?.url;
+      const data = { coverImage: image };
+      const imageForProfile = await UploadImageForProfile(userId, data, token)
+      setUserData(imageForProfile)
+
+    } catch (err) {
+      toast.error('Image upload fail');
+    }
+  };
+  console.log(user);
 
   return (
     <div className="min-h-screen bg-base-200 py-6 sm:py-8 md:py-10 px-3 sm:px-4 md:px-6">
@@ -17,8 +53,28 @@ const ProfilePage = ({ featuredLessons }) => {
         {/* Profile Card */}
         <div className="bg-base-100 rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl overflow-hidden">
           {/* Cover */}
-          <div className="relative text-center pt-6 sm:pt-8 md:pt-10 z-10 h-32 sm:h-40 md:h-52 lg:h-64 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-            <span className="absolute top-3 right-3 text-white text-3xl"><LuImagePlus /></span>
+          <div
+            style={{
+              backgroundImage: coverPhoto
+                ? `url(${coverPhoto})`
+                : undefined,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+            className="relative text-center pt-6 sm:pt-8 md:pt-10 z-10 h-32 sm:h-40 md:h-52 lg:h-64 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+            <label htmlFor="imageUrl" className="absolute top-3 right-3 cursor-pointer">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm hover:bg-black/60 transition">
+                <LuImagePlus className="text-white text-xl" />
+              </div>
+              <input
+                id="imageUrl"
+                name="imageUrl"
+                type="file"
+                accept="image/*"
+                onChange={handleLogoUpload}
+                className="hidden"
+              />
+            </label>
             <div className="mt-2 sm:mt-3">
               <span
                 className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold ${user?.role === "admin"

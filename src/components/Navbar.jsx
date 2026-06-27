@@ -27,8 +27,7 @@ export default function Navbar() {
   ];
   const navLinkUser = [
     { name: 'Home', href: '/', icon: RiHome4Fill },
-    { name: 'Public Lesson', href: '/public-lesson', icon: FaBookOpen },
-    { name: 'Profile', href: '/profile', icon: FaUserAlt },
+    { name: 'Public Lesson', href: '/public-lesson', icon: FaBookOpen }, 
   ];
 
   const navLinksAdmin = [

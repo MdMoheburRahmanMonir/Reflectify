@@ -4,7 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import React from "react";
 
-const PublicUserProfile = ({ featuredLessons, publicSessionData }) => {
+const PublicUserProfile = ({ featuredLessons, publicSessionData, coverPhoto }) => {
     const { data: session } = authClient.useSession();
     console.log(publicSessionData, 'public data id ');
 
@@ -18,7 +18,15 @@ const PublicUserProfile = ({ featuredLessons, publicSessionData }) => {
                 {/* Profile Card */}
                 <div className="bg-base-100 rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl overflow-hidden">
                     {/* Cover */}
-                    <div className="relative text-center pt-6 sm:pt-8 md:pt-10 z-10 h-32 sm:h-40 md:h-52 lg:h-64 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                    <div
+                        style={{
+                            backgroundImage: coverPhoto
+                                ? `url(${coverPhoto})`
+                                : undefined,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                        }}
+                        className="relative text-center pt-6 sm:pt-8 md:pt-10 z-10 h-32 sm:h-40 md:h-52 lg:h-64 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                         <div className="mt-2 sm:mt-3">
                             <span
                                 className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold ${user?.role === "admin"
