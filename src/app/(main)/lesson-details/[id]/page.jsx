@@ -8,6 +8,7 @@ import { LessonDetails } from '@/lib/api/Lesson_Details_page/Lesson_Details_page
 import { PostACommentToServer } from '@/lib/api/PostACommentToServer';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import { FaTelegram } from 'react-icons/fa';
@@ -83,24 +84,25 @@ const LessonDetailsPage = async ({ params }) => {
                         <div className="absolute inset-0 bg-black/50" />
 
                         {/* Profile + meta card in top-left */}
-                        <div className="absolute hidden md:block lg:block bottom-4 right-4 z-20">
-                            <div className=" bg-slate-900/10 backdrop-blur-2xl shadow-xl rounded-2xl p-4 max-w-sm">
-                                <div className="flex items-center gap-3">
-                                    <img src={lessonData.userImage || '/avatar-placeholder.png'} alt={lessonData.userName} className="h-14 w-14 rounded-full object-cover" />
-                                    <div>
-                                        <p className="font-semibold text-white">{lessonData.userName}</p>
-                                        <p className="text-xs text-white">{lessonData.userEmail}</p>
+                        <Link href={`/public-profile/${lessonData.userId}`}>
+                            <div className="absolute hidden md:block lg:block bottom-4 right-4 z-20">
+                                <div className=" bg-slate-900/10 backdrop-blur-2xl shadow-xl rounded-2xl p-4 max-w-sm">
+                                    <div className="flex items-center gap-3">
+                                        <img src={lessonData.userImage || '/avatar-placeholder.png'} alt={lessonData.userName} className="h-14 w-14 rounded-full object-cover" />
+                                        <div>
+                                            <p className="font-semibold text-white">{lessonData.userName}</p>
+                                            <p className="text-xs text-white">{lessonData.userEmail}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4 text-sm text-slate-700 dark:text-slate-300 space-y-2">
+                                        <p className='text-white'><span className="font-semibold text-white">Access:</span> {lessonData.accessLevel}</p>
+                                        <p className='text-white'><span className="font-semibold text-white">Privacy:</span> {lessonData.privacy}</p>
+                                        {created && <p className='text-white'><span className="font-semibold text-white">Uploaded:</span> {created}</p>}
                                     </div>
                                 </div>
-
-                                <div className="mt-4 text-sm text-slate-700 dark:text-slate-300 space-y-2">
-                                    <p className='text-white'><span className="font-semibold text-white">Access:</span> {lessonData.accessLevel}</p>
-                                    <p className='text-white'><span className="font-semibold text-white">Privacy:</span> {lessonData.privacy}</p>
-                                    {created && <p className='text-white'><span className="font-semibold text-white">Uploaded:</span> {created}</p>}
-                                </div>
                             </div>
-                        </div>
-
+                        </Link>
                         {/* Title and description on left-middle */}
                         <div className="absolute left-6 top-6 transform   z-20 max-w-3xl">
                             <div className="flex items-center gap-3">
@@ -136,7 +138,7 @@ const LessonDetailsPage = async ({ params }) => {
                             <div
                                 style={{ backgroundImage: `url(${session?.user?.image})` }}
                                 className="flex h-10 w-10 bg-cover bg-center shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-blue-600 text-xs font-bold text-white shadow-md">
-                                
+
                             </div>
                             <input
                                 id="comment"

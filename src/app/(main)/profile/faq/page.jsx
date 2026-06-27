@@ -1,4 +1,5 @@
 'use client';
+import NavigationDrowerProfile from "@/components/profilepage/NavigationDrowerProfile";
 import { Link } from "lucide-react";
 import { useState } from "react";
 
@@ -35,7 +36,7 @@ const FAQPage = () => {
 
   return (
     <div className="min-h-screen px-4 py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-all duration-300">
-
+      <NavigationDrowerProfile />
       {/* Header */}
       <div className="max-w-4xl mx-auto text-center mb-10">
         <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
@@ -60,8 +61,8 @@ const FAQPage = () => {
             <button
               onClick={() => toggleAccordion(faq.id)}
               className={`w-full flex justify-between items-center px-6 py-5 text-left transition ${expandedId === faq.id
-                  ? "bg-indigo-100 dark:bg-slate-800"
-                  : "hover:bg-gray-50 dark:hover:bg-slate-800/60"
+                ? "bg-indigo-100 dark:bg-slate-800"
+                : "hover:bg-gray-50 dark:hover:bg-slate-800/60"
                 }`}
             >
               <div>

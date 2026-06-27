@@ -1,12 +1,13 @@
 "use client";
 
+import NavigationDrowerProfile from "@/components/profilepage/NavigationDrowerProfile";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function ProfileEditPage() {
-    const [image, setImage] = useState(''); 
+    const [image, setImage] = useState('');
 
     const handleLogoUpload = async (e) => {
         const file = e.target.files[0];
@@ -26,7 +27,7 @@ export default function ProfileEditPage() {
                 method: 'POST',
                 body: formData,
             });
-            const data = await response.json(); 
+            const data = await response.json();
             setImage(`${data?.data?.url}`);
         } catch (err) {
             toast.error('Image upload fail');
@@ -36,7 +37,7 @@ export default function ProfileEditPage() {
 
     const router = useRouter()
 
-    const { data: session } = authClient.useSession(); 
+    const { data: session } = authClient.useSession();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -67,7 +68,8 @@ export default function ProfileEditPage() {
     };
 
     return (
-        <div className=" w-full  flex items-center justify-center p-5">
+        <div className=" w-full  flex flex-col items-center justify-center p-5">
+            <NavigationDrowerProfile />
             <div className="w-full max-w-md  shadow-lg dark:shadow-white/20 shadow-black/20 rounded-2xl p-6">
                 <h1 className="text-2xl font-bold text-center mb-6 bg-gradient-to-l from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
                     Edit Profile

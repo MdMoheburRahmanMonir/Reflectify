@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { CustomTrigger } from '@/components/CustomTrigger';
 import { ArrowRight } from 'lucide-react';
-import ThemeToggle from './ThemeToggle'; 
-import { FaBookOpen, FaUserAlt } from 'react-icons/fa';
-import { MdDashboard } from 'react-icons/md';
+import ThemeToggle from './ThemeToggle';
+import { FaAddressBook, FaBookOpen, FaUserAlt } from 'react-icons/fa';
+import { MdCreateNewFolder, MdDashboard } from 'react-icons/md';
 import { RiHome4Fill } from 'react-icons/ri';
 
 export default function Navbar() {
@@ -20,7 +20,14 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/', icon: RiHome4Fill },
     { name: 'Public Lesson', href: '/public-lesson', icon: FaBookOpen },
+    { name: 'Add Lesson', href: '/user/dashboard/add-lesson', icon: MdCreateNewFolder },
     { name: 'Dashboard', href: '/user/dashboard', icon: MdDashboard },
+    { name: 'My Lesson', href: '/user/dashboard/my-lessons', icon: FaAddressBook },
+    { name: 'Profile', href: '/profile', icon: FaUserAlt },
+  ];
+  const navLinkUser = [
+    { name: 'Home', href: '/', icon: RiHome4Fill },
+    { name: 'Public Lesson', href: '/public-lesson', icon: FaBookOpen },
     { name: 'Profile', href: '/profile', icon: FaUserAlt },
   ];
 
@@ -37,12 +44,11 @@ export default function Navbar() {
   }
   const links = []
 
-  const filter = session?.user?.role === 'admin' ? links.push(navLinksAdmin) : session?.user?.role === 'user' ? links.push(navLinks) : links.push(navLinks);
-
+  const filter = session?.user?.role === 'admin' ? links.push(navLinksAdmin) : session?.user?.role === 'user' ? links.push(navLinks) : links.push(navLinkUser);
 
   return (
     <nav className="w-11/12 px-0 backdrop-blur-[10px] mx-auto bg-transparent sticky top-0 z-50">
-      <div className="w-full max-w-7xl mx-auto shadow-md shadow-black/10 dark:shadow-white/10 rounded-xl sm:rounded-2xl grid grid-cols-2 lg:grid-cols-3 px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 items-center gap-2 sm:gap-4">
+      <div className="w-full max-w-7xl mx-auto shadow-md shadow-black/10 dark:shadow-white/10 rounded-xl sm:rounded-2xl grid grid-cols-2 lg:grid-cols-3 px-3 sm:px-4 md:px-2 pt-2 items-center gap-2 sm:gap-4">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
             <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex items-center justify-center font-bold shadow-md bg-white shrink-0">
@@ -53,17 +59,16 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="hidden lg:flex justify-center items-center gap-8 md:gap-12">
+        <div className="hidden z-50 lg:flex justify-center items-center gap-8 md:gap-12">
           {links[0].map(link => {
             const isActive = pathname === link.href;
             const Icons = link.icon;
             return (
-              <Link key={link.href} href={link.href} className={`flex gap-10 text-sm md:text-base whitespace-nowrap font-medium transition px-3 ${isActive ? 'text-blue-600 border-b-[3px] pb-1 border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
+              <Link key={link.name} href={link.href} className={`flex gap-10 text-sm md:text-base whitespace-nowrap font-medium transition px-3 ${isActive ? 'text-blue-600 border-b-[3px] pb-1 border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
                 <Icons className="h-5 md:h-6 w-5 md:w-6 font-bold hover:text-blue-600" />
               </Link>
             );
           })}
-
         </div>
 
         <div className="hidden md:flex justify-end items-center gap-2 sm:gap-3">
@@ -147,7 +152,7 @@ export default function Navbar() {
                       const isActive = pathname === link.href;
                       const Icons = link.icon;
                       return (
-                        <Link key={link.href} href={link.href} className={`flex gap-2 text-sm whitespace-nowrap font-medium transition px-3 py-2 rounded-lg ${isActive ? 'text-blue-600 border-l-[3px] border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
+                        <Link key={link.name} href={link.href} className={`flex gap-2 text-sm whitespace-nowrap font-medium transition px-3 py-2 rounded-lg ${isActive ? 'text-blue-600 border-l-[3px] border-blue-600 font-semibold' : 'text-slate-700 dark:text-slate-200'}`}>
                           <Icons className="h-4 sm:h-5 w-4 sm:w-5 font-bold pt-0.5" />  <p> {link.name}</p>
                         </Link>
                       );

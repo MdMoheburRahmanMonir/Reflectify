@@ -11,18 +11,7 @@ const getInitials = (name) =>
         .filter(Boolean)
         .map((word) => word[0])
         .join("")
-        .toUpperCase();
-
-const normalizeContributors = (contributors = []) =>
-    Array.isArray(contributors)
-        ? contributors.map((user, index) => ({
-            _id: user._id || index,
-            userName: user.userName || user.name || "Unknown",
-            category: user.category || "Contributor",
-            userImage: user.userImage || user.avatar || "",
-            lessonCount: user.lessonCount ?? user.lessons ?? 0,
-        }))
-        : [];
+        .toUpperCase(); 
 
 const container = {
     hidden: {},
@@ -98,7 +87,7 @@ export default function TopContributors({ TopContributors }) {
                     viewport={{ once: true }}
                     className="grid grid-cols-2 mx-auto w-full justify-center sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5  justify-items-center gap-3 sm:gap-4 md:gap-6 lg:gap-10"
                 >
-                    {normalizeContributors(TopContributors).map((user, index) => {
+                    {TopContributors.map((user, index) => {
                         const topThree =
                             index === 0
                                 ? "from-yellow-400/70 to-orange-500/70"

@@ -7,13 +7,9 @@ import {
   Dropdown,
   Avatar,
   Label,
-} from '@heroui/react';
-import { PiGearLight } from "react-icons/pi";
-import { RxAvatar } from "react-icons/rx";
-import { FaRegArrowAltCircleRight, FaUserCog } from 'react-icons/fa';
-import ThemeToggle from './ThemeToggle';
-import { LuLayoutDashboard } from 'react-icons/lu';
-import Link from 'next/link';
+} from '@heroui/react'; 
+import { FaRegArrowAltCircleRight, FaUserCog } from 'react-icons/fa'; 
+import { LuLayoutDashboard } from 'react-icons/lu'; 
 import { RiHome4Line } from 'react-icons/ri';
 
 export function CustomTrigger() {
@@ -74,27 +70,27 @@ export function CustomTrigger() {
 
         {/* Menu */}
         <Dropdown.Menu>
-          <Dropdown.Item id="home" textValue="home">
-            <div className="flex w-full items-center justify-between gap-2">
-              <Link href="/"  >
+          <Dropdown.Item id="home" textValue="home" href="/"  >
+            {/* <Link href="/"  > */}
+              <div className="flex w-full items-center justify-between gap-2">
                 <Label>Home</Label>
-              </Link>
-              <RiHome4Line className="size-3.5 text-muted" />
-            </div>
+                <RiHome4Line className="size-3.5 text-muted" />
+              </div>
+            {/* </Link> */}
           </Dropdown.Item>
-          <Dropdown.Item id="dashboard" textValue="Dashboard">
+          <Dropdown.Item id="dashboard" textValue="Dashboard" href="/user/dashboard" >
             <div className="flex w-full items-center justify-between gap-2">
-              <Link href="/user/dashboard"  >
+              {/* <Link href="/user/dashboard"  > */}
                 <Label>Dashboard</Label>
-              </Link>
+              {/* </Link> */}
               <LuLayoutDashboard className="size-3.5 text-muted" />
             </div>
           </Dropdown.Item>
-          <Dropdown.Item id="profile" textValue="profile">
+          <Dropdown.Item id="profile" textValue="profile" href="/profile"  >
             <div className="flex w-full items-center justify-between gap-2">
-              <Link href="/profile"  >
+              {/* <Link href="/profile"  > */}
                 <Label>profile</Label>
-              </Link>
+              {/* </Link> */}
               <FaUserCog className="size-3.5 text-muted" />
             </div>
           </Dropdown.Item>
