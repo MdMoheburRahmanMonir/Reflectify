@@ -11,7 +11,7 @@ import { headers } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import { FaTelegram } from 'react-icons/fa';
+import { FaTelegram, FaUserCircle } from 'react-icons/fa';
 
 
 const LessonDetailsPage = async ({ params }) => {
@@ -119,6 +119,9 @@ const LessonDetailsPage = async ({ params }) => {
                             <LikeButton lesson={lessonData} session={session} />
                             <SavedButton lesson={lessonData} session={session} />
                             <ReportButton lesson={lessonData} />
+                            <Link href={`/public-profile/${lessonData.userId}`}> 
+                                <button className='py-1.5 px-4 flex gap-2 justify-center items-center bg-white text-black rounded-full'><FaUserCircle /> View all lessons </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

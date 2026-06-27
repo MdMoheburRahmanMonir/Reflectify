@@ -11,9 +11,10 @@ import { toast } from "react-toastify";
 export function EditFormUserDashboard({ lesson, token }) {
     const [image, setImage] = useState(`${lesson?.lessonPhoto}`);
     const session = SessionClient();
+    console.log(lesson);
 
-
-
+    // userName 
+    // userEmail
 
     const handleFile = async (e) => {
         const file = e.target.files[0];
@@ -184,6 +185,16 @@ export function EditFormUserDashboard({ lesson, token }) {
                                             onChange={handleFile}
                                             className="w-full top-0 left-0 absolute hidden px-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-dashed"
                                         />
+                                    </div>
+                                    <div className="p-4 rounded-2xl flex justify-between border bg-indigo-50 dark:bg-slate-800">
+                                        <div className="flex flex-col gap-3">
+                                            <label >Your Email</label>
+                                            <input type="email" defaultValue={`${lesson.userEmail}`} className="max-w-4xl" disabled id="" />
+                                        </div>
+                                        <div className="flex flex-col gap-3">
+                                            <label >Your Name </label>
+                                            <input type="name" defaultValue={`${lesson.userName}`} disabled id="" />
+                                        </div>
                                     </div>
 
                                     {/* Submit */}
