@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { LuImagePlus } from "react-icons/lu";
 import { toast } from "react-toastify";
 
-const ProfilePage = ({ featuredLessons, token, coverPhoto }) => {
+const ProfilePage = ({ featuredLessons, token, coverPhoto, totalLesson, totalSavedByMe }) => {
   const [userDatai, setUserData] = useState('')
   console.log(userDatai);
 
@@ -143,12 +143,12 @@ const ProfilePage = ({ featuredLessons, token, coverPhoto }) => {
             {/* Stats */}
             {user?.role === "user" && <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mt-6 sm:mt-8 md:mt-10 px-2 sm:px-0">
               <div className="bg-base-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 text-center">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">24</h3>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">{totalLesson || 0}</h3>
                 <p className="text-xs sm:text-sm md:text-base text-gray-800 dark:text-gray-300 mt-2">Lessons Shared</p>
               </div>
 
               <div className="bg-base-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 text-center">
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary">12</h3>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary">{totalSavedByMe || 0}</h3>
                 <p className="text-xs sm:text-sm md:text-base text-gray-800 dark:text-gray-300 mt-2">Favorites Saved</p>
               </div>
 
@@ -198,7 +198,7 @@ const ProfilePage = ({ featuredLessons, token, coverPhoto }) => {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-2">
-            {featuredLessons.map((lesson) => (
+            {featuredLessons?.map((lesson) => (
               <article
                 key={lesson._id}
                 className="group overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-sm transition hover:-translate-y-1 hover:shadow-2xl dark:border-slate-800 dark:bg-slate-950"

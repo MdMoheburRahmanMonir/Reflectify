@@ -14,9 +14,20 @@ const ProfileMainPage = async () => {
   const coverImage = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-user-cover/${MyId}`)
   const img = await coverImage.json() 
   const coverPhoto = img?.coverImage;
+  const totalLesson = data?.totalLesson[0]?.totalLesson;
+  const totalSavedByMe = data?.countSave[0]?.totalSavedByMe;
+  
+  console.log(totalLesson, 'My Total Lesson');
+  
   return (
     <div>
-      <ProfilePage  featuredLessons={featuredLessons} token={token} coverPhoto={coverPhoto}/>
+      <ProfilePage  
+      featuredLessons={featuredLessons} 
+      token={token} 
+      coverPhoto={coverPhoto} 
+      totalLesson={totalLesson}
+      totalSavedByMe={totalSavedByMe}
+      />
     </div>
   );
 };

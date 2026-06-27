@@ -3,8 +3,9 @@ import NavigationDrowerProfile from "@/components/profilepage/NavigationDrowerPr
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import React from "react";
+import { LuImagePlus } from "react-icons/lu";
 
-const PublicUserProfile = ({ featuredLessons, publicSessionData, coverPhoto }) => {
+const PublicUserProfile = ({ featuredLessons, publicSessionData, coverPhoto, TotalLessonCreated }) => {
     const { data: session } = authClient.useSession();
     console.log(publicSessionData, 'public data id ');
 
@@ -26,19 +27,24 @@ const PublicUserProfile = ({ featuredLessons, publicSessionData, coverPhoto }) =
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                         }}
-                        className="relative text-center pt-6 sm:pt-8 md:pt-10 z-10 h-32 sm:h-40 md:h-52 lg:h-64 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-                        <div className="mt-2 sm:mt-3">
+                        className="relative pt-6 sm:pt-8 md:pt-10 z-10 h-32 sm:h-40 md:h-52 lg:h-64 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                    >
+                      
+                        <div className="absolute bottom-4 left-4 flex flex-col gap-2 items-start">
                             <span
-                                className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold ${user?.role === "admin"
-                                    ? "bg-red-100 text-red-600"
-                                    : "bg-blue-100 text-blue-600"
+                                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold shadow-sm ${user?.role === "admin"
+                                        ? "bg-red-100 text-red-600 border border-red-200"
+                                        : "bg-white/90 text-blue-600 border border-blue-200"
                                     }`}
                             >
-                                {user?.role === "admin"
-                                    ? "Status: 👑 Admin"
-                                    : "Status: ✨ Community Member"}
+                                {user?.role === "admin" ? "👑 Admin" : "✨ Community Member"}
                             </span>
-                        </div>
+
+                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-purple-700 border border-purple-200 shadow-sm">
+                                📚 {TotalLessonCreated} Lessons by {user?.name}
+                            </span>
+                        </div> 
+                         
                     </div>
 
                     <div className="px-4 sm:px-6 md:px-8 pb-6 sm:pb-8 ">
